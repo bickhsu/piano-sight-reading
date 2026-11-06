@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>音感練習室 · 識譜反應訓練</title><style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#243d38;background:#f5f5ef;--green:#245c4b;--muted:#7c8982}*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button,select,input{min-height:48px}button{cursor:pointer;touch-action:manipulation;border:1px solid #d8dfd5;border-radius:12px;background:white;color:inherit;padding:10px 18px}button:hover{border-color:var(--green);background:#edf3ed}button:disabled{opacity:.5;cursor:default}button.primary{background:var(--green);color:white;border-color:var(--green)}header{max-width:1100px;margin:auto;padding:28px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dce2d8}.brand{font-weight:700;font-size:21px;letter-spacing:1px}.brand small{font-size:11px;color:var(--muted);display:block;letter-spacing:3px;margin-top:5px}nav{display:flex;gap:8px}nav button{background:transparent;border:0}nav button.active{background:#e4ece3;color:var(--green)}main{max-width:1100px;margin:34px auto;padding:0 24px}.eyebrow{font-size:12px;letter-spacing:3px;color:#688372;font-weight:600}h1{font-size:32px;letter-spacing:1px;margin:12px 0}p{color:#748078;line-height:1.7}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:24px;margin-top:26px}.card{background:#fff;border:1px solid #e0e5da;border-radius:22px;padding:26px;box-shadow:0 6px 22px #24463504}.practice{padding:26px 32px}.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.tag{font-size:12px;padding:7px 11px;border-radius:20px;background:#edf2e9;color:#57715d}.progress{height:4px;background:#edf0e8;border-radius:9px;margin:18px 0}.progress span{display:block;height:100%;background:#729783;border-radius:9px;transition:width .2s}.score{width:100%;height:auto;max-height:238px;display:block;margin:6px 0 10px}.staff-line,.ledger-line{stroke:#64756c;stroke-width:1.5;shape-rendering:geometricPrecision}.feedback{text-align:center;height:32px;color:#a7473f;font-size:14px}.answers{display:grid;grid-template-columns:repeat(7,1fr);gap:9px}.answers button{padding:14px 0;font-size:20px;font-weight:600;min-height:62px}.hint{text-align:center;font-size:12px;margin:18px 0 0;color:#929b94}h2{font-size:17px;margin:0 0 20px}label.field{display:block;font-size:13px;margin:19px 0;color:#67766b}select,input[type=number]{display:block;width:100%;border:1px solid #dce2d8;border-radius:9px;margin-top:8px;background:#fafbf7;padding:8px 12px;color:#243d38}.switch{display:flex;align-items:center;justify-content:space-between;font-size:13px;margin:20px 0}input[type=checkbox]{accent-color:var(--green);width:20px;min-height:20px}.aside-note{font-size:12px;border-top:1px solid #e7ebe2;padding-top:18px}.start{width:100%;margin-top:10px}.footer{text-align:center;font-size:12px;color:#96a094;margin:28px 0}.hidden{display:none!important}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}.metric{padding:20px;background:#f0f4ec;border-radius:14px}.metric strong{display:block;font-size:26px;margin:10px 0}.metric small{color:#768476}.chart{width:100%;height:240px}.legend{font-size:12px;color:#78877b}.heat{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;margin-bottom:24px}.heat div{padding:12px 5px;text-align:center;border-radius:8px;font-size:12px}.heat small{display:block;margin-top:5px;font-size:11px;white-space:nowrap}.stats-actions{display:flex;gap:10px;margin:20px 0}.empty{padding:30px;text-align:center;color:#819080}@media(max-width:700px){header{padding:20px 18px}.brand{font-size:18px}nav button{padding:8px 12px}main{padding:0 16px;margin-top:25px}h1{font-size:27px}.layout{grid-template-columns:1fr;gap:18px}.practice{padding:20px 15px}.card{border-radius:17px}.score{height:auto;max-height:210px}.answers{gap:7px;grid-template-columns:repeat(4,1fr)}.answers button{font-size:18px;min-height:53px}.metrics{grid-template-columns:repeat(2,1fr)}.settings{padding:22px}.footer{margin:22px 0}.chart{height:200px}}
+@media(max-width:700px){nav button{white-space:nowrap;font-size:14px;padding:8px}header{gap:8px;padding:12px 14px}.brand{font-size:16px}.brand small{font-size:9px;letter-spacing:1px}body.practicing main{margin-top:12px}body.practicing #practice-view>.eyebrow,body.practicing #practice-view>h1,body.practicing #practice-view>p,body.practicing .hint,body.practicing .footer{display:none}body.practicing .layout{margin-top:0}body.practicing .practice{padding:12px}body.practicing .progress{margin:10px 0}body.practicing .score{margin:0;max-height:190px}body.practicing .feedback{height:38px}body.practicing .answers{padding-bottom:env(safe-area-inset-bottom,0px)}body.practicing .answers button{min-height:48px;padding:10px 0}}
+</style></head><body><header><div class="brand">♩ 音感練習室<small>SIGHT READING STUDIO</small></div><nav><button id="practice-tab" class="active">練習</button><button id="stats-tab">統計</button></nav></header><div style="max-width:1100px;margin:auto;padding:12px 24px"><button id="google">使用 Google 登入</button><span id="email"></span> <button id="signout" hidden>登出</button><label> 匯入舊紀錄 <input id="import-file" type="file" accept="application/json"></label><p id="sync-status" role="status"></p><p id="import-status" role="status"></p></div><main hidden><button id="settings-back">返回練習設定</button><section id="practice-view"><div class="eyebrow">A LITTLE PRACTICE, EVERY DAY</div><h1>讓看譜，成為直覺。</h1><p style="margin:0">看見音符，選出音名。依自己的節奏，練習每一次反應。</p><div class="layout"><div class="card practice"><div class="row"><span class="tag" id="clef-label">高音譜</span><span id="counter" style="font-size:13px;color:#7b897e">準備開始 · 20 題</span></div><div class="progress"><span id="progress" style="width:0%"></span></div><svg id="score" class="score" viewBox="28 12 364 190" aria-label="五線譜上的音符" role="img"></svg><div id="feedback" class="feedback" aria-live="polite"></div><div id="answers" class="answers"></div><p class="hint">鍵盤 A–G 也能作答 · 放輕鬆，準確比速度更重要</p></div><aside class="card settings"><h2>練習設定</h2><label class="field">譜號模式<select id="mode"><option value="treble">只高音譜</option><option value="bass">只低音譜</option><option value="mixed">高低音混合</option></select></label><label class="field">每輪題數<input id="count" type="number" min="5" max="100" value="20"></label><label class="switch">包含加線音<input id="ledger" type="checkbox" checked></label><label class="field">音名顯示<select id="naming"><option value="letters">C D E F G A B</option><option value="solfege">Do Re Mi Fa Sol La Si</option></select></label><button id="start" class="primary start">開始練習 →</button><p class="aside-note">練習會依你的反應調整出題，讓不熟悉的音多出現一些。</p></aside></div></section><section id="result-view" class="hidden"><div class="eyebrow">SESSION COMPLETE</div><h1>每一次練習，都在進步。</h1><p>本輪練習完成，讓我們看看你的表現。</p><div class="card"><div id="result-metrics" class="metrics"></div><button id="again" class="primary">再來一輪 →</button></div></section><section id="stats-view" class="hidden"><div class="eyebrow">YOUR PRACTICE JOURNEY</div><h1>看見自己的進步。</h1><p>累積每一次反應，找到值得多練習的音。</p><div class="card"><h2>進步曲線</h2><div class="legend">● 綠色：正確率（0–100%）　● 金色：答對平均時間（毫秒）</div><div id="chart"></div><h2>最近輪次</h2><div id="recent-rounds"></div><h2>每音熱度</h2><p class="legend">綠色 → 黃色 → 紅色：錯誤率或反應時間越高，顏色越紅。灰色表示尚未練習。</p><h2>高音譜</h2><div id="heat-treble" class="heat"></div><h2>低音譜</h2><div id="heat-bass" class="heat"></div><div class="stats-actions"><button id="export">匯出 JSON</button><button id="clear">清除資料</button></div></div></section><div class="footer">每日一小步，讓雙手與音符更靠近。</div></main><script src="vendor/supabase-js.js"></script><script>
+'use strict';
+const $=s=>document.querySelector(s), letters=['C','D','E','F','G','A','B'], syllables=['Do','Re','Mi','Fa','Sol','La','Si'];
+const index=n=>Number(n.slice(1))*7+letters.indexOf(n[0]);
+function notesFor(clef,ledger){let [lo,hi]=clef==='treble'?(ledger?['A3','C6']:['D4','G5']):(ledger?['E2','C4']:['F2','B3']);return Array.from({length:index(hi)-index(lo)+1},(_,i)=>{let v=index(lo)+i;return letters[v%7]+Math.floor(v/7)})}
+const plainObject=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);
+const nonnegative=v=>Number.isFinite(v)&&v>=0;
+function cleanData(raw){
+ const source=plainObject(raw)?raw:{};
+ const rounds=Array.isArray(source.rounds)?source.rounds.filter(r=>plainObject(r)&&['count','accuracy'].every(k=>nonnegative(r[k]))&&(r.averageTime===null||nonnegative(r.averageTime))&&r.count>=(r.incomplete===true?1:5)&&r.count<=100&&Number.isInteger(r.count)&&r.accuracy<=1&&['time','mode','slowest','mostErrors'].every(k=>typeof r[k]==='string')&&Number.isFinite(Date.parse(r.time))&&['treble','bass','mixed'].includes(r.mode)).map(r=>{const clean={...r};if('incomplete' in clean)clean.incomplete=clean.incomplete===true;if(!Number.isInteger(clean.planned)||clean.planned<5||clean.planned>100||clean.planned<clean.count)delete clean.planned;return clean}):[];
+ const notes={};
+ if(plainObject(source.notes))for(const [key,value] of Object.entries(source.notes)){
+  if(/^(treble|bass):[CDEFGAB]\d+$/.test(key)&&plainObject(value)&&['attempts','errors','averageTime'].every(k=>nonnegative(value[k]))&&Number.isInteger(value.attempts)&&Number.isInteger(value.errors)&&value.errors<=value.attempts)notes[key]={attempts:value.attempts,errors:value.errors,averageTime:value.averageTime};
+ }
+ return {version:1,rounds,notes};
+}
+let raw;try{raw=JSON.parse(localStorage.getItem('sight-reading-v1'))}catch{}
+let data={version:1,rounds:[],notes:{}};
+let current,geom,running=false,locked=false,started=0,round=[],total=20,roundMode='treble',activeRoundId=null,practiceGeneration=0,timer,previous=null,completedResult=null,resultReady=false,interrupted=false;
+const save=()=>{if(cloudUser)merge();else localStorage.setItem('sr-guest',JSON.stringify(data));};
+function renderNote(clef,note){current={clef,note};const lines=[65,85,105,125,145],bottom=clef==='treble'?'E4':'G2',y=145-(index(note)-index(bottom))*10,ledger=[];for(let v=165;v<=y;v+=20)ledger.push(v);for(let v=45;v>=y;v-=20)ledger.push(v);geom={staffLinesY:lines,noteY:y,ledgerLinesY:ledger,clef};let path=clef==='treble'?'<path id="clef-treble" d="M81 138 C61 125 72 108 88 111 C108 114 108 139 90 146 C66 156 47 136 53 114 C58 94 82 81 90 63 C96 50 92 33 85 31 C73 37 73 59 78 81 L98 167 C103 186 83 198 72 185 C64 173 77 163 85 171 C91 180 80 187 75 180" fill="none" stroke="#294a3e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>':'<g id="clef-bass" fill="#294a3e"><path d="M62 85 C59 70 68 62 81 62 C98 62 107 72 106 87 C105 110 84 130 62 140 C80 124 94 105 94 86 C94 72 86 67 78 70 C73 72 70 76 71 80 C79 75 87 83 83 90 C78 99 63 97 62 85Z"/><path d="M116 75 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0 M116 95 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0"/></g>';
+$('#score').innerHTML=lines.map(v=>`<line class="staff-line" x1="40" x2="380" y1="${v}" y2="${v}"/>`).join('')+path+ledger.map(v=>`<line class="ledger-line" x1="212" x2="268" y1="${v}" y2="${v}"/>`).join('')+`<ellipse id="note-head" cx="240" cy="${y}" rx="18" ry="12" fill="white" stroke="#294a3e" stroke-width="4" transform="rotate(-15 240 ${y})"/>`;$('#clef-label').textContent=clef==='treble'?'高音譜':'低音譜';started=performance.now();return geom}
+function check(letter){return !!current&&String(letter).toUpperCase()===current.note[0]}
+function weight(c){const s=data.notes[c.clef+':'+c.note];return s?1+4*(s.attempts>0?s.errors/s.attempts:0)+Math.min(s.averageTime/1800,4):1}
+function next(){const clefs=roundMode==='mixed'?['treble','bass']:[roundMode],pool=clefs.flatMap(c=>notesFor(c,$('#ledger').checked).map(n=>({clef:c,note:n}))).filter(c=>!previous||c.clef!==previous.clef||c.note!==previous.note);let r=Math.random()*pool.reduce((s,c)=>s+weight(c),0),pick=pool[pool.length-1];for(const c of pool){r-=weight(c);if(r<0){pick=c;break}}previous=pick;renderNote(pick.clef,pick.note);locked=false;$('#feedback').textContent='';$('#counter').textContent=`第 ${round.length+1} / ${total} 題`;$('#progress').style.width=100*round.length/total+'%';setButtons(false)}
+function setButtons(disabled){document.querySelectorAll('[data-letter]').forEach(b=>b.disabled=disabled)}
+function answer(letter){if(!running||locked||performance.now()-started<200)return false;const elapsed=performance.now()-started,correct=check(letter);locked=true;const record={...current,correct,time:elapsed};round.push(record);queueAnswer(record);const key=current.clef+':'+current.note,s=data.notes[key]||{attempts:0,errors:0,averageTime:0};if(correct)s.averageTime+=(elapsed-s.averageTime)/(s.attempts-s.errors+1);s.attempts++;if(!correct)s.errors++;data.notes[key]=s;if(round.length>=total){completedResult=roundResult();data.rounds.push(completedResult);queueRound(completedResult);running=false}save();const advance=()=>completedResult?finish():next();if(correct)advance();else{$('#feedback').textContent=`正確答案：${current.note[0]}（${syllables[letters.indexOf(current.note[0])]}）· ${current.note}`;$('#note-head').setAttribute('stroke','#c24f46');setButtons(true);timer=setTimeout(advance,1000)}return correct}
+function show(view){if(view==='practice'&&resultReady)view='result';document.body.classList.toggle('practicing',running&&view==='practice');for(const id of ['practice','result','stats'])$('#'+id+'-view').classList.toggle('hidden',id!==view);$('#practice-tab').classList.toggle('active',view!=='stats');$('#stats-tab').classList.toggle('active',view==='stats');if(view==='stats')renderStats()}
+function start(){if(cloudUser&&(clearing||localStorage.getItem(key('clear-pending')))){$('#sync-status').textContent='請先完成清除雲端紀錄，再開始練習';return}interrupt();clearTimeout(timer);const value=$('#count').value.trim(),number=Number(value);total=value!==''&&Number.isFinite(number)?Math.max(5,Math.min(100,Math.round(number))):20;$('#count').value=total;roundMode=$('#mode').value;round=[];activeRoundId=crypto.randomUUID();practiceGeneration=cloudUser?generation(cloudUser.id):0;completedResult=null;resultReady=false;interrupted=false;running=true;locked=false;['mode','count','ledger'].forEach(id=>$('#'+id).disabled=true);$('#start').textContent='重新開始 →';show('practice');window.scrollTo({top:0,behavior:'instant'});next()}
+function roundResult(incomplete=false){const correct=round.filter(r=>r.correct),groups={};round.forEach(r=>{const k=r.clef+':'+r.note,g=groups[k]||(groups[k]={...r,correctCount:0,errors:0,sum:0});if(r.correct){g.correctCount++;g.sum+=r.time}else g.errors++});const values=Object.values(groups),slow=values.filter(g=>g.correctCount).sort((a,b)=>b.sum/b.correctCount-a.sum/a.correctCount)[0],wrong=values.filter(g=>g.errors).sort((a,b)=>b.errors-a.errors)[0],label=g=>g?`${g.clef==='treble'?'高音':'低音'} ${g.note}`:'無';return {client_id:activeRoundId,time:new Date().toISOString(),count:round.length,accuracy:correct.length/round.length,averageTime:correct.length?correct.reduce((s,r)=>s+r.time,0)/correct.length:null,mode:roundMode,slowest:slow?label(slow):'—',mostErrors:label(wrong),...(incomplete?{incomplete:true,planned:total}:{})}}
+function interrupt(){if(!running)return;clearTimeout(timer);running=false;interrupted=true;locked=true;setButtons(true);['mode','count','ledger'].forEach(id=>$('#'+id).disabled=false);if(round.length){const result=roundResult(true);data.rounds.push(result);queueRound(result);save()}}
+window.addEventListener('pagehide',interrupt);
+window.addEventListener('beforeunload',interrupt);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')interrupt()});
+function resetPractice(message=''){clearTimeout(timer);running=false;locked=true;round=[];completedResult=null;resultReady=false;interrupted=false;previous=null;setButtons(true);['mode','count','ledger'].forEach(id=>$('#'+id).disabled=false);$('#start').textContent='開始練習 →';$('#counter').textContent=`準備開始 · ${total} 題`;$('#progress').style.width='0%';renderNote('treble','G4');$('#feedback').textContent=message;document.body.classList.remove('practicing')}
+window.addEventListener('pageshow',e=>{if(e.persisted&&interrupted){resetPractice('本輪已中斷並儲存，按開始練習重新開始');show('practice')}});
+const roundAverage=r=>r.averageTime===null||(r.accuracy===0&&r.averageTime===0)?null:r.averageTime;
+const averageLabel=r=>roundAverage(r)===null?'—':Math.round(r.averageTime)+' ms';
+function finish(){running=false;locked=false;['mode','count','ledger'].forEach(id=>$('#'+id).disabled=false);setButtons(true);const result=completedResult;$('#result-metrics').innerHTML=[['正確率',Math.round(result.accuracy*100)+'%',`${round.filter(r=>r.correct).length} / ${total} 題答對`],['平均反應時間',averageLabel(result),'只計算答對的題目'],['最慢的音',roundAverage(result)===null?'—':result.slowest,'依本輪答對平均時間'],['最常錯的音',result.mostErrors,'依本輪錯誤次數']].map(([a,b,c])=>`<div class="metric">${a}<strong>${b}</strong><small>${c}</small></div>`).join('');resultReady=true;show('result')}
+let chartResizeFrame;
+window.addEventListener('resize',()=>{cancelAnimationFrame(chartResizeFrame);chartResizeFrame=requestAnimationFrame(()=>{if(!$('#stats-view').classList.contains('hidden'))renderStats()})});
+function renderStats(){const rs=data.rounds.filter(r=>r.incomplete!==true),w=Math.max(240,$('#chart').clientWidth),h=200,p=38,max=Math.max(1000,...rs.map(r=>roundAverage(r)??0)),x=i=>p+(w-p*2)*(rs.length===1?.5:i/(rs.length-1)),y=v=>h-p-v*(h-2*p);$('#chart').innerHTML=rs.length?`<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="正確率與平均反應時間進步曲線">${[0,.5,1].map(v=>`<line x1="${p}" x2="${w-p}" y1="${y(v)}" y2="${y(v)}" stroke="#e3e8df"/><text x="0" y="${y(v)+4}" fill="#82917f" font-size="12">${v*100}%</text><text x="${w-p+5}" y="${y(v)+4}" fill="#a38b56" font-size="12">${Math.round(v*max)}</text>`).join('')}${[['accuracy','#387c62',1],['averageTime','#b49a58',max]].map(([key,color,scale])=>rs.map((r,i)=>key==='averageTime'&&roundAverage(r)===null?'|':`${x(i)},${y(r[key]/scale)}`).join(' ').split('|').filter(points=>points.trim()).map(points=>`<polyline points="${points.trim()}" fill="none" stroke="${color}" stroke-width="3"/>`).join('')+rs.map((r,i)=>key==='averageTime'&&roundAverage(r)===null?'':`<circle cx="${x(i)}" cy="${y(r[key]/scale)}" r="4" fill="${color}"><title>第 ${i+1} 輪：${key==='accuracy'?Math.round(r[key]*100)+'%':Math.round(r[key])+' ms'}</title></circle>`).join('')).join('')}<text x="${p}" y="${h-5}" font-size="12" fill="#82917f">第 1 輪</text><text x="${w-95}" y="${h-5}" font-size="12" fill="#82917f">第 ${rs.length} 輪</text></svg>`:'<div class="empty">完成第一輪後，就能看到你的進步曲線。</div>';$('#recent-rounds').replaceChildren(...[...data.rounds].sort((a,b)=>Date.parse(b.time)-Date.parse(a.time)).slice(0,20).map(r=>{const row=document.createElement('p');row.className='recent-round';row.textContent=`${new Date(r.time).toLocaleString('zh-TW')} · ${r.count} 題 · 正確率 ${Math.round(r.accuracy*100)}% · 平均 ${averageLabel(r)} · ${{treble:'高音譜',bass:'低音譜',mixed:'高低音混合'}[r.mode]}${r.incomplete===true?' · 未完成':''}`;return row}));for(const clef of ['treble','bass'])$('#heat-'+clef).innerHTML=notesFor(clef,true).map(n=>{let s=data.notes[clef+':'+n],heat=s?Math.max((s.attempts>0?s.errors/s.attempts:0),Math.min(1,s.averageTime/6000)):0;return `<div style="background:${s?`hsl(${120*(1-heat)} 72% 82%)`:'#f0f1ed'}" title="${s?`${s.attempts} 次，錯誤 ${s.errors} 次，平均 ${s.attempts>s.errors?Math.round(s.averageTime)+' ms':'—'}`:'尚未練習'}">${n}<small>${s?'錯 '+Math.round((s.attempts>0?s.errors/s.attempts:0)*100)+'% · 平均 '+(s.attempts>s.errors?Math.round(s.averageTime)+'ms':'—'):'尚未練習'}</small></div>`}).join('')}
+function exportData(){const blob=new Blob([JSON.stringify({...data,source:'sight-reading-cloud-v1'},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='sight-reading-stats.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+$('#answers').innerHTML=letters.map(l=>`<button data-letter="${l}" disabled>${l}</button>`).join('');document.querySelectorAll('[data-letter]').forEach(b=>b.onclick=()=>answer(b.dataset.letter));$('#naming').onchange=()=>document.querySelectorAll('[data-letter]').forEach(b=>b.textContent=$('#naming').value==='letters'?b.dataset.letter:syllables[letters.indexOf(b.dataset.letter)]);$('#start').onclick=start;$('#again').onclick=start;$('#practice-tab').onclick=()=>show('practice');$('#settings-back').onclick=()=>{interrupt();resetPractice();show('practice')};$('#stats-tab').onclick=()=>show('stats');$('#export').onclick=exportData;$('#clear').onclick=clearHistory;document.addEventListener('keydown',e=>{if((e.target instanceof Element && e.target.matches('input,select'))||e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;if(/^[a-g]$/i.test(e.key)&&!$('#practice-view').classList.contains('hidden'))answer(e.key)});window.__sr={notesFor,renderNote,geometry:()=>structuredClone(geom),check,answer,weights:()=>['treble','bass'].flatMap(c=>notesFor(c,true).map(note=>weight({clef:c,note})))};renderNote('treble','G4');
+
+const client=supabase.createClient("https://tgmjfztmbistwrhmbfip.supabase.co","sb_publishable_cxZ6UfL_PTpqetxBVfp0Iw_zxY5bfv_",{auth:{flowType:'pkce',detectSessionInUrl:true}});
+let cloudUser=null,denied=false,flushing=null,clearing=false,epoch=0;
+const deviceId=localStorage.getItem('sr-device')||crypto.randomUUID();localStorage.setItem('sr-device',deviceId);
+let box={rounds:[],answer_events:[],note_stats_baseline:[]},cache={rounds:[],events:[],baselines:[]};
+const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))||fallback}catch{return fallback}};
+const key=name=>'sr-'+cloudUser.id+'-'+name;
+const tables=['rounds','answer_events','note_stats_baseline'];
+const emptyBox=()=>({rounds:[],answer_events:[],note_stats_baseline:[]});
+const userKey=(uid,name)=>'sr-'+uid+'-'+name;
+const generation=uid=>Number(localStorage.getItem(userKey(uid,'generation'))||0);
+const withLock=(uid,work)=>navigator.locks?navigator.locks.request('piano-outbox-'+uid,{mode:'exclusive'},work):Promise.resolve().then(work);
+const identity=(table,r)=>table==='rounds'?r.client_id:table==='answer_events'?r.client_event_id:r.source+':'+r.clef+':'+r.note;
+let mutations=Promise.resolve(),refreshToken=0,retryAt=0,retryDelay=1000;
+const itemPrefix=uid=>'piano-ob:'+encodeURIComponent(uid)+':';
+const itemKey=(uid,g,t,r)=>itemPrefix(uid)+g+':'+t+':'+encodeURIComponent(identity(t,r));
+const storageKeys=()=>Array.from({length:localStorage.length},(_,i)=>localStorage.key(i)).filter(Boolean);
+// Keep order outside uploaded rows too: acknowledged records lose their outbox keys.
+function roundSequence(uid,id){
+ const k=userKey(uid,'round-sequence-'+encodeURIComponent(id)),existing=localStorage.getItem(k);
+ if(existing!==null)return Number(existing);
+ const counter=userKey(uid,'round-sequence'),next=Math.max(Number(localStorage.getItem(counter)||0)+1,Date.now()*1000);
+ localStorage.setItem(counter,String(next));localStorage.setItem(k,String(next));return next;
+}
+function quarantine(uid,rejected){if(!rejected.length)return;const k=userKey(uid,'quarantine');localStorage.setItem(k,JSON.stringify([...read(k,[]),...rejected]));$('#sync-status').textContent=`已隔離 ${rejected.length} 筆格式不符的紀錄，不會重複傳送`;}
+function loadBox(uid){
+ const g=generation(uid),legacyKey=userKey(uid,'outbox'),legacy=localStorage.getItem(legacyKey);
+ if(legacy!==null){
+  let stored;try{stored=JSON.parse(legacy)}catch{quarantine(uid,[{row:legacy}])}
+  if(stored&&!plainObject(stored))quarantine(uid,[{row:stored}]);
+  if(plainObject(stored))for(const t of tables)for(const r of (Array.isArray(stored[t])?stored[t]:[])){
+   if(!plainObject(r)||(t==='rounds'?typeof r.client_id!=='string':t==='answer_events'?typeof r.client_event_id!=='string':!['source','clef','note'].every(k=>typeof r[k]==='string'))){quarantine(uid,[{table:t,row:r}]);continue}
+   if((r._generation??0)!==g)continue;
+   if(t==='rounds')roundSequence(uid,r.client_id);
+   const k=itemKey(uid,g,t,r);if(localStorage.getItem(k)===null)localStorage.setItem(k,JSON.stringify({...r,_generation:g}));
+  }
+  localStorage.removeItem(legacyKey);
+ }
+ const fresh=emptyBox(),prefix=itemPrefix(uid),rejected=[];
+ for(const k of storageKeys())if(k.startsWith(prefix)){
+  const [version,t]=k.slice(prefix.length).split(':');
+  if(Number(version)<g){localStorage.removeItem(k);continue}
+  if(Number(version)!==g)continue;
+  let r;try{r=JSON.parse(localStorage.getItem(k))}catch{}
+  if(!tables.includes(t)||!plainObject(r)||r._generation!==g||itemKey(uid,g,t,r)!==k){rejected.push({table:t,row:r??null});localStorage.removeItem(k);continue}
+  if(t==='rounds')r._sequence=roundSequence(uid,r.client_id);fresh[t].push(r);
+ }
+ quarantine(uid,rejected);return fresh;
+}
+function syncView(uid){if(cloudUser?.id!==uid)return;box=loadBox(uid);const c=read(userKey(uid,'cache'),null);cache=c&&((c._generation??0)===generation(uid))?c:{rounds:[],events:[],baselines:[]};}
+function persist(){if(cloudUser&&(cache._generation??0)===generation(cloudUser.id))localStorage.setItem(key('cache'),JSON.stringify(cache));}
+function addRows(rows,uid=cloudUser?.id,g=uid&&generation(uid)){
+ if(!uid)return Promise.resolve();
+ // Commit in this task: unload handlers must never wait for a Web Lock.
+ if(g!==generation(uid)||localStorage.getItem(userKey(uid,'clear-pending')))return Promise.resolve();
+ for(const t of tables)for(const r of rows[t]||[]){const k=itemKey(uid,g,t,r),existing=read(k,null);localStorage.setItem(k,JSON.stringify({...r,...(t==='rounds'?{_sequence:existing?._sequence??roundSequence(uid,r.client_id)}:{}),_generation:g}));}
+ // Clear may have advanced the generation in another tab during this task.
+ if(cloudUser?.id===uid)box=loadBox(uid);
+ return Promise.resolve();
+}
+function queueAnswer(r){if(!cloudUser)return;addRows({answer_events:[{client_event_id:crypto.randomUUID(),round_client_id:activeRoundId,clef:r.clef,note:r.note,correct:r.correct,elapsed_ms:r.time,answered_at:new Date().toISOString()}]},cloudUser.id,practiceGeneration);}
+function queueRound(r){if(!cloudUser)return;addRows({rounds:[{client_id:r.client_id,played_at:r.time,count:r.count,planned:r.planned??total,accuracy:r.accuracy,average_time_ms:r.averageTime,mode:r.mode,slowest:r.slowest,most_errors:r.mostErrors,incomplete:r.incomplete===true,device_id:deviceId}]},cloudUser.id,practiceGeneration).then(()=>flush(false));}
+addEventListener('storage',e=>{if(cloudUser&&(e.key?.startsWith('sr-'+cloudUser.id+'-')||e.key?.startsWith(itemPrefix(cloudUser.id)))){syncView(cloudUser.id);if(e.key.endsWith('generation'))resetPractice();merge();}});
+const unique=(rows,id)=>[...new Map(rows.map(r=>[id(r),r])).values()];
+function merge(){
+ if(cloudUser){box=loadBox(cloudUser.id);if((cache._generation??0)!==generation(cloudUser.id))cache={rounds:[],events:[],baselines:[],_generation:generation(cloudUser.id)};}
+ const rounds=unique([...cache.rounds,...box.rounds],r=>r.client_id);
+ for(const r of rounds)roundSequence(cloudUser.id,r.client_id);
+ rounds.sort((a,b)=>roundSequence(cloudUser.id,a.client_id)-roundSequence(cloudUser.id,b.client_id));
+ data={version:1,rounds:cleanData({rounds:rounds.map(r=>({client_id:r.client_id,time:r.played_at,count:r.count,planned:r.planned,accuracy:r.accuracy,averageTime:r.average_time_ms,mode:r.mode,slowest:r.slowest,mostErrors:r.most_errors,...(r.incomplete?{incomplete:true}:{})}))}).rounds,notes:{}};
+ const add=(r,a,e,t)=>{const k=r.clef+':'+r.note,s=data.notes[k]||(data.notes[k]={attempts:0,errors:0,averageTime:0});const correct=s.attempts-s.errors;s.attempts+=a;s.errors+=e;s.averageTime=(correct*s.averageTime+t)/(s.attempts-s.errors||1)};
+ if(cache.stats)for(const r of cache.stats)add(r,Number(r.attempts),Number(r.errors),Number(r.correct_time_total_ms));
+ const baselineRows=cache.stats?box.note_stats_baseline.filter(r=>!cache.baselines.some(c=>c.source===r.source&&c.clef===r.clef&&c.note===r.note)):[...cache.baselines,...box.note_stats_baseline];
+ const eventRows=cache.stats?box.answer_events.filter(r=>!cache.events.some(c=>c.client_event_id===r.client_event_id)):[...cache.events,...box.answer_events];
+ for(const r of unique(baselineRows,r=>r.source+':'+r.clef+':'+r.note))add(r,r.attempts,r.errors,r.average_time_ms*(r.attempts-r.errors));
+ for(const r of unique(eventRows,r=>r.client_event_id))add(r,1,r.correct?0:1,r.correct?r.elapsed_ms:0);
+ if(!$('#stats-view').classList.contains('hidden'))renderStats();
+}
+function sanitizeOutbox(){
+ const validDate=v=>typeof v==='string'&&Number.isFinite(Date.parse(v)),integer=v=>Number.isInteger(v)&&v>=0,note=r=>['treble','bass'].includes(r.clef)&&/^[CDEFGAB][0-9]$/.test(r.note);
+ const checks={rounds:r=>typeof r.client_id==='string'&&validDate(r.played_at)&&Number.isInteger(r.count)&&r.count>=(r.incomplete===true?1:5)&&r.count<=100&&(r.planned==null||(Number.isInteger(r.planned)&&r.planned>=5&&r.planned<=100&&r.planned>=r.count))&&nonnegative(r.accuracy)&&r.accuracy<=1&&(r.average_time_ms===null||nonnegative(r.average_time_ms))&&['treble','bass','mixed'].includes(r.mode)&&typeof r.slowest==='string'&&typeof r.most_errors==='string',answer_events:r=>typeof r.client_event_id==='string'&&note(r)&&typeof r.correct==='boolean'&&nonnegative(r.elapsed_ms)&&validDate(r.answered_at),note_stats_baseline:r=>note(r)&&integer(r.attempts)&&integer(r.errors)&&r.errors<=r.attempts&&nonnegative(r.average_time_ms)&&Number.isFinite(r.average_time_ms*(r.attempts-r.errors))&&typeof r.source==='string'&&r.source.trim().length>0&&r.source.trim().length<=200};
+ const rejected=[];for(const [table,check] of Object.entries(checks)){const rows=Array.isArray(box[table])?box[table]:[];box[table]=rows.filter(r=>{if(plainObject(r)&&check(r))return true;rejected.push({table,row:r});localStorage.removeItem(itemKey(cloudUser.id,r._generation,table,r));return false})}
+ quarantine(cloudUser.id,rejected);
+}
+function rejection(error){if(error&&(String(error.code)==='42501'||[401,403].includes(error.status))){denied=true;$('#sync-status').textContent='此帳號沒有權限 · 練習僅儲存在此裝置，下次登入再試';return true}return false}
+async function pages(query){const rows=[];for(let start=0;;start+=1000){const r=await query().range(start,start+999);if(r.error)throw {...r.error,status:r.status};rows.push(...r.data);if(r.data.length<1000)return rows}}
+async function refresh(){
+ if(!cloudUser||denied||!navigator.onLine)return;
+ const uid=cloudUser.id,ticket=epoch,token=++refreshToken,g=generation(uid),pending=loadBox(uid);
+ try{
+ const rounds=await pages(()=>client.from('rounds').select('*').order('played_at').order('client_id'));
+ const stats=await pages(()=>client.from('note_stats').select('*').order('clef').order('note'));
+ const found={events:[],baselines:[]};
+ for(const [table,column,target] of [['answer_events','client_event_id','events'],['note_stats_baseline','source','baselines']]){
+ const ids=[...new Set(pending[table].map(r=>r[column]))];for(let i=0;i<ids.length;i+=100){const chunk=ids.slice(i,i+100);found[target].push(...await pages(()=>client.from(table).select(table==='answer_events'?'client_event_id':'source,clef,note').in(column,chunk).order(column)));}}
+ if(ticket!==epoch||token!==refreshToken||g!==generation(uid)||localStorage.getItem(userKey(uid,'clear-pending')))return;
+ cache={rounds,stats,...found,_generation:g};box=loadBox(uid);persist();merge();
+ }catch(error){if(ticket===epoch)rejection(error)}
+}
+function flush(manual=true){
+ if(manual){retryAt=0;retryDelay=1000;}
+ if(flushing)return flushing;
+ if(!cloudUser||denied||clearing||!navigator.onLine||Date.now()<retryAt)return Promise.resolve();
+ const uid=cloudUser.id,ticket=epoch;
+ flushing=(async()=>{await mutations;await withLock(uid,async()=>{
+ if(ticket!==epoch||cloudUser?.id!==uid)return;
+ if(localStorage.getItem(userKey(uid,'clear-pending'))){await finishClear(ticket,uid);return}
+ try{box=loadBox(uid);sanitizeOutbox();for(const table of tables){let fresh=loadBox(uid);while(fresh[table].length){
+ if(ticket!==epoch||cloudUser?.id!==uid)return;
+ const batch=fresh[table].slice(0,100),payload=batch.map(({_generation,_sequence,...r})=>({...r,user_id:uid}));
+ const conflict=table==='rounds'?'user_id,client_id':table==='answer_events'?'user_id,client_event_id':'user_id,source,clef,note';
+ const {error,status}=await client.from(table).upsert(payload,{onConflict:conflict,ignoreDuplicates:true});if(ticket!==epoch)return;if(error)throw {...error,status};$('#sync-status').textContent='雲端同步正常';
+ for(const r of batch)localStorage.removeItem(itemKey(uid,r._generation,table,r));fresh=loadBox(uid);box=fresh;
+ }}retryAt=0;retryDelay=1000;await refresh();
+ }catch(error){if(ticket!==epoch)return;rejection(error);retryAt=Date.now()+retryDelay;retryDelay=Math.min(30000,retryDelay*2);if(!denied)$('#sync-status').textContent='同步暫停，紀錄已保留，稍後重試';await refresh();}
+ });})().finally(()=>{flushing=null});return flushing;
+}
+async function clearHistory(){
+ if(!cloudUser||clearing)return;
+ if(!navigator.onLine){$('#sync-status').textContent='離線時無法清除雲端紀錄，請連線後再試';return}
+ if(denied){$('#sync-status').textContent='此帳號沒有權限';return}
+ if(!confirm('確定清除所有練習紀錄與音符統計（包含雲端資料）？'))return;
+ clearing=true;resetPractice();const ticket=epoch,uid=cloudUser.id;$('main').inert=true;
+ try{await mutations;await withLock(uid,async()=>{if(ticket!==epoch)return;localStorage.setItem(userKey(uid,'generation'),String(generation(uid)+1));localStorage.setItem(userKey(uid,'clear-pending'),'1');loadBox(uid);cache={rounds:[],events:[],baselines:[],_generation:generation(uid)};box=emptyBox();persist();merge();await finishClear(ticket,uid);});}finally{clearing=false;$('main').inert=false}
+}
+async function finishClear(ticket,userId){
+ for(const table of ['answer_events','rounds','note_stats_baseline']){
+ if(ticket!==epoch||cloudUser?.id!==userId)return;
+ const {error,status}=await client.from(table).delete().eq('user_id',userId);
+ if(ticket!==epoch)return;
+ if(error){rejection({...error,status});$('#sync-status').textContent=denied?'此帳號沒有權限':'清除尚未完成，請連線後重試清除';return}
+ }
+ resetPractice();box=emptyBox();cache={rounds:[],events:[],baselines:[],_generation:generation(userId)};persist();localStorage.removeItem(userKey(userId,'clear-pending'));merge();renderStats();$('#sync-status').textContent='已清除雲端練習紀錄與音符統計';
+}
+const canonical=v=>Array.isArray(v)?v.map(canonical):plainObject(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])])):v;
+async function digest(v){return [...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(canonical(v)))))].map(b=>b.toString(16).padStart(2,'0')).join('')}
+function normalizedRound(r){return {time:new Date(r.time).toISOString(),count:r.count,planned:r.planned??Math.max(5,r.count),accuracy:r.accuracy,averageTime:r.averageTime,mode:r.mode,slowest:r.slowest,mostErrors:r.mostErrors,incomplete:r.incomplete===true}}
+async function importLegacy(raw){
+ if(!cloudUser||localStorage.getItem(key('clear-pending')))return;
+ if(raw?.source==='sight-reading-cloud-v1'){$('#sync-status').textContent='這是雲端匯出檔，紀錄已由雲端同步，無需重複匯入';return}
+ const uid=cloudUser.id,ticket=epoch,g=generation(uid),clean=cleanData(raw),rounds=await Promise.all(clean.rounds.map(async r=>{const fields=normalizedRound(r);return {fields,hash:await digest(fields)}}));const canonicalRounds=[...rounds].sort((a,b)=>a.hash.localeCompare(b.hash));
+ const notes=Object.entries(clean.notes).filter(([k,s])=>/^(treble|bass):[CDEFGAB][0-9]$/.test(k)&&Number.isFinite(s.averageTime*(s.attempts-s.errors))).sort(([a],[b])=>a.localeCompare(b));
+ const rejected=(Array.isArray(raw?.rounds)?raw.rounds.length:0)-rounds.length+(plainObject(raw?.notes)?Object.keys(raw.notes).length:0)-notes.length;
+ if(rejected>0)$('#import-status').textContent=`已略過 ${rejected} 筆格式不符的舊紀錄`;
+ const snapshot=await digest({rounds:canonicalRounds.map(r=>r.fields),notes}),marker=userKey(uid,'import-'+snapshot);
+ if(ticket!==epoch||g!==generation(uid)||localStorage.getItem(marker))return;
+ const rows=emptyBox();for(const {fields:r,hash} of rounds)rows.rounds.push({client_id:'legacy-'+hash,played_at:r.time,count:r.count,planned:r.planned,accuracy:r.accuracy,average_time_ms:r.averageTime,mode:r.mode,slowest:r.slowest,most_errors:r.mostErrors,incomplete:r.incomplete,device_id:deviceId});
+ for(const [k,s] of notes){const [clef,note]=k.split(':');rows.note_stats_baseline.push({source:'legacy:'+snapshot,clef,note,attempts:s.attempts,errors:s.errors,average_time_ms:s.averageTime});}
+ await addRows(rows,uid,g);if(ticket!==epoch||g!==generation(uid))return;localStorage.setItem(marker,JSON.stringify({deviceId}));merge();await flush();
+}
+async function sessionChanged(session){
+ const next=session?.user||null;if(next?.id===cloudUser?.id)return;
+ if(cloudUser)interrupt();epoch++;cloudUser=next;denied=false;resetPractice();
+ $('#google').hidden=!!cloudUser;$('#signout').hidden=!cloudUser;$('main').hidden=!cloudUser;$('#email').textContent=cloudUser?.email||'';
+ if(!cloudUser){data={version:1,rounds:[],notes:{}};return}
+ const ticket=epoch;await withLock(next.id,()=>{if(ticket!==epoch)return;syncView(next.id);sanitizeOutbox();});if(ticket!==epoch)return;merge();$('#sync-status').textContent='尚未確認權限 · 練習紀錄先儲存在此裝置';if(localStorage.getItem(key('clear-pending'))){await flush();if(localStorage.getItem(key('clear-pending')))return}await refresh();if(ticket!==epoch)return;await importLegacy(read('sight-reading-v1',{}));if(ticket!==epoch)return;await flush();
+}
+$('#google').onclick=()=>client.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});
+$('#signout').onclick=async()=>{interrupt();await client.auth.signOut();await sessionChanged(null)};
+$('#import-file').onchange=async e=>{try{await importLegacy(JSON.parse(await e.target.files[0].text()))}catch{$('#sync-status').textContent='無法讀取匯入檔案'}finally{e.target.value=''}};
+client.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>sessionChanged(session),0)});
+client.auth.getSession().then(({data})=>sessionChanged(data.session));
+addEventListener('online',()=>flush());setInterval(()=>flush(false),1000);
+window.__cloud={flush,refresh,importLegacy,get outbox(){return cloudUser?loadBox(cloudUser.id):box},get data(){return data},get user(){return cloudUser}};
+</script></body></html>
