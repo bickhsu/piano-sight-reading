@@ -1,9 +1,244 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>音感練習室 · 識譜反應訓練</title><style>
-:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#243d38;background:#f5f5ef;--green:#245c4b;--muted:#7c8982}*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button,select,input{min-height:48px}button{cursor:pointer;touch-action:manipulation;border:1px solid #d8dfd5;border-radius:12px;background:white;color:inherit;padding:10px 18px}button:hover{border-color:var(--green);background:#edf3ed}button:disabled{opacity:.5;cursor:default}button.primary{background:var(--green);color:white;border-color:var(--green)}header{max-width:1100px;margin:auto;padding:28px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dce2d8}.brand{font-weight:700;font-size:21px;letter-spacing:1px}.brand small{font-size:11px;color:var(--muted);display:block;letter-spacing:3px;margin-top:5px}nav{display:flex;gap:8px}nav button{background:transparent;border:0}nav button.active{background:#e4ece3;color:var(--green)}main{max-width:1100px;margin:34px auto;padding:0 24px}.eyebrow{font-size:12px;letter-spacing:3px;color:#688372;font-weight:600}h1{font-size:32px;letter-spacing:1px;margin:12px 0}p{color:#748078;line-height:1.7}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:24px;margin-top:26px}.card{background:#fff;border:1px solid #e0e5da;border-radius:22px;padding:26px;box-shadow:0 6px 22px #24463504}.practice{padding:26px 32px}.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.tag{font-size:12px;padding:7px 11px;border-radius:20px;background:#edf2e9;color:#57715d}.progress{height:4px;background:#edf0e8;border-radius:9px;margin:18px 0}.progress span{display:block;height:100%;background:#729783;border-radius:9px;transition:width .2s}.score{width:100%;height:auto;max-height:238px;display:block;margin:6px 0 10px}.staff-line,.ledger-line{stroke:#64756c;stroke-width:1.5;shape-rendering:geometricPrecision}.feedback{text-align:center;height:32px;color:#a7473f;font-size:14px}.answers{display:grid;grid-template-columns:repeat(7,1fr);gap:9px}.answers button{padding:14px 0;font-size:20px;font-weight:600;min-height:62px}.hint{text-align:center;font-size:12px;margin:18px 0 0;color:#929b94}h2{font-size:17px;margin:0 0 20px}label.field{display:block;font-size:13px;margin:19px 0;color:#67766b}select,input[type=number]{display:block;width:100%;border:1px solid #dce2d8;border-radius:9px;margin-top:8px;background:#fafbf7;padding:8px 12px;color:#243d38}.switch{display:flex;align-items:center;justify-content:space-between;font-size:13px;margin:20px 0}input[type=checkbox]{accent-color:var(--green);width:20px;min-height:20px}.aside-note{font-size:12px;border-top:1px solid #e7ebe2;padding-top:18px}.start{width:100%;margin-top:10px}.footer{text-align:center;font-size:12px;color:#96a094;margin:28px 0}.hidden{display:none!important}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}.metric{padding:20px;background:#f0f4ec;border-radius:14px}.metric strong{display:block;font-size:26px;margin:10px 0}.metric small{color:#768476}.chart{width:100%;height:240px}.legend{font-size:12px;color:#78877b}.heat{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;margin-bottom:24px}.heat div{padding:12px 5px;text-align:center;border-radius:8px;font-size:12px}.heat small{display:block;margin-top:5px;font-size:11px;white-space:nowrap}.stats-actions{display:flex;gap:10px;margin:20px 0}.empty{padding:30px;text-align:center;color:#819080}@media(max-width:700px){header{padding:20px 18px}.brand{font-size:18px}nav button{padding:8px 12px}main{padding:0 16px;margin-top:25px}h1{font-size:27px}.layout{grid-template-columns:1fr;gap:18px}.practice{padding:20px 15px}.card{border-radius:17px}.score{height:auto;max-height:210px}.answers{gap:7px;grid-template-columns:repeat(4,1fr)}.answers button{font-size:18px;min-height:53px}.metrics{grid-template-columns:repeat(2,1fr)}.settings{padding:22px}.footer{margin:22px 0}.chart{height:200px}}
-@media(max-width:700px){nav button{white-space:nowrap;font-size:14px;padding:8px}header{gap:8px;padding:12px 14px}.brand{font-size:16px}.brand small{font-size:9px;letter-spacing:1px}body.practicing main{margin-top:12px}body.practicing #practice-view>.eyebrow,body.practicing #practice-view>h1,body.practicing #practice-view>p,body.practicing .hint,body.practicing .footer{display:none}body.practicing .layout{margin-top:0}body.practicing .practice{padding:12px}body.practicing .progress{margin:10px 0}body.practicing .score{margin:0;max-height:190px}body.practicing .feedback{height:38px}body.practicing .answers{padding-bottom:env(safe-area-inset-bottom,0px)}body.practicing .answers button{min-height:48px;padding:10px 0}}
-header{flex-wrap:wrap;row-gap:8px}nav{flex-wrap:wrap;justify-content:flex-end}#sound-toggle{flex:none;white-space:nowrap;font-weight:700;font-size:15px;padding:10px 14px;border-radius:12px}#sound-toggle[aria-checked="true"]{background:#e7f2ea;border:1px solid #245c4b;color:#245c4b}#sound-toggle[aria-checked="false"]{background:#f4f1ea;border:1px solid #ddd4c6;color:#6f675c}#sound-toggle[aria-checked="true"]:hover{background:#dceadf;border-color:#245c4b}#sound-toggle[aria-checked="false"]:hover{background:#efeae2;border-color:#ddd4c6}@media(max-width:700px){#sound-toggle{font-size:14px;padding:8px 10px}}
-</style></head><body><header><div class="brand">♩ 音感練習室<small>SIGHT READING STUDIO</small></div><nav><button id="sound-toggle" type="button" role="switch" aria-checked="true" aria-label="答對時播放題目音高，目前聲音開啟">聲音開</button><button id="practice-tab" class="active">練習</button><button id="stats-tab">統計</button></nav></header><div style="max-width:1100px;margin:auto;padding:12px 24px"><button id="google">使用 Google 登入</button><span id="email"></span> <button id="signout" hidden>登出</button><label> 匯入舊紀錄 <input id="import-file" type="file" accept="application/json"></label><p id="sync-status" role="status"></p><p id="import-status" role="status"></p></div><main hidden><button id="settings-back">返回練習設定</button><section id="practice-view"><div class="eyebrow">A LITTLE PRACTICE, EVERY DAY</div><h1>讓看譜，成為直覺。</h1><p style="margin:0">看見音符，選出音名。依自己的節奏，練習每一次反應。</p><div class="layout"><div class="card practice"><div class="row"><span class="tag" id="clef-label">高音譜</span><span id="counter" style="font-size:13px;color:#7b897e">準備開始 · 20 題</span></div><div class="progress"><span id="progress" style="width:0%"></span></div><svg id="score" class="score" viewBox="28 12 364 190" aria-label="五線譜上的音符" role="img"></svg><div id="feedback" class="feedback" aria-live="polite"></div><div id="answers" class="answers"></div><p class="hint">鍵盤 A–G 也能作答 · 放輕鬆，準確比速度更重要</p></div><aside class="card settings"><h2>練習設定</h2><label class="field">譜號模式<select id="mode"><option value="treble">只高音譜</option><option value="bass">只低音譜</option><option value="mixed">高低音混合</option></select></label><label class="field">每輪題數<input id="count" type="number" min="5" max="100" value="20"></label><label class="switch">包含加線音<input id="ledger" type="checkbox" checked></label><label class="field">音名顯示<select id="naming"><option value="letters">C D E F G A B</option><option value="solfege">Do Re Mi Fa Sol La Si</option></select></label><button id="start" class="primary start">開始練習 →</button><p class="aside-note">練習會依你的反應調整出題，讓不熟悉的音多出現一些。</p></aside></div></section><section id="result-view" class="hidden"><div class="eyebrow">SESSION COMPLETE</div><h1>每一次練習，都在進步。</h1><p>本輪練習完成，讓我們看看你的表現。</p><div class="card"><div id="result-metrics" class="metrics"></div><button id="again" class="primary">再來一輪 →</button></div></section><section id="stats-view" class="hidden"><div class="eyebrow">YOUR PRACTICE JOURNEY</div><h1>看見自己的進步。</h1><p>累積每一次反應，找到值得多練習的音。</p><div class="card"><h2>進步曲線</h2><div class="legend">● 綠色：正確率（0–100%）　● 金色：答對平均時間（毫秒）</div><div id="chart"></div><h2>最近輪次</h2><div id="recent-rounds"></div><h2>每音熱度</h2><p class="legend">綠色 → 黃色 → 紅色：錯誤率或反應時間越高，顏色越紅。灰色表示尚未練習。</p><h2>高音譜</h2><div id="heat-treble" class="heat"></div><h2>低音譜</h2><div id="heat-bass" class="heat"></div><div class="stats-actions"><button id="export">匯出 JSON</button><button id="clear">清除資料</button></div></div></section><div class="footer">每日一小步，讓雙手與音符更靠近。</div></main><script src="vendor/supabase-js.js"></script><script>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f3ead7"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="識譜"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><title>音感練習室 · 識譜反應訓練</title><style>
+:root{
+  --paper:#f3ead7;
+  --sheet:#fbf7ef;
+  --ink:#1c1915;
+  --burgundy:#6e2c32;
+  --sepia:#7a5b3a;
+  --muted:#7a7166;
+  --line:#d9cbb3;
+  --serif:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,"Songti TC","PMingLiU","Times New Roman",serif;
+  color:var(--ink);
+  background:var(--paper);
+  font-family:var(--serif);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(rgba(62,44,22,.045) .65px,transparent .7px),
+    radial-gradient(rgba(62,44,22,.03) .55px,transparent .6px);
+  background-size:3px 3px,7px 7px;
+  background-position:0 0,1px 2px;
+}
+button,input,select{font:inherit;color:inherit}
+button,select,input{min-height:48px}
+button{
+  cursor:pointer;
+  touch-action:manipulation;
+  border:1px solid var(--ink);
+  border-radius:12px;
+  background:var(--sheet);
+  padding:10px 16px;
+}
+button:hover{background:#f3e7d4}
+button:disabled{opacity:.55;cursor:default}
+button.primary{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+button.primary:hover{background:#2a2420}
+header{
+  max-width:1100px;
+  margin:auto;
+  padding:calc(14px + env(safe-area-inset-top,0px)) 20px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  border-bottom:1px solid var(--line);
+  background:rgba(243,234,215,.92);
+}
+.brand{font-weight:700;font-size:22px;letter-spacing:.04em;line-height:1.1}
+.brand small{font-size:11px;color:var(--sepia);display:block;letter-spacing:.22em;margin-top:4px;font-weight:600}
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+nav button{background:transparent;border:0;border-radius:999px;color:var(--ink)}
+nav button.active{background:#e7dcc6;color:var(--ink)}
+#sound-toggle{flex:none;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;border-radius:50%;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center}#sound-toggle svg{display:block}
+#sound-toggle[aria-checked="true"]{background:#f8e7e4;border-color:var(--burgundy);color:var(--burgundy)}
+#sound-toggle[aria-checked="false"]{background:#efe8da;border-color:#cbbfa8;color:var(--muted)}
+#sound-toggle[aria-checked="true"]:hover{background:#f3d9d4}
+#sound-toggle[aria-checked="false"]:hover{background:#e7decc}
+.account-bar{max-width:1100px;margin:auto;padding:12px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}.import{position:relative;display:inline-flex;align-items:center;min-height:48px;padding:0 16px;border:1px solid var(--ink);border-radius:12px;background:var(--sheet);cursor:pointer}.import input{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;min-height:0}
+main{max-width:1100px;margin:16px auto 12px;padding:0 20px}
+main[hidden]{display:none!important}
+.eyebrow{font-size:12px;letter-spacing:.22em;color:var(--sepia);font-weight:700}
+h1,h2{font-family:var(--serif);font-weight:700;color:var(--ink)}
+h1{font-size:34px;letter-spacing:.01em;margin:10px 0}
+h2{font-size:18px;margin:0 0 16px}
+p{color:#4e463d;line-height:1.7}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:22px;margin-top:22px}
+.card{background:var(--sheet);border:1px solid #e4d8c2;border-radius:18px;padding:22px;box-shadow:0 1px 0 rgba(28,25,21,.04)}
+.practice{padding:22px 26px 18px}
+.row{display:flex;justify-content:flex-end;align-items:center;gap:12px;min-height:22px}#counter{font-variant-numeric:tabular-nums;letter-spacing:.04em;color:var(--sepia);font-size:14px}
+.tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#efe4d2;color:var(--sepia);letter-spacing:.08em}
+.progress{height:3px;background:#eadfcd;border-radius:9px;margin:12px 0}
+.progress span{display:block;height:100%;background:var(--burgundy);border-radius:9px;transition:width .2s}
+.score{width:100%;height:auto;max-height:210px;display:block;margin:4px 0 6px;background:transparent}
+.staff-line,.ledger-line{stroke:var(--ink);stroke-width:1.6;shape-rendering:geometricPrecision}
+.feedback{text-align:center;min-height:28px;color:var(--burgundy);font-size:15px;font-weight:700}
+.hint{text-align:center;font-size:12px;margin:12px 0 0;color:var(--muted)}
+.piano{
+  --black-w:8.6%;
+  position:relative;
+  display:flex;
+  align-items:stretch;
+  width:100%;
+  height:150px;
+  min-height:120px;
+  margin-top:8px;
+  border:1px solid var(--ink);
+  border-radius:12px;
+  overflow:hidden;
+  background:#f7f2e6;
+  touch-action:manipulation;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
+}
+.piano button[data-letter]{
+  position:relative;
+  z-index:1;
+  flex:1 1 0;
+  min-width:0;
+  min-height:120px;
+  height:auto;
+  margin:0;
+  padding:0 0 14px;
+  border:0;
+  border-right:1px solid var(--ink);
+  border-radius:0;
+  background:linear-gradient(#fffdf8,#f3ecdf);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.04em;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  touch-action:manipulation;
+  box-shadow:inset 0 -6px 0 rgba(28,25,21,.06);
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+}
+.piano button[data-letter]:last-of-type{border-right:0}
+.piano button[data-letter]:active,
+.piano button[data-letter].is-down{
+  background:#e6d8c2;
+  box-shadow:inset 0 5px 10px rgba(28,25,21,.18);
+  color:var(--burgundy);
+}
+.piano button[data-letter]:disabled{opacity:.72;color:#8d8376}
+.black-key{
+  position:absolute;
+  z-index:2;
+  top:0;
+  left:calc(var(--i) * 100% / 7 - var(--black-w) / 2);
+  width:var(--black-w);
+  height:58%;
+  border-radius:0 0 5px 5px;
+  background:linear-gradient(#3a342e,#12100e 72%);
+  box-shadow:inset -2px -4px 0 rgba(255,255,255,.06), 1px 2px 2px rgba(0,0,0,.28);
+  pointer-events:auto;
+}
+label.field{display:block;font-size:13px;margin:16px 0;color:#51483f}
+select,input[type=number]{display:block;width:100%;border:1px solid #d9cbb3;border-radius:10px;margin-top:8px;background:#fffdf8;padding:8px 12px}
+.switch{display:flex;align-items:center;justify-content:space-between;font-size:13px;margin:16px 0}
+input[type=checkbox]{accent-color:var(--burgundy);width:20px;min-height:20px}
+.aside-note{font-size:12px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted)}
+.start{width:100%;margin-top:8px}
+.footer{text-align:center;font-size:12px;color:var(--muted);margin:26px 0}
+.hidden{display:none!important}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+.metric{padding:16px;background:#f3ead8;border-radius:12px}
+.metric strong{display:block;font-size:26px;margin:8px 0}
+.metric small{color:var(--muted)}
+.chart{width:100%;height:240px}
+.legend{font-size:12px;color:var(--muted)}
+.heat{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;margin-bottom:20px}
+.heat div{padding:12px 5px;text-align:center;border-radius:8px;font-size:12px;border:1px solid rgba(28,25,21,.06)}
+.heat small{display:block;margin-top:5px;font-size:11px;white-space:nowrap}
+.stats-actions{display:flex;gap:10px;margin:18px 0}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+#settings-back{width:44px;height:44px;min-height:44px;padding:0;border-radius:50%;margin-bottom:8px}
+@media(max-width:800px){
+  header{padding:calc(8px + env(safe-area-inset-top,0px)) 12px 8px;gap:8px}
+  .brand{font-size:16px}
+  .brand small{font-size:9px;letter-spacing:.12em}
+  nav button{white-space:nowrap;font-size:14px;padding:8px 10px}
+  #sound-toggle{width:40px;height:40px;min-width:40px;min-height:40px}
+  .account-bar{padding:8px 12px}
+  main{padding:0 12px;margin-top:16px}
+  h1{font-size:28px}
+  .layout{grid-template-columns:1fr;gap:14px;margin-top:12px}
+  .card{border-radius:14px}
+  .practice{padding:14px 12px 12px}
+  .score{max-height:210px}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .footer{margin:16px 0}
+  .chart{height:200px}
+  body.practicing{
+    height:100dvh;
+    max-height:100dvh;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  body.practicing header{flex:none}
+  body.practicing .account-bar,
+  body.practicing #settings-back,
+  body.practicing .settings,
+  body.practicing .footer,
+  body.practicing #practice-view>.eyebrow,
+  body.practicing #practice-view>h1,
+  body.practicing #practice-view>p,
+  body.practicing .hint{display:none!important}
+  body.practicing main{
+    flex:1 1 auto;
+    min-height:0;
+    margin:0;
+    padding:0 8px;
+    display:flex;
+    flex-direction:column;
+  }
+  body.practicing #practice-view{
+    flex:1 1 auto;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+  }
+  body.practicing .layout{flex:1 1 auto;min-height:0;margin:0;display:flex}
+  body.practicing .practice{
+    flex:1 1 auto;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    padding:6px 4px 0;
+    border:0;
+    box-shadow:none;
+    background:transparent;
+  }
+  body.practicing .progress{margin:6px 0}
+  body.practicing .score{flex:1 1 auto;min-height:0;max-height:none;width:100%;margin:0}
+  body.practicing .feedback{flex:none;min-height:22px;height:auto;font-size:14px}
+  body.practicing .piano{
+    flex:none;
+    width:100vw;
+    max-width:100vw;
+    height:calc(132px + env(safe-area-inset-bottom,0px));
+    min-height:calc(120px + env(safe-area-inset-bottom,0px));
+    margin:0 0 0 calc(50% - 50vw);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    box-sizing:border-box;
+    border-radius:0;
+    border-left:0;
+    border-right:0;
+  }
+}
+</style></head><body><header><div class="brand">音感練習室</div><nav><button id="sound-toggle" type="button" role="switch" aria-checked="true" aria-label="聲音開"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg></button><button id="practice-tab" class="active">練習</button><button id="stats-tab">統計</button></nav></header><div id="account-bar" class="account-bar"><button id="google">使用 Google 登入</button><span id="email"></span> <button id="signout" hidden>登出</button><label class="import">匯入<input id="import-file" type="file" accept="application/json"></label><p id="sync-status" role="status"></p><p id="import-status" role="status"></p></div><main hidden><button id="settings-back" type="button" aria-label="返回練習設定">←</button><section id="practice-view"><div class="layout"><div class="card practice"><div class="row"><span id="counter"></span></div><div class="progress"><span id="progress" style="width:0%"></span></div><svg id="score" class="score" viewBox="28 12 364 190" aria-label="五線譜上的音符" role="img"></svg><div id="feedback" class="feedback" aria-live="polite"></div><div id="answers" class="answers piano" role="group" aria-label="鋼琴鍵盤"></div></div><aside class="card settings"><label class="field">譜號<select id="mode"><option value="treble">只高音譜</option><option value="bass">只低音譜</option><option value="mixed">高低音混合</option></select></label><label class="field">題數<input id="count" type="number" min="5" max="100" value="20"></label><label class="switch">加線<input id="ledger" type="checkbox" checked></label><label class="field">音名<select id="naming"><option value="letters">C D E F G A B</option><option value="solfege">Do Re Mi Fa Sol La Si</option></select></label><button id="start" class="primary start">開始</button></aside></div></section><section id="result-view" class="hidden"><div class="card"><div id="result-metrics" class="metrics"></div><button id="again" class="primary">再來</button></div></section><section id="stats-view" class="hidden"><div class="card"><div id="chart"></div><div id="recent-rounds"></div><div id="heat-treble" class="heat"></div><div id="heat-bass" class="heat"></div><div class="stats-actions"><button id="export">匯出</button><button id="clear">清除</button></div></div></section></main><script src="vendor/supabase-js.js"></script><script>
 'use strict';
 const $=s=>document.querySelector(s), letters=['C','D','E','F','G','A','B'], syllables=['Do','Re','Mi','Fa','Sol','La','Si'];
 const index=n=>Number(n.slice(1))*7+letters.indexOf(n[0]);
@@ -23,41 +258,52 @@ let raw;try{raw=JSON.parse(localStorage.getItem('sight-reading-v1'))}catch{}
 let data={version:1,rounds:[],notes:{}};
 let current,geom,running=false,locked=false,started=0,round=[],total=20,roundMode='treble',activeRoundId=null,practiceGeneration=0,timer,previous=null,completedResult=null,resultReady=false,interrupted=false;
 const save=()=>{if(cloudUser)merge();else localStorage.setItem('sr-guest',JSON.stringify(data));};
-function renderNote(clef,note){current={clef,note};const lines=[65,85,105,125,145],bottom=clef==='treble'?'E4':'G2',y=145-(index(note)-index(bottom))*10,ledger=[];for(let v=165;v<=y;v+=20)ledger.push(v);for(let v=45;v>=y;v-=20)ledger.push(v);geom={staffLinesY:lines,noteY:y,ledgerLinesY:ledger,clef};let path=clef==='treble'?'<path id="clef-treble" d="M81 138 C61 125 72 108 88 111 C108 114 108 139 90 146 C66 156 47 136 53 114 C58 94 82 81 90 63 C96 50 92 33 85 31 C73 37 73 59 78 81 L98 167 C103 186 83 198 72 185 C64 173 77 163 85 171 C91 180 80 187 75 180" fill="none" stroke="#294a3e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>':'<g id="clef-bass" fill="#294a3e"><path d="M62 85 C59 70 68 62 81 62 C98 62 107 72 106 87 C105 110 84 130 62 140 C80 124 94 105 94 86 C94 72 86 67 78 70 C73 72 70 76 71 80 C79 75 87 83 83 90 C78 99 63 97 62 85Z"/><path d="M116 75 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0 M116 95 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0"/></g>';
-$('#score').innerHTML=lines.map(v=>`<line class="staff-line" x1="40" x2="380" y1="${v}" y2="${v}"/>`).join('')+path+ledger.map(v=>`<line class="ledger-line" x1="212" x2="268" y1="${v}" y2="${v}"/>`).join('')+`<ellipse id="note-head" cx="240" cy="${y}" rx="18" ry="12" fill="white" stroke="#294a3e" stroke-width="4" transform="rotate(-15 240 ${y})"/>`;$('#clef-label').textContent=clef==='treble'?'高音譜':'低音譜';started=performance.now();return geom}
+function renderNote(clef,note){current={clef,note};const lines=[65,85,105,125,145],bottom=clef==='treble'?'E4':'G2',y=145-(index(note)-index(bottom))*10,ledger=[];for(let v=165;v<=y;v+=20)ledger.push(v);for(let v=45;v>=y;v-=20)ledger.push(v);geom={staffLinesY:lines,noteY:y,ledgerLinesY:ledger,clef};let path=clef==='treble'?'<path id="clef-treble" d="M81 138 C61 125 72 108 88 111 C108 114 108 139 90 146 C66 156 47 136 53 114 C58 94 82 81 90 63 C96 50 92 33 85 31 C73 37 73 59 78 81 L98 167 C103 186 83 198 72 185 C64 173 77 163 85 171 C91 180 80 187 75 180" fill="none" stroke="#1c1915" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>':'<g id="clef-bass" fill="#1c1915"><path d="M62 85 C59 70 68 62 81 62 C98 62 107 72 106 87 C105 110 84 130 62 140 C80 124 94 105 94 86 C94 72 86 67 78 70 C73 72 70 76 71 80 C79 75 87 83 83 90 C78 99 63 97 62 85Z"/><path d="M116 75 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0 M116 95 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0"/></g>';
+$('#score').innerHTML=lines.map(v=>`<line class="staff-line" x1="40" x2="380" y1="${v}" y2="${v}"/>`).join('')+path+ledger.map(v=>`<line class="ledger-line" x1="212" x2="268" y1="${v}" y2="${v}"/>`).join('')+`<line class="stem" x1="${y<105?222:258}" y1="${y}" x2="${y<105?222:258}" y2="${y+(y<105?46:-46)}" stroke="#1c1915" stroke-width="2.2" stroke-linecap="round"/><ellipse id="note-head" cx="240" cy="${y}" rx="18" ry="12" fill="#fbf7ef" stroke="#1c1915" stroke-width="3.4" transform="rotate(-18 240 ${y})"/>`;started=performance.now();return geom}
 function check(letter){return !!current&&String(letter).toUpperCase()===current.note[0]}
 function weight(c){const s=data.notes[c.clef+':'+c.note];return s?1+4*(s.attempts>0?s.errors/s.attempts:0)+Math.min(s.averageTime/1800,4):1}
-function next(){const clefs=roundMode==='mixed'?['treble','bass']:[roundMode],pool=clefs.flatMap(c=>notesFor(c,$('#ledger').checked).map(n=>({clef:c,note:n}))).filter(c=>!previous||c.clef!==previous.clef||c.note!==previous.note);let r=Math.random()*pool.reduce((s,c)=>s+weight(c),0),pick=pool[pool.length-1];for(const c of pool){r-=weight(c);if(r<0){pick=c;break}}previous=pick;renderNote(pick.clef,pick.note);locked=false;$('#feedback').textContent='';$('#counter').textContent=`第 ${round.length+1} / ${total} 題`;$('#progress').style.width=100*round.length/total+'%';setButtons(false)}
+function next(){const clefs=roundMode==='mixed'?['treble','bass']:[roundMode],pool=clefs.flatMap(c=>notesFor(c,$('#ledger').checked).map(n=>({clef:c,note:n}))).filter(c=>!previous||c.clef!==previous.clef||c.note!==previous.note);let r=Math.random()*pool.reduce((s,c)=>s+weight(c),0),pick=pool[pool.length-1];for(const c of pool){r-=weight(c);if(r<0){pick=c;break}}previous=pick;renderNote(pick.clef,pick.note);locked=false;$('#feedback').textContent='';$('#counter').textContent=`${round.length+1}/${total}`;$('#progress').style.width=100*round.length/total+'%';setButtons(false)}
 function setButtons(disabled){document.querySelectorAll('[data-letter]').forEach(b=>b.disabled=disabled)}
 const SEMI={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
-let soundPref=true,audioCtx=null,activeTone=null;
+let soundPref=true,audioCtx=null,activeTone=null,audioUnlocked=false;
 try{const saved=localStorage.getItem('sr-sound');if(saved==='off')soundPref=false;else if(saved==='on')soundPref=true}catch(e){}
 function pitchHz(note){const midi=(Number(note.slice(1))+1)*12+SEMI[note[0]];return 440*Math.pow(2,(midi-69)/12)}
-function ensureAudio(){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;try{if(audioCtx&&audioCtx.state==='closed')audioCtx=null;if(!audioCtx)audioCtx=new AC()}catch(e){audioCtx=null}return audioCtx}
-function resumeAudio(){try{const ctx=ensureAudio();if(!ctx)return null;if(ctx.state==='suspended'||ctx.state==='interrupted'){const pending=ctx.resume();if(pending&&typeof pending.then==='function')pending.then(()=>{},()=>{})}return ctx}catch(e){return null}}
+function ensureAudio(){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;try{if(audioCtx&&audioCtx.state==='closed'){audioCtx=null;audioUnlocked=false}if(!audioCtx)audioCtx=new AC()}catch(e){audioCtx=null}return audioCtx}
+function preferPlayback(){try{const session=navigator.audioSession;if(session&&session.type!=='playback')session.type='playback'}catch(e){}}
+function unlockAudio(){preferPlayback();let ctx=null;try{ctx=ensureAudio()}catch(e){return null}if(!ctx)return null;try{if(ctx.state==='suspended'||ctx.state==='interrupted'){const pending=ctx.resume();if(pending&&typeof pending.then==='function')pending.then(()=>{},()=>{})}}catch(e){}if(!audioUnlocked){try{const buffer=ctx.createBuffer(1,1,ctx.sampleRate||22050),src=ctx.createBufferSource();src.buffer=buffer;src.connect(ctx.destination);src.start(0);audioUnlocked=true}catch(e){}}return ctx}
 function stopTone(){const tone=activeTone;activeTone=null;if(!tone)return;try{tone.gain.disconnect()}catch(e){}}
-function paintSound(){const b=$('#sound-toggle');if(!b)return;const on=soundPref;b.setAttribute('aria-checked',on?'true':'false');b.textContent=on?'聲音開':'靜音';b.title=on?'答對時播放這個音的音高':'目前靜音';b.setAttribute('aria-label',on?'答對時播放題目音高，目前聲音開啟':'目前靜音，答對不播放聲音')}
-function playAnsweredNote(note){if(!soundPref||!note)return;try{const ctx=resumeAudio();if(!ctx||ctx.state==='closed')return;const hz=pitchHz(note);if(!Number.isFinite(hz)||hz<=0)return;stopTone();const osc=ctx.createOscillator(),gain=ctx.createGain(),t=ctx.currentTime;osc.type='sine';osc.frequency.value=hz;gain.gain.setValueAtTime(0.0001,t);gain.gain.exponentialRampToValueAtTime(0.18,t+0.02);gain.gain.exponentialRampToValueAtTime(0.0001,t+0.42);osc.connect(gain);gain.connect(ctx.destination);osc.start(t);osc.stop(t+0.45);activeTone={osc,gain};osc.onended=()=>{if(activeTone&&activeTone.osc===osc)activeTone=null}}catch(e){}}
-function answer(letter){if(!running||locked||performance.now()-started<200)return false;const elapsed=performance.now()-started,correct=check(letter);locked=true;const record={...current,correct,time:elapsed};round.push(record);queueAnswer(record);const key=current.clef+':'+current.note,s=data.notes[key]||{attempts:0,errors:0,averageTime:0};if(correct)s.averageTime+=(elapsed-s.averageTime)/(s.attempts-s.errors+1);s.attempts++;if(!correct)s.errors++;data.notes[key]=s;if(round.length>=total){completedResult=roundResult();data.rounds.push(completedResult);queueRound(completedResult);running=false}save();const advance=()=>completedResult?finish():next();if(correct){try{playAnsweredNote(current.note)}catch(e){}advance()}else{$('#feedback').textContent=`正確答案：${current.note[0]}（${syllables[letters.indexOf(current.note[0])]}）· ${current.note}`;$('#note-head').setAttribute('stroke','#c24f46');setButtons(true);timer=setTimeout(advance,1000)}return correct}
+const soundIcon={on:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg>',off:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9.5l5 5M21 9.5l-5 5"/></svg>'};
+function paintSound(){const b=$('#sound-toggle');if(!b)return;const on=soundPref;b.setAttribute('aria-checked',on?'true':'false');b.innerHTML=on?soundIcon.on:soundIcon.off;b.setAttribute('aria-label',on?'聲音開':'靜音')}
+function playAnsweredNote(note){if(!soundPref||!note)return;try{const ctx=unlockAudio();if(!ctx||ctx.state==='closed')return;const hz=pitchHz(note);if(!Number.isFinite(hz)||hz<=0)return;stopTone();const osc=ctx.createOscillator(),gain=ctx.createGain(),t=ctx.currentTime;osc.type='sine';osc.frequency.value=hz;gain.gain.setValueAtTime(0.0001,t);gain.gain.exponentialRampToValueAtTime(0.18,t+0.02);gain.gain.exponentialRampToValueAtTime(0.0001,t+0.42);osc.connect(gain);gain.connect(ctx.destination);osc.start(t);osc.stop(t+0.45);activeTone={osc,gain};osc.onended=()=>{if(activeTone&&activeTone.osc===osc)activeTone=null}}catch(e){}}
+function answer(letter){if(!running||locked||performance.now()-started<200)return false;const elapsed=performance.now()-started,correct=check(letter);locked=true;const record={...current,correct,time:elapsed};round.push(record);queueAnswer(record);const key=current.clef+':'+current.note,s=data.notes[key]||{attempts:0,errors:0,averageTime:0};if(correct)s.averageTime+=(elapsed-s.averageTime)/(s.attempts-s.errors+1);s.attempts++;if(!correct)s.errors++;data.notes[key]=s;if(round.length>=total){completedResult=roundResult();data.rounds.push(completedResult);queueRound(completedResult);running=false}save();const advance=()=>completedResult?finish():next();if(correct){try{playAnsweredNote(current.note)}catch(e){}advance()}else{$('#feedback').textContent=current.note;$('#note-head').setAttribute('stroke','#6e2c32');$('#note-head').setAttribute('fill','#f6e4e2');setButtons(true);timer=setTimeout(advance,1000)}return correct}
 function show(view){if(view==='practice'&&resultReady)view='result';document.body.classList.toggle('practicing',running&&view==='practice');for(const id of ['practice','result','stats'])$('#'+id+'-view').classList.toggle('hidden',id!==view);$('#practice-tab').classList.toggle('active',view!=='stats');$('#stats-tab').classList.toggle('active',view==='stats');if(view==='stats')renderStats()}
-function start(){if(cloudUser&&(clearing||localStorage.getItem(key('clear-pending')))){$('#sync-status').textContent='請先完成清除雲端紀錄，再開始練習';return}interrupt();clearTimeout(timer);const value=$('#count').value.trim(),number=Number(value);total=value!==''&&Number.isFinite(number)?Math.max(5,Math.min(100,Math.round(number))):20;$('#count').value=total;roundMode=$('#mode').value;round=[];activeRoundId=crypto.randomUUID();practiceGeneration=cloudUser?generation(cloudUser.id):0;completedResult=null;resultReady=false;interrupted=false;running=true;locked=false;['mode','count','ledger'].forEach(id=>$('#'+id).disabled=true);$('#start').textContent='重新開始 →';show('practice');window.scrollTo({top:0,behavior:'instant'});next()}
+function start(){if(cloudUser&&(clearing||localStorage.getItem(key('clear-pending')))){$('#sync-status').textContent='清除尚未完成';return}interrupt();clearTimeout(timer);const value=$('#count').value.trim(),number=Number(value);total=value!==''&&Number.isFinite(number)?Math.max(5,Math.min(100,Math.round(number))):20;$('#count').value=total;roundMode=$('#mode').value;round=[];activeRoundId=crypto.randomUUID();practiceGeneration=cloudUser?generation(cloudUser.id):0;completedResult=null;resultReady=false;interrupted=false;running=true;locked=false;['mode','count','ledger'].forEach(id=>$('#'+id).disabled=true);$('#start').textContent='再來';show('practice');window.scrollTo({top:0,behavior:'instant'});next()}
 function roundResult(incomplete=false){const correct=round.filter(r=>r.correct),groups={};round.forEach(r=>{const k=r.clef+':'+r.note,g=groups[k]||(groups[k]={...r,correctCount:0,errors:0,sum:0});if(r.correct){g.correctCount++;g.sum+=r.time}else g.errors++});const values=Object.values(groups),slow=values.filter(g=>g.correctCount).sort((a,b)=>b.sum/b.correctCount-a.sum/a.correctCount)[0],wrong=values.filter(g=>g.errors).sort((a,b)=>b.errors-a.errors)[0],label=g=>g?`${g.clef==='treble'?'高音':'低音'} ${g.note}`:'無';return {client_id:activeRoundId,time:new Date().toISOString(),count:round.length,accuracy:correct.length/round.length,averageTime:correct.length?correct.reduce((s,r)=>s+r.time,0)/correct.length:null,mode:roundMode,slowest:slow?label(slow):'—',mostErrors:label(wrong),...(incomplete?{incomplete:true,planned:total}:{})}}
 function interrupt(){if(!running)return;clearTimeout(timer);running=false;interrupted=true;locked=true;setButtons(true);['mode','count','ledger'].forEach(id=>$('#'+id).disabled=false);if(round.length){const result=roundResult(true);data.rounds.push(result);queueRound(result);save()}}
 window.addEventListener('pagehide',interrupt);
 window.addEventListener('beforeunload',interrupt);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')interrupt()});
-function resetPractice(message=''){clearTimeout(timer);running=false;locked=true;round=[];completedResult=null;resultReady=false;interrupted=false;previous=null;setButtons(true);['mode','count','ledger'].forEach(id=>$('#'+id).disabled=false);$('#start').textContent='開始練習 →';$('#counter').textContent=`準備開始 · ${total} 題`;$('#progress').style.width='0%';renderNote('treble','G4');$('#feedback').textContent=message;document.body.classList.remove('practicing')}
-window.addEventListener('pageshow',e=>{if(e.persisted&&interrupted){resetPractice('本輪已中斷並儲存，按開始練習重新開始');show('practice')}});
+function resetPractice(message=''){clearTimeout(timer);running=false;locked=true;round=[];completedResult=null;resultReady=false;interrupted=false;previous=null;setButtons(true);['mode','count','ledger'].forEach(id=>$('#'+id).disabled=false);$('#start').textContent='開始';$('#counter').textContent='';$('#progress').style.width='0%';renderNote('treble','G4');$('#feedback').textContent=message;document.body.classList.remove('practicing')}
+window.addEventListener('pageshow',e=>{if(e.persisted&&interrupted){resetPractice('');show('practice')}});
 const roundAverage=r=>r.averageTime===null||(r.accuracy===0&&r.averageTime===0)?null:r.averageTime;
 const averageLabel=r=>roundAverage(r)===null?'—':Math.round(r.averageTime)+' ms';
-function finish(){running=false;locked=false;['mode','count','ledger'].forEach(id=>$('#'+id).disabled=false);setButtons(true);const result=completedResult;$('#result-metrics').innerHTML=[['正確率',Math.round(result.accuracy*100)+'%',`${round.filter(r=>r.correct).length} / ${total} 題答對`],['平均反應時間',averageLabel(result),'只計算答對的題目'],['最慢的音',roundAverage(result)===null?'—':result.slowest,'依本輪答對平均時間'],['最常錯的音',result.mostErrors,'依本輪錯誤次數']].map(([a,b,c])=>`<div class="metric">${a}<strong>${b}</strong><small>${c}</small></div>`).join('');resultReady=true;show('result')}
+function finish(){running=false;locked=false;['mode','count','ledger'].forEach(id=>$('#'+id).disabled=false);setButtons(true);const result=completedResult;$('#result-metrics').innerHTML=[Math.round(result.accuracy*100)+'%',averageLabel(result),roundAverage(result)===null?'—':result.slowest,result.mostErrors].map(v=>`<div class="metric"><strong>${v}</strong></div>`).join('');resultReady=true;show('result')}
 let chartResizeFrame;
 window.addEventListener('resize',()=>{cancelAnimationFrame(chartResizeFrame);chartResizeFrame=requestAnimationFrame(()=>{if(!$('#stats-view').classList.contains('hidden'))renderStats()})});
-function renderStats(){const rs=data.rounds.filter(r=>r.incomplete!==true),w=Math.max(240,$('#chart').clientWidth),h=200,p=38,max=Math.max(1000,...rs.map(r=>roundAverage(r)??0)),x=i=>p+(w-p*2)*(rs.length===1?.5:i/(rs.length-1)),y=v=>h-p-v*(h-2*p);$('#chart').innerHTML=rs.length?`<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="正確率與平均反應時間進步曲線">${[0,.5,1].map(v=>`<line x1="${p}" x2="${w-p}" y1="${y(v)}" y2="${y(v)}" stroke="#e3e8df"/><text x="0" y="${y(v)+4}" fill="#82917f" font-size="12">${v*100}%</text><text x="${w-p+5}" y="${y(v)+4}" fill="#a38b56" font-size="12">${Math.round(v*max)}</text>`).join('')}${[['accuracy','#387c62',1],['averageTime','#b49a58',max]].map(([key,color,scale])=>rs.map((r,i)=>key==='averageTime'&&roundAverage(r)===null?'|':`${x(i)},${y(r[key]/scale)}`).join(' ').split('|').filter(points=>points.trim()).map(points=>`<polyline points="${points.trim()}" fill="none" stroke="${color}" stroke-width="3"/>`).join('')+rs.map((r,i)=>key==='averageTime'&&roundAverage(r)===null?'':`<circle cx="${x(i)}" cy="${y(r[key]/scale)}" r="4" fill="${color}"><title>第 ${i+1} 輪：${key==='accuracy'?Math.round(r[key]*100)+'%':Math.round(r[key])+' ms'}</title></circle>`).join('')).join('')}<text x="${p}" y="${h-5}" font-size="12" fill="#82917f">第 1 輪</text><text x="${w-95}" y="${h-5}" font-size="12" fill="#82917f">第 ${rs.length} 輪</text></svg>`:'<div class="empty">完成第一輪後，就能看到你的進步曲線。</div>';$('#recent-rounds').replaceChildren(...[...data.rounds].sort((a,b)=>Date.parse(b.time)-Date.parse(a.time)).slice(0,20).map(r=>{const row=document.createElement('p');row.className='recent-round';row.textContent=`${new Date(r.time).toLocaleString('zh-TW')} · ${r.count} 題 · 正確率 ${Math.round(r.accuracy*100)}% · 平均 ${averageLabel(r)} · ${{treble:'高音譜',bass:'低音譜',mixed:'高低音混合'}[r.mode]}${r.incomplete===true?' · 未完成':''}`;return row}));for(const clef of ['treble','bass'])$('#heat-'+clef).innerHTML=notesFor(clef,true).map(n=>{let s=data.notes[clef+':'+n],heat=s?Math.max((s.attempts>0?s.errors/s.attempts:0),Math.min(1,s.averageTime/6000)):0;return `<div style="background:${s?`hsl(${120*(1-heat)} 72% 82%)`:'#f0f1ed'}" title="${s?`${s.attempts} 次，錯誤 ${s.errors} 次，平均 ${s.attempts>s.errors?Math.round(s.averageTime)+' ms':'—'}`:'尚未練習'}">${n}<small>${s?'錯 '+Math.round((s.attempts>0?s.errors/s.attempts:0)*100)+'% · 平均 '+(s.attempts>s.errors?Math.round(s.averageTime)+'ms':'—'):'尚未練習'}</small></div>`}).join('')}
+function renderStats(){const rs=data.rounds.filter(r=>r.incomplete!==true),w=Math.max(240,$('#chart').clientWidth),h=200,p=38,max=Math.max(1000,...rs.map(r=>roundAverage(r)??0)),x=i=>p+(w-p*2)*(rs.length===1?.5:i/(rs.length-1)),y=v=>h-p-v*(h-2*p);$('#chart').innerHTML=rs.length?`<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="進步">${[0,.5,1].map(v=>`<line x1="${p}" x2="${w-p}" y1="${y(v)}" y2="${y(v)}" stroke="#e3e8df"/><text x="0" y="${y(v)+4}" fill="#82917f" font-size="12">${v*100}%</text><text x="${w-p+5}" y="${y(v)+4}" fill="#a38b56" font-size="12">${Math.round(v*max)}</text>`).join('')}${[['accuracy','#387c62',1],['averageTime','#b49a58',max]].map(([key,color,scale])=>rs.map((r,i)=>key==='averageTime'&&roundAverage(r)===null?'|':`${x(i)},${y(r[key]/scale)}`).join(' ').split('|').filter(points=>points.trim()).map(points=>`<polyline points="${points.trim()}" fill="none" stroke="${color}" stroke-width="3"/>`).join('')+rs.map((r,i)=>key==='averageTime'&&roundAverage(r)===null?'':`<circle cx="${x(i)}" cy="${y(r[key]/scale)}" r="4" fill="${color}"><title>第 ${i+1} 輪：${key==='accuracy'?Math.round(r[key]*100)+'%':Math.round(r[key])+' ms'}</title></circle>`).join('')).join('')}<text x="${p}" y="${h-5}" font-size="12" fill="#82917f">1</text><text x="${w-28}" y="${h-5}" font-size="12" fill="#82917f">${rs.length}</text></svg>`:'';$('#recent-rounds').replaceChildren(...[...data.rounds].sort((a,b)=>Date.parse(b.time)-Date.parse(a.time)).slice(0,20).map(r=>{const row=document.createElement('p');row.className='recent-round';row.textContent=`${new Date(r.time).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}  ${Math.round(r.accuracy*100)}%  ${averageLabel(r)}`;return row}));for(const clef of ['treble','bass'])$('#heat-'+clef).innerHTML=notesFor(clef,true).map(n=>{let s=data.notes[clef+':'+n],heat=s?Math.max((s.attempts>0?s.errors/s.attempts:0),Math.min(1,s.averageTime/6000)):0;return `<div style="background:${s?`hsl(${120*(1-heat)} 45% 78%)`:'#f3ead7'}">${n}<small>${s?Math.round((s.attempts>0?s.errors/s.attempts:0)*100)+'%':''}</small></div>`}).join('')}
 function exportData(){const blob=new Blob([JSON.stringify({...data,source:'sight-reading-cloud-v1'},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='sight-reading-stats.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-$('#answers').innerHTML=letters.map(l=>`<button data-letter="${l}" disabled>${l}</button>`).join('');document.querySelectorAll('[data-letter]').forEach(b=>b.onclick=()=>answer(b.dataset.letter));$('#naming').onchange=()=>document.querySelectorAll('[data-letter]').forEach(b=>b.textContent=$('#naming').value==='letters'?b.dataset.letter:syllables[letters.indexOf(b.dataset.letter)]);$('#start').onclick=start;$('#again').onclick=start;$('#practice-tab').onclick=()=>show('practice');$('#settings-back').onclick=()=>{interrupt();resetPractice();show('practice')};$('#stats-tab').onclick=()=>show('stats');$('#export').onclick=exportData;$('#clear').onclick=clearHistory;document.addEventListener('keydown',e=>{if((e.target instanceof Element && e.target.matches('input,select'))||e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;if(/^[a-g]$/i.test(e.key)&&!$('#practice-view').classList.contains('hidden'))answer(e.key)});
-$('#sound-toggle').onclick=()=>{soundPref=!soundPref;try{localStorage.setItem('sr-sound',soundPref?'on':'off')}catch(e){}if(soundPref)resumeAudio();else stopTone();paintSound()};
-document.querySelector('.answers').addEventListener('pointerdown',()=>{if(soundPref)resumeAudio()});
+$('#answers').innerHTML=letters.map(l=>`<button type="button" data-letter="${l}" disabled>${l}</button>`).join('')+[1,2,4,5,6].map(i=>`<span class="black-key" style="--i:${i}" aria-hidden="true"></span>`).join('');
+let tapAnswered=false;
+document.querySelectorAll('[data-letter]').forEach(b=>{
+ b.addEventListener('pointerdown',e=>{if(e.button>0)return;b.classList.add('is-down');if(soundPref)unlockAudio()});
+ b.addEventListener('pointerup',e=>{b.classList.remove('is-down');if(e.button>0)return;tapAnswered=true;if(soundPref)unlockAudio();answer(b.dataset.letter)});
+ b.addEventListener('pointercancel',()=>b.classList.remove('is-down'));
+ b.addEventListener('pointerleave',()=>b.classList.remove('is-down'));
+ b.addEventListener('click',()=>{if(tapAnswered){tapAnswered=false;return}if(soundPref)unlockAudio();answer(b.dataset.letter)});
+});
+$('#naming').onchange=()=>document.querySelectorAll('[data-letter]').forEach(b=>b.textContent=$('#naming').value==='letters'?b.dataset.letter:syllables[letters.indexOf(b.dataset.letter)]);$('#start').onclick=start;$('#again').onclick=start;$('#practice-tab').onclick=()=>show('practice');$('#settings-back').onclick=()=>{interrupt();resetPractice();show('practice')};$('#stats-tab').onclick=()=>show('stats');$('#export').onclick=exportData;$('#clear').onclick=clearHistory;document.addEventListener('keydown',e=>{if((e.target instanceof Element && e.target.matches('input,select'))||e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;if(/^[a-g]$/i.test(e.key)&&!$('#practice-view').classList.contains('hidden')){if(soundPref)unlockAudio();answer(e.key)}});
+$('#sound-toggle').onclick=()=>{soundPref=!soundPref;try{localStorage.setItem('sr-sound',soundPref?'on':'off')}catch(e){}if(soundPref)unlockAudio();else stopTone();paintSound()};
+document.querySelector('.answers').addEventListener('pointerdown',()=>{if(soundPref)unlockAudio()});$('#answers').addEventListener('touchmove',e=>{e.preventDefault()},{passive:false});
 paintSound();window.__sr={notesFor,renderNote,geometry:()=>structuredClone(geom),check,answer,weights:()=>['treble','bass'].flatMap(c=>notesFor(c,true).map(note=>weight({clef:c,note})))};renderNote('treble','G4');
 
 const client=supabase.createClient("https://tgmjfztmbistwrhmbfip.supabase.co","sb_publishable_cxZ6UfL_PTpqetxBVfp0Iw_zxY5bfv_",{auth:{flowType:'pkce',detectSessionInUrl:true}});
