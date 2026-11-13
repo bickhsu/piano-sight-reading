@@ -299,6 +299,10 @@ body.stage .piano button[data-letter]{min-height:0;height:auto;padding:0 0 5px;b
 body.stage .piano button[data-letter]:last-of-type{border-right:0}
 body.stage .piano button[data-letter]:disabled{opacity:1;color:#c2bbb2}
 body.stage .piano .black-key{height:54%;border-radius:0 0 3px 3px;background:linear-gradient(#2c2c2c,#111);box-shadow:1px 1px 1px rgba(0,0,0,.22)}
+body.stage .piano button[data-letter].flash-ok{background:#7dcea0;box-shadow:inset 0 0 0 2px #1f4d3a}
+body.stage .piano button[data-letter].flash-bad{background:#f0a0a6;box-shadow:inset 0 0 0 2px #6e2c32}
+#score.pop-ok{filter:drop-shadow(0 0 7px rgba(40,140,80,.45))}
+#score.pop-bad{filter:drop-shadow(0 0 10px rgba(176,48,48,.55))}
 @media(min-width:801px){
   body.stage .layout{max-width:760px;margin:0 auto;width:100%}
   body.stage .piano{height:30vh!important;max-height:250px;min-height:180px}
@@ -310,7 +314,7 @@ body.stage .piano .black-key{height:54%;border-radius:0 0 3px 3px;background:lin
   body.stage .piano{height:48dvh!important;min-height:0!important;max-height:none!important;width:calc(100% - 12px)!important;max-width:none!important;margin:auto auto 0!important;padding-bottom:env(safe-area-inset-bottom,0px)}
   body.stage .piano .black-key{height:62%}
 }
-</style></head><body class="stage setup"><header><button id="back-practice" class="icon-btn hidden" type="button" aria-label="練習"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15 5l-7 7 7 7"/></svg></button><nav id="play-controls"><button id="transport" class="icon-btn" type="button" aria-pressed="false" aria-label="開始"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></button><div class="bpm" role="group" aria-label="速度"><button type="button" id="bpm-down" aria-label="慢">−</button><output id="bpm" data-bpm>60</output><button type="button" id="bpm-up" aria-label="快">+</button></div><output id="clock" class="clock" hidden>1:00</output><button id="gear" class="icon-btn" type="button" aria-expanded="false" aria-label="設定"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></button></nav></header><main hidden><section id="practice-view"><div class="layout"><div class="card practice"><svg id="score" class="score" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid meet" aria-label="五線譜" role="img"></svg><div id="tune-sheet" class="tune-sheet" hidden><div class="seg" id="play-seg" role="group" aria-label="模式"><button type="button" data-play="rhythm" aria-pressed="true">節奏</button><button type="button" data-play="speed">速度</button></div><div class="seg" id="length-seg" role="group" aria-label="時間"><button type="button" data-seconds="30">0:30</button><button type="button" data-seconds="60" aria-pressed="true">1:00</button><button type="button" data-seconds="90">1:30</button><button type="button" data-seconds="120">2:00</button></div><div class="bpm setup-bpm" role="group" aria-label="速度"><button type="button" id="setup-bpm-down" aria-label="慢">−</button><output id="setup-bpm" data-bpm>60</output><button type="button" id="setup-bpm-up" aria-label="快">+</button></div><div class="seg" id="clef-seg" role="group"><button type="button" data-clef="treble" aria-label="高音" aria-pressed="true">𝄞<small>高音</small></button><button type="button" data-clef="bass" aria-label="低音">𝄢<small>低音</small></button><button type="button" data-clef="mixed" aria-label="混合">𝄞<small>混合</small></button></div><div class="seg" role="group"><button type="button" id="ledger-toggle" aria-pressed="true" aria-label="加線">≡<small>加線</small></button><button type="button" data-name="letters" aria-pressed="true" aria-label="字母">C<small>字母</small></button><button type="button" data-name="solfege" aria-label="唱名">Do<small>唱名</small></button></div><div class="seg" id="flow-seg" role="group"><button type="button" data-flow="continue" aria-pressed="true" aria-label="繼續">→<small>繼續</small></button><button type="button" data-flow="pause" aria-label="停下">Ⅱ<small>停下</small></button></div><div class="seg" id="judge-seg" role="group"><button type="button" data-judge="strict" aria-pressed="true" aria-label="嚴">±100<small>嚴</small></button><button type="button" data-judge="normal" aria-label="中">±160<small>中</small></button><button type="button" data-judge="loose" aria-label="寬">±240<small>寬</small></button></div><div class="seg" id="rhythm-seg" role="group"><button type="button" data-rhythm="quarter" aria-pressed="true" aria-label="四分">♩<small>四分</small></button><button type="button" data-rhythm="mixed" aria-label="混合">♫<small>混合</small></button></div><div class="seg" role="group"><button id="sound-toggle" type="button" role="switch" aria-checked="true" aria-label="聲音開"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg><small>聲音</small></button><button id="metro-toggle" type="button" role="switch" aria-checked="true" aria-label="節拍開"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M9 20h6L12 4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 9l5 3"/></svg><small>節拍</small></button><button type="button" id="stats-tab" aria-label="統計">▤<small>統計</small></button></div><div class="seg" role="group"><button type="button" id="google">登入</button><button id="signout" type="button" hidden>登出</button><label class="import">匯入<input id="import-file" type="file" accept="application/json"></label></div><p id="sync-status" role="status"></p><p id="import-status" role="status"></p><span id="email" hidden></span><button id="round-start" class="primary" type="button">開始</button></div><div id="result-overlay" class="result-overlay" hidden><div class="result-card" role="dialog" aria-label="成績"><button id="result-close" class="icon-btn" type="button" aria-label="關閉">×</button><output id="result-score" class="score-num">0</output><p id="result-best" class="result-best" hidden>最佳</p><p id="result-acc" class="result-acc">0%</p><p id="result-grades" class="result-grades"><span id="result-perfect" class="perfect">0</span><span id="result-ok" class="ok">0</span><span id="result-miss" class="miss">0</span></p><p id="result-streak" class="result-streak">連續 0</p><button id="result-again" class="primary" type="button">再來</button></div></div><div id="answers" class="answers piano" role="group" aria-label="鋼琴鍵盤"></div><span id="counter" hidden></span><span id="progress" hidden></span><div id="feedback" hidden></div><select id="mode" hidden><option value="treble" selected>高</option><option value="bass">低</option><option value="mixed">合</option></select><input id="count" type="number" hidden value="20"><input id="ledger" type="checkbox" hidden checked><select id="naming" hidden><option value="letters" selected>C</option><option value="solfege">Do</option></select></div></div></section><section id="result-view" class="hidden"><div class="card"><div id="result-metrics" class="metrics"></div><button id="again" class="primary">再來</button></div></section><section id="stats-view" class="hidden"><div class="card"><div id="chart"></div><div id="recent-rounds"></div><div id="heat-treble" class="heat"></div><div id="heat-bass" class="heat"></div><div class="stats-actions"><button id="export">匯出</button><button id="clear">清除</button></div></div></section></main><script src="vendor/supabase-js.js"></script><script>
+</style></head><body class="stage setup"><audio id="ios-unlock" playsinline webkit-playsinline preload="auto" loop src="data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YSADAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA=="></audio><header><button id="back-practice" class="icon-btn hidden" type="button" aria-label="練習"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15 5l-7 7 7 7"/></svg></button><nav id="play-controls"><button id="transport" class="icon-btn" type="button" aria-pressed="false" aria-label="開始"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></button><div class="bpm" role="group" aria-label="速度"><button type="button" id="bpm-down" aria-label="慢">−</button><output id="bpm" data-bpm>60</output><button type="button" id="bpm-up" aria-label="快">+</button></div><output id="clock" class="clock" hidden>1:00</output><button id="gear" class="icon-btn" type="button" aria-expanded="false" aria-label="設定"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></button></nav></header><main hidden><section id="practice-view"><div class="layout"><div class="card practice"><svg id="score" class="score" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid meet" aria-label="五線譜" role="img"></svg><div id="tune-sheet" class="tune-sheet" hidden><div class="seg" id="play-seg" role="group" aria-label="模式"><button type="button" data-play="rhythm" aria-pressed="true">節奏</button><button type="button" data-play="speed">速度</button></div><div class="seg" id="length-seg" role="group" aria-label="時間"><button type="button" data-seconds="30">0:30</button><button type="button" data-seconds="60" aria-pressed="true">1:00</button><button type="button" data-seconds="90">1:30</button><button type="button" data-seconds="120">2:00</button></div><div class="bpm setup-bpm" role="group" aria-label="速度"><button type="button" id="setup-bpm-down" aria-label="慢">−</button><output id="setup-bpm" data-bpm>60</output><button type="button" id="setup-bpm-up" aria-label="快">+</button></div><div class="seg" id="clef-seg" role="group"><button type="button" data-clef="treble" aria-label="高音" aria-pressed="true">𝄞<small>高音</small></button><button type="button" data-clef="bass" aria-label="低音">𝄢<small>低音</small></button><button type="button" data-clef="mixed" aria-label="混合">𝄞<small>混合</small></button></div><div class="seg" role="group"><button type="button" id="ledger-toggle" aria-pressed="true" aria-label="加線">≡<small>加線</small></button><button type="button" data-name="letters" aria-pressed="true" aria-label="字母">C<small>字母</small></button><button type="button" data-name="solfege" aria-label="唱名">Do<small>唱名</small></button></div><div class="seg" id="flow-seg" role="group"><button type="button" data-flow="continue" aria-pressed="true" aria-label="繼續">→<small>繼續</small></button><button type="button" data-flow="pause" aria-label="停下">Ⅱ<small>停下</small></button></div><div class="seg" id="judge-seg" role="group"><button type="button" data-judge="strict" aria-pressed="true" aria-label="嚴">±100<small>嚴</small></button><button type="button" data-judge="normal" aria-label="中">±160<small>中</small></button><button type="button" data-judge="loose" aria-label="寬">±240<small>寬</small></button></div><div class="seg" id="rhythm-seg" role="group"><button type="button" data-rhythm="quarter" aria-pressed="true" aria-label="四分">♩<small>四分</small></button><button type="button" data-rhythm="mixed" aria-label="混合">♫<small>混合</small></button></div><div class="seg" role="group"><button id="sound-toggle" type="button" role="switch" aria-checked="true" aria-label="聲音開"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg><small>聲音</small></button><button id="metro-toggle" type="button" role="switch" aria-checked="true" aria-label="節拍開"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M9 20h6L12 4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 9l5 3"/></svg><small>節拍</small></button><button type="button" id="stats-tab" aria-label="統計">▤<small>統計</small></button></div><div class="seg" role="group"><button type="button" id="google">登入</button><button id="signout" type="button" hidden>登出</button><label class="import">匯入<input id="import-file" type="file" accept="application/json"></label></div><p id="sync-status" role="status"></p><p id="import-status" role="status"></p><span id="email" hidden></span><button id="round-start" class="primary" type="button">開始</button></div><div id="result-overlay" class="result-overlay" hidden><div class="result-card" role="dialog" aria-label="成績"><button id="result-close" class="icon-btn" type="button" aria-label="關閉">×</button><output id="result-score" class="score-num">0</output><p id="result-best" class="result-best" hidden>最佳</p><p id="result-acc" class="result-acc">0%</p><p id="result-grades" class="result-grades"><span id="result-perfect" class="perfect">0</span><span id="result-ok" class="ok">0</span><span id="result-miss" class="miss">0</span></p><p id="result-streak" class="result-streak">連續 0</p><button id="result-again" class="primary" type="button">再來</button></div></div><div id="answers" class="answers piano" role="group" aria-label="鋼琴鍵盤"></div><span id="counter" hidden></span><span id="progress" hidden></span><div id="feedback" hidden></div><select id="mode" hidden><option value="treble" selected>高</option><option value="bass">低</option><option value="mixed">合</option></select><input id="count" type="number" hidden value="20"><input id="ledger" type="checkbox" hidden checked><select id="naming" hidden><option value="letters" selected>C</option><option value="solfege">Do</option></select></div></div></section><section id="result-view" class="hidden"><div class="card"><div id="result-metrics" class="metrics"></div><button id="again" class="primary">再來</button></div></section><section id="stats-view" class="hidden"><div class="card"><div id="chart"></div><div id="recent-rounds"></div><div id="heat-treble" class="heat"></div><div id="heat-bass" class="heat"></div><div class="stats-actions"><button id="export">匯出</button><button id="clear">清除</button></div></div></section></main><script src="vendor/supabase-js.js"></script><script>
 'use strict';
 const $=s=>document.querySelector(s), letters=['C','D','E','F','G','A','B'], syllables=['Do','Re','Mi','Fa','Sol','La','Si'];
 const index=n=>Number(n.slice(1))*7+letters.indexOf(n[0]);
@@ -347,11 +351,19 @@ try{const saved=localStorage.getItem('sr-sound');if(saved==='off')soundPref=fals
 function pitchHz(note){const midi=(Number(note.slice(1))+1)*12+SEMI[note[0]];return 440*Math.pow(2,(midi-69)/12)}
 function ensureAudio(){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;try{if(audioCtx&&audioCtx.state==='closed'){audioCtx=null;audioUnlocked=false}if(!audioCtx)audioCtx=new AC()}catch(e){audioCtx=null}return audioCtx}
 function preferPlayback(){try{const session=navigator.audioSession;if(session&&session.type!=='playback')session.type='playback'}catch(e){}}
-function unlockAudio(){preferPlayback();let ctx=null;try{ctx=ensureAudio()}catch(e){return null}if(!ctx)return null;try{if(ctx.state==='suspended'||ctx.state==='interrupted'){const pending=ctx.resume();if(pending&&typeof pending.then==='function')pending.then(()=>{},()=>{})}}catch(e){}if(!audioUnlocked){try{const buffer=ctx.createBuffer(1,1,ctx.sampleRate||22050),src=ctx.createBufferSource();src.buffer=buffer;src.connect(ctx.destination);src.start(0);audioUnlocked=true}catch(e){}}return ctx}
-function stopTone(){const tone=activeTone;activeTone=null;if(!tone)return;try{tone.gain.disconnect()}catch(e){}}
+function unlockAudio(){preferPlayback();try{const el=$('#ios-unlock');if(el&&el.paused){const pending=el.play();if(pending&&typeof pending.catch==='function')pending.catch(()=>{})}}catch(e){}let ctx=null;try{ctx=ensureAudio()}catch(e){return null}if(!ctx)return null;try{if(ctx.state==='suspended'||ctx.state==='interrupted'){const pending=ctx.resume();if(pending&&typeof pending.then==='function')pending.then(()=>{},()=>{})}}catch(e){}if(!audioUnlocked){try{const buffer=ctx.createBuffer(1,1,ctx.sampleRate||22050),src=ctx.createBufferSource();src.buffer=buffer;src.connect(ctx.destination);src.start(0);audioUnlocked=true}catch(e){}}return ctx}
+let masterGain=null;
+function masterBus(ctx){if(!masterGain||masterGain.context!==ctx){masterGain=ctx.createGain();masterGain.gain.value=1;masterGain.connect(ctx.destination)}return masterGain}
+function burst(ctx,type,freq,t,peak,decay){const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type=type;osc.frequency.value=freq;gain.gain.setValueAtTime(0.0001,t);gain.gain.exponentialRampToValueAtTime(peak,t+0.01);gain.gain.exponentialRampToValueAtTime(0.0001,t+decay);osc.connect(gain);gain.connect(masterBus(ctx));osc.start(t);osc.stop(t+decay+0.02);return osc}
+function stopTone(){const tone=activeTone;activeTone=null;if(!tone)return;for(const osc of tone.oscs||[]){try{osc.stop()}catch(e){}}}
 const soundIcon={on:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg>',off:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9.5l5 5M21 9.5l-5 5"/></svg>'};
 function paintSound(){const b=$('#sound-toggle');if(!b)return;const on=soundPref;b.setAttribute('aria-checked',on?'true':'false');b.innerHTML=(on?soundIcon.on:soundIcon.off)+'<small>聲音</small>';b.setAttribute('aria-label',on?'聲音開':'靜音')}
-function playAnsweredNote(note){if(!soundPref||!note)return;try{const ctx=unlockAudio();if(!ctx||ctx.state==='closed')return;const hz=pitchHz(note);if(!Number.isFinite(hz)||hz<=0)return;stopTone();const osc=ctx.createOscillator(),gain=ctx.createGain(),t=ctx.currentTime;osc.type='sine';osc.frequency.value=hz;gain.gain.setValueAtTime(0.0001,t);gain.gain.exponentialRampToValueAtTime(0.18,t+0.02);gain.gain.exponentialRampToValueAtTime(0.0001,t+0.42);osc.connect(gain);gain.connect(ctx.destination);osc.start(t);osc.stop(t+0.45);activeTone={osc,gain};osc.onended=()=>{if(activeTone&&activeTone.osc===osc)activeTone=null}}catch(e){}}
+function playAnsweredNote(note){if(!soundPref||!note)return;try{const ctx=unlockAudio();if(!ctx||ctx.state==='closed')return;const hz=pitchHz(note);if(!Number.isFinite(hz)||hz<=0)return;stopTone();const t=ctx.currentTime;activeTone={oscs:[burst(ctx,'triangle',hz,t,0.62,0.42),burst(ctx,'sine',hz*2,t,0.26,0.3),burst(ctx,'sine',hz*3,t,0.1,0.18),burst(ctx,'square',1680,t,0.09,0.045)]}}catch(e){}}
+function playWrong(){if(!soundPref)return;try{const ctx=unlockAudio();if(!ctx||ctx.state==='closed')return;stopTone();const t=ctx.currentTime;activeTone={oscs:[burst(ctx,'sawtooth',78,t,0.5,0.2),burst(ctx,'square',46,t,0.32,0.22)]}}catch(e){}}
+function pulse(ok){try{if(typeof navigator.vibrate==='function')navigator.vibrate(ok?18:46)}catch(e){}}
+function flashKey(note,ok){const b=document.querySelector(`[data-note="${note}"]`);if(!b)return;b.classList.remove('flash-ok','flash-bad');void b.offsetWidth;b.classList.add(ok?'flash-ok':'flash-bad');clearTimeout(b._flash);b._flash=setTimeout(()=>b.classList.remove('flash-ok','flash-bad'),230)}
+function flashStaff(ok){const svg=$('#score');if(!svg)return;svg.classList.remove('pop-ok','pop-bad');void svg.offsetWidth;svg.classList.add(ok?'pop-ok':'pop-bad');clearTimeout(svg._flash);svg._flash=setTimeout(()=>svg.classList.remove('pop-ok','pop-bad'),230)}
+function feel(note,ok){flashKey(note,ok);flashStaff(ok);pulse(ok);if(ok)playAnsweredNote(note);else playWrong()}
 
 function loadTune(){
  try{
@@ -397,7 +409,7 @@ function scheduleClick(musicTime,accent){
   const osc=ctx.createOscillator(),gain=ctx.createGain();
   osc.type='sine'; osc.frequency.value=accent?1760:988;
   gain.gain.setValueAtTime(0.0001,when);
-  gain.gain.exponentialRampToValueAtTime(accent?0.2:0.11,when+0.004);
+  gain.gain.exponentialRampToValueAtTime(accent?0.07:0.04,when+0.004);
   gain.gain.exponentialRampToValueAtTime(0.0001,when+0.045);
   osc.connect(gain); gain.connect(ctx.destination); osc.start(when); osc.stop(when+0.05);
   clickNodes.push(osc); if(clickNodes.length>32) clickNodes.shift();
@@ -444,7 +456,7 @@ function flushRound(incomplete){
  activeRoundId=crypto.randomUUID();
 }
 function staffY(clef,note){const base=clef==='treble'?30:18;return staffGeom.bottom-(index(note)-base)*staffGeom.step}
-function glyph(x,y,dur,color){
+function glyph(x,y,dur,color,fx){
  const g=staffGeom, above=y<=g.mid, rx=g.gap*0.58, ry=g.gap*0.4, len=g.gap*3.5, sw=1.25, open=dur>=2;
  const sx=x+(above?-rx*0.82:rx*0.82), sy=y+(above?len:-len);
  const head=`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${open?'#fbf7ef':color}" stroke="${color}" stroke-width="${open?sw:0.6}" transform="rotate(-18 ${x} ${y})"/>`;
@@ -454,7 +466,10 @@ function glyph(x,y,dur,color){
  const half=g.gap*0.9;
  for(let ly=g.bottom+g.gap; ly<=y+1; ly+=g.gap) led+=`<line x1="${x-half}" x2="${x+half}" y1="${ly}" y2="${ly}" stroke="#1c1915" stroke-width="1"/>`;
  for(let ly=g.top-g.gap; ly>=y-1; ly-=g.gap) led+=`<line x1="${x-half}" x2="${x+half}" y1="${ly}" y2="${ly}" stroke="#1c1915" stroke-width="1"/>`;
- return led+stem+head+flag;
+ let body=led+stem+head+flag;
+ if(fx&&fx.kind==='ok'){const s=1+0.34*Math.sin(Math.min(1,fx.t)*Math.PI);body=`<g transform="translate(${x} ${y}) scale(${s}) translate(${-x} ${-y})">${body}</g>`}
+ else if(fx&&fx.kind==='bad'){const dx=(Math.sin(fx.t*Math.PI*6)*6*(1-Math.min(1,fx.t))).toFixed(2);body=`<g transform="translate(${dx} 0)">${body}</g>`}
+ return body;
 }
 function drawScore(now){
  layoutStaff();
@@ -463,7 +478,9 @@ function drawScore(now){
  for(const n of stream){
   const x=noteX(n.time,now);
   if(x<-40||x>viewW+40) continue;
-  notes+=glyph(x,staffY(n.clef,n.note),n.dur,n.mark==='bad'||n.mark==='miss'?'#6e2c32':n.mark==='ok'?'#7a5b3a':n.mark==='perfect'?'#1f4d3a':'#1c1915');
+  const age=n.flashAt==null?9:now-n.flashAt, fx=age<0.22?{kind:n.mark==='bad'||n.mark==='miss'?'bad':'ok',t:age/0.22}:null;
+  const ink=fx?fx.kind==='bad'?'#9a3038':'#1f4d3a':n.mark==='bad'||n.mark==='miss'?'#6e2c32':n.mark==='ok'?'#7a5b3a':n.mark==='perfect'?'#1f4d3a':'#1c1915';
+  notes+=glyph(x,staffY(n.clef,n.note),n.dur,ink,fx);
  }
  const barsSvg=beats.filter(b=>b.accent).map(b=>{const x=noteX(b.time,now)-g.gap*0.95;return x>hitX+4&&x<viewW-4?`<line x1="${x}" x2="${x}" y1="${g.top}" y2="${g.bottom}" stroke="#1c1915" stroke-width="1.1"/>`:''}).join('');
  const lines=[]; for(let i=0;i<5;i++){const y=g.top+i*g.gap; lines.push(`<line class="staff-line" x1="0" x2="${viewW}" y1="${y}" y2="${y}" stroke="#1c1915" stroke-width="1"/>`)}
@@ -511,13 +528,13 @@ function drawSpeed(now){
  speedLayout();
  const g=staffGeom, lag=speedLagNow(now);
  const clef=speedQ[0]?speedQ[0].clef:(roundMode==='mixed'?'treble':roundMode);
- const colorOf=n=>n.mark==='bad'?'#6e2c32':n.mark==='ok'?'#7a5b3a':n.mark==='perfect'?'#1f4d3a':'#1c1915';
+ const paint=(n,x)=>{const age=n.flashAt==null?9:now-n.flashAt,fx=age<0.22?{kind:n.mark==='bad'?'bad':'ok',t:age/0.22}:null;const ink=fx?fx.kind==='bad'?'#9a3038':'#1f4d3a':n.mark==='bad'?'#6e2c32':n.mark==='ok'?'#7a5b3a':n.mark==='perfect'?'#1f4d3a':'#1c1915';return glyph(x,staffY(n.clef,n.note),1,ink,fx)};
  let notes='';
- if(speedGone&&lag>0.02) notes+=glyph(hitX+(lag-1)*pxBeat,staffY(speedGone.clef,speedGone.note),1,colorOf(speedGone));
+ if(speedGone&&lag>0.02) notes+=paint(speedGone,hitX+(lag-1)*pxBeat);
  speedQ.forEach((n,i)=>{
   const x=hitX+(i+lag)*pxBeat;
   if(x<-40||x>viewW+36) return;
-  notes+=glyph(x,staffY(n.clef,n.note),1,colorOf(n));
+  notes+=paint(n,x);
  });
  const lines=[]; for(let i=0;i<5;i++){const y=g.top+i*g.gap; lines.push(`<line class="staff-line" x1="0" x2="${viewW}" y1="${y}" y2="${y}" stroke="#1c1915" stroke-width="1"/>`)}
  const music=`font-family="Bravura" font-size="${g.em}" fill="#1c1915"`;
@@ -534,21 +551,22 @@ function judgeSpeed(letter){
  const now=musicNow();
  if(holding){
   if(letter===cur.note){
-   holding=false; cur.mark='ok';
-   try{playAnsweredNote(cur.note)}catch(e){}
+   holding=false; cur.mark='ok'; cur.flashAt=now;
+   feel(cur.note,true);
    advanceSpeed(now);
   }
   return true;
  }
  const elapsed=Math.max(0,(now-(cur.born==null?now:cur.born))*1000);
  if(letter===cur.note){
-  cur.mark='perfect';
+  cur.mark='perfect'; cur.flashAt=now;
   recordAttempt(cur,true,elapsed);
-  try{playAnsweredNote(cur.note)}catch(e){}
+  feel(cur.note,true);
   advanceSpeed(now);
  }else{
-  cur.mark='bad';
+  cur.mark='bad'; cur.flashAt=now;
   recordAttempt(cur,false,elapsed);
+  feel(letter,false);
   if(flowMode==='pause'){holding=true; held=cur}
   else advanceSpeed(now);
  }
@@ -578,8 +596,8 @@ function pump(){
  for(const n of stream){
   if(n.judged) continue;
   if(now-n.time>limit){
-   n.judged=true; n.mark='miss';
-   recordAttempt(n,false,windows().ok);
+   n.judged=true; n.mark='miss'; n.flashAt=now;
+   recordAttempt(n,false,windows().ok); flashStaff(false);
    if(flowMode==='pause'){holding=true; held=n; break}
   }
  }
@@ -634,15 +652,15 @@ function rhythmStart(){
 function judge(letter,at){
  if(!running) return false;
  if(playMode==='speed') return judgeSpeed(letter);
+ const now=typeof at==='number'?at:musicNow(),w=windows();
  if(holding){
   if(held && letter===held.note){
-   holding=false; held.mark='ok';
+   holding=false; held.mark='ok'; held.flashAt=now;
    const raw=nowAudio(); clockShift=raw-held.time;
-   try{playAnsweredNote(held.note)}catch(e){}
+   feel(held.note,true);
   }
   return true;
  }
- const now=typeof at==='number'?at:musicNow(),w=windows();
  let best=null;
  for(const n of stream){
   if(n.judged) continue;
@@ -654,12 +672,13 @@ function judge(letter,at){
  const n=best.n,ad=Math.abs(best.off),right=letter===n.note;
  n.judged=true;
  if(right&&ad<=w.ok){
-  n.mark=ad<=w.perfect?'perfect':'ok';
+  n.mark=ad<=w.perfect?'perfect':'ok'; n.flashAt=now;
   recordAttempt(n,true,best.off);
-  try{playAnsweredNote(n.note)}catch(e){}
+  feel(n.note,true);
  }else{
-  n.mark='bad';
+  n.mark='bad'; n.flashAt=now;
   recordAttempt(n,false,best.off);
+  feel(letter,false);
   if(flowMode==='pause'){holding=true; held=n}
  }
  return true;
