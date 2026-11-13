@@ -242,7 +242,7 @@ input[type=checkbox]{accent-color:var(--burgundy);width:20px;min-height:20px}
 .icon-btn{width:40px;height:40px;min-width:40px;min-height:40px;padding:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
 .icon-btn[aria-pressed="true"],#metro-toggle[aria-checked="true"],#sound-toggle[aria-checked="true"]{background:#f8e7e4;border-color:var(--burgundy);color:var(--burgundy)}
 #metro-toggle[aria-checked="false"]{background:#efe8da;border-color:#cbbfa8;color:var(--muted)}
-#mode,#count,#ledger,#naming,#counter,#progress,#feedback{display:none!important}
+#mode,#count,#ledger,#naming,#counter,#progress,#feedback,#signout[hidden]{display:none!important}
 .bpm{display:inline-flex;align-items:center;border:1px solid var(--ink);border-radius:999px;overflow:hidden;background:var(--sheet);height:40px}
 .bpm button{border:0;border-radius:0;min-height:40px;width:32px;padding:0;background:transparent}
 .bpm output{min-width:2.4em;text-align:center;font-variant-numeric:tabular-nums;font-weight:700}
@@ -253,23 +253,26 @@ input[type=checkbox]{accent-color:var(--burgundy);width:20px;min-height:20px}
 .seg{display:flex;gap:6px}
 .seg button{flex:1;min-height:44px;padding:4px 6px;font-family:var(--serif)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
-@media(max-width:800px){
-  header{align-items:flex-start}
-  nav{width:100%;justify-content:space-between}
-  body.stage{height:100dvh;max-height:100dvh;overflow:hidden;display:flex;flex-direction:column}
-  body.stage header{flex:none}
-  body.stage main{flex:1 1 auto;min-height:0;margin:0;padding:0 8px;display:flex;flex-direction:column}
-  body.stage #practice-view{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
-  body.stage .layout{flex:1 1 auto;min-height:0;margin:0;display:flex}
-  body.stage .practice{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;padding:0 0 calc(132px + env(safe-area-inset-bottom,0px));border:0;box-shadow:none;background:transparent}
-  body.stage .score{flex:1 1 auto;min-height:0;max-height:none;width:100%;height:auto;margin:0}
-  body.stage .piano{position:absolute;left:-8px;right:auto;bottom:0;z-index:4;width:100vw;max-width:100vw;height:calc(132px + env(safe-area-inset-bottom,0px));min-height:calc(120px + env(safe-area-inset-bottom,0px));margin:0!important;padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;border-radius:0;border-left:0;border-right:0}
-  body.stage.practicing .account-bar{display:none!important}
-}
+.brand{display:none}
+header{flex-wrap:nowrap!important;align-items:center;justify-content:center;width:100%;margin:0;padding:calc(6px + env(safe-area-inset-top,0px)) 12px 6px;max-width:none}
+#play-controls{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:12px;width:min(100%,440px);margin:0 auto}
+#play-controls.hidden,#back-practice.hidden{display:none!important}
+.seg button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:18px;font-weight:700;line-height:1}
+.seg button small{font-size:12px;font-weight:700;letter-spacing:.04em}
+body.stage .account-bar{display:none!important}
+body.stage{height:100dvh;max-height:100dvh;overflow:hidden;display:flex;flex-direction:column}
+body.stage header{flex:none}
+body.stage main{flex:1 1 auto;min-height:0;margin:0;padding:0;display:flex;flex-direction:column}
+body.stage #practice-view,.stage .layout{flex:1 1 auto;min-height:0;margin:0;display:flex;flex-direction:column}
+body.stage .practice{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;padding:0!important;border:0;box-shadow:none;background:transparent}
+body.stage .score{flex:1 1 auto;width:100%;min-height:0;max-height:none!important;height:auto;margin:0;background:#fbf7ef}
+body.stage .piano{position:relative!important;left:auto!important;bottom:auto!important;flex:0 0 auto;width:100%!important;max-width:none!important;height:42vh;min-height:180px;max-height:420px;margin:0!important;border-radius:0;z-index:4;padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
 @media(min-width:801px){
-  .score{height:230px;max-height:230px}
+  body.stage .layout{max-width:980px;margin:0 auto;width:100%}
+  body.stage .score{min-height:280px}
+  body.stage .piano{height:220px;min-height:180px;max-height:240px}
 }
-</style></head><body class="stage"><header><div class="brand">音感練習室</div><nav><button id="transport" class="icon-btn" type="button" aria-pressed="false" aria-label="開始"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></button><button id="sound-toggle" class="icon-btn" type="button" role="switch" aria-checked="true" aria-label="聲音開"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg></button><button id="metro-toggle" class="icon-btn" type="button" role="switch" aria-checked="true" aria-label="節拍"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M8 21h8L13 3h-2z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 8l6 4"/></svg></button><div class="bpm" role="group" aria-label="速度"><button type="button" id="bpm-down" aria-label="慢">−</button><output id="bpm">60</output><button type="button" id="bpm-up" aria-label="快">+</button></div><button id="gear" class="icon-btn" type="button" aria-expanded="false" aria-label="設定"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></button><button id="practice-tab" class="active">練習</button><button id="stats-tab">統計</button></nav></header><div id="account-bar" class="account-bar"><button id="google">使用 Google 登入</button><span id="email"></span> <button id="signout" hidden>登出</button><label class="import">匯入<input id="import-file" type="file" accept="application/json"></label><p id="sync-status" role="status"></p><p id="import-status" role="status"></p></div><main hidden><section id="practice-view"><div class="layout"><div class="card practice"><svg id="score" class="score" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid meet" aria-label="五線譜" role="img"></svg><div id="tune-sheet" class="tune-sheet" hidden><div class="seg" id="clef-seg" role="group"><button type="button" data-clef="treble" aria-label="高音譜" aria-pressed="true">𝄞</button><button type="button" data-clef="bass" aria-label="低音譜">𝄢</button><button type="button" data-clef="mixed" aria-label="高低音">𝄞𝄢</button></div><div class="seg" role="group"><button type="button" id="ledger-toggle" aria-pressed="true" aria-label="加線">≡</button><button type="button" data-name="letters" aria-pressed="true" aria-label="字母">C</button><button type="button" data-name="solfege" aria-label="唱名">Do</button></div><div class="seg" id="flow-seg" role="group"><button type="button" data-flow="continue" aria-pressed="true" aria-label="繼續">→</button><button type="button" data-flow="pause" aria-label="停下">❚❚</button></div><div class="seg" id="judge-seg" role="group"><button type="button" data-judge="strict" aria-pressed="true">±100</button><button type="button" data-judge="normal">±160</button><button type="button" data-judge="loose">±240</button></div><div class="seg" id="rhythm-seg" role="group"><button type="button" data-rhythm="quarter" aria-pressed="true" aria-label="四分音符">♩</button><button type="button" data-rhythm="mixed" aria-label="混合節奏">♩♪</button></div></div><div id="answers" class="answers piano" role="group" aria-label="鋼琴鍵盤"></div><span id="counter" hidden></span><span id="progress" hidden></span><div id="feedback" hidden></div><select id="mode" hidden><option value="treble" selected>高</option><option value="bass">低</option><option value="mixed">合</option></select><input id="count" type="number" hidden value="20"><input id="ledger" type="checkbox" hidden checked><select id="naming" hidden><option value="letters" selected>C</option><option value="solfege">Do</option></select></div></div></section><section id="result-view" class="hidden"><div class="card"><div id="result-metrics" class="metrics"></div><button id="again" class="primary">再來</button></div></section><section id="stats-view" class="hidden"><div class="card"><div id="chart"></div><div id="recent-rounds"></div><div id="heat-treble" class="heat"></div><div id="heat-bass" class="heat"></div><div class="stats-actions"><button id="export">匯出</button><button id="clear">清除</button></div></div></section></main><script src="vendor/supabase-js.js"></script><script>
+</style></head><body class="stage"><header><button id="back-practice" class="icon-btn hidden" type="button" aria-label="練習"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15 5l-7 7 7 7"/></svg></button><nav id="play-controls"><button id="transport" class="icon-btn" type="button" aria-pressed="false" aria-label="開始"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></button><div class="bpm" role="group" aria-label="速度"><button type="button" id="bpm-down" aria-label="慢">−</button><output id="bpm">60</output><button type="button" id="bpm-up" aria-label="快">+</button></div><button id="gear" class="icon-btn" type="button" aria-expanded="false" aria-label="設定"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></button></nav></header><main hidden><section id="practice-view"><div class="layout"><div class="card practice"><svg id="score" class="score" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid meet" aria-label="五線譜" role="img"></svg><div id="tune-sheet" class="tune-sheet" hidden><div class="seg" id="clef-seg" role="group"><button type="button" data-clef="treble" aria-label="高音" aria-pressed="true">𝄞<small>高音</small></button><button type="button" data-clef="bass" aria-label="低音">𝄢<small>低音</small></button><button type="button" data-clef="mixed" aria-label="混合">𝄞<small>混合</small></button></div><div class="seg" role="group"><button type="button" id="ledger-toggle" aria-pressed="true" aria-label="加線">≡<small>加線</small></button><button type="button" data-name="letters" aria-pressed="true" aria-label="字母">C<small>字母</small></button><button type="button" data-name="solfege" aria-label="唱名">Do<small>唱名</small></button></div><div class="seg" id="flow-seg" role="group"><button type="button" data-flow="continue" aria-pressed="true" aria-label="繼續">→<small>繼續</small></button><button type="button" data-flow="pause" aria-label="停下">Ⅱ<small>停下</small></button></div><div class="seg" id="judge-seg" role="group"><button type="button" data-judge="strict" aria-pressed="true" aria-label="嚴">±100<small>嚴</small></button><button type="button" data-judge="normal" aria-label="中">±160<small>中</small></button><button type="button" data-judge="loose" aria-label="寬">±240<small>寬</small></button></div><div class="seg" id="rhythm-seg" role="group"><button type="button" data-rhythm="quarter" aria-pressed="true" aria-label="四分">♩<small>四分</small></button><button type="button" data-rhythm="mixed" aria-label="混合">♫<small>混合</small></button></div><div class="seg" role="group"><button id="sound-toggle" type="button" role="switch" aria-checked="true" aria-label="聲音開"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg><small>聲音</small></button><button id="metro-toggle" type="button" role="switch" aria-checked="true" aria-label="節拍開"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M9 20h6L12 4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 9l5 3"/></svg><small>節拍</small></button><button type="button" id="stats-tab" aria-label="統計">▤<small>統計</small></button></div><div class="seg" role="group"><button type="button" id="google">登入</button><button id="signout" type="button" hidden>登出</button><label class="import">匯入<input id="import-file" type="file" accept="application/json"></label></div><p id="sync-status" role="status"></p><p id="import-status" role="status"></p><span id="email" hidden></span></div><div id="answers" class="answers piano" role="group" aria-label="鋼琴鍵盤"></div><span id="counter" hidden></span><span id="progress" hidden></span><div id="feedback" hidden></div><select id="mode" hidden><option value="treble" selected>高</option><option value="bass">低</option><option value="mixed">合</option></select><input id="count" type="number" hidden value="20"><input id="ledger" type="checkbox" hidden checked><select id="naming" hidden><option value="letters" selected>C</option><option value="solfege">Do</option></select></div></div></section><section id="result-view" class="hidden"><div class="card"><div id="result-metrics" class="metrics"></div><button id="again" class="primary">再來</button></div></section><section id="stats-view" class="hidden"><div class="card"><div id="chart"></div><div id="recent-rounds"></div><div id="heat-treble" class="heat"></div><div id="heat-bass" class="heat"></div><div class="stats-actions"><button id="export">匯出</button><button id="clear">清除</button></div></div></section></main><script src="vendor/supabase-js.js"></script><script>
 'use strict';
 const $=s=>document.querySelector(s), letters=['C','D','E','F','G','A','B'], syllables=['Do','Re','Mi','Fa','Sol','La','Si'];
 const index=n=>Number(n.slice(1))*7+letters.indexOf(n[0]);
@@ -306,7 +309,7 @@ function preferPlayback(){try{const session=navigator.audioSession;if(session&&s
 function unlockAudio(){preferPlayback();let ctx=null;try{ctx=ensureAudio()}catch(e){return null}if(!ctx)return null;try{if(ctx.state==='suspended'||ctx.state==='interrupted'){const pending=ctx.resume();if(pending&&typeof pending.then==='function')pending.then(()=>{},()=>{})}}catch(e){}if(!audioUnlocked){try{const buffer=ctx.createBuffer(1,1,ctx.sampleRate||22050),src=ctx.createBufferSource();src.buffer=buffer;src.connect(ctx.destination);src.start(0);audioUnlocked=true}catch(e){}}return ctx}
 function stopTone(){const tone=activeTone;activeTone=null;if(!tone)return;try{tone.gain.disconnect()}catch(e){}}
 const soundIcon={on:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg>',off:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9.5l5 5M21 9.5l-5 5"/></svg>'};
-function paintSound(){const b=$('#sound-toggle');if(!b)return;const on=soundPref;b.setAttribute('aria-checked',on?'true':'false');b.innerHTML=on?soundIcon.on:soundIcon.off;b.setAttribute('aria-label',on?'聲音開':'靜音')}
+function paintSound(){const b=$('#sound-toggle');if(!b)return;const on=soundPref;b.setAttribute('aria-checked',on?'true':'false');b.innerHTML=(on?soundIcon.on:soundIcon.off)+'<small>聲音</small>';b.setAttribute('aria-label',on?'聲音開':'靜音')}
 function playAnsweredNote(note){if(!soundPref||!note)return;try{const ctx=unlockAudio();if(!ctx||ctx.state==='closed')return;const hz=pitchHz(note);if(!Number.isFinite(hz)||hz<=0)return;stopTone();const osc=ctx.createOscillator(),gain=ctx.createGain(),t=ctx.currentTime;osc.type='sine';osc.frequency.value=hz;gain.gain.setValueAtTime(0.0001,t);gain.gain.exponentialRampToValueAtTime(0.18,t+0.02);gain.gain.exponentialRampToValueAtTime(0.0001,t+0.42);osc.connect(gain);gain.connect(ctx.destination);osc.start(t);osc.stop(t+0.45);activeTone={osc,gain};osc.onended=()=>{if(activeTone&&activeTone.osc===osc)activeTone=null}}catch(e){}}
 
 function loadTune(){
@@ -326,8 +329,18 @@ function saveTune(key,value){try{localStorage.setItem(key,value)}catch(e){}}
 function windows(){return JUDGE_WINDOWS[judgeMode]||JUDGE_WINDOWS.strict}
 function classify(offsetMs,mode){const w=(mode?JUDGE_WINDOWS[mode]:windows());const a=Math.abs(offsetMs);if(a<=w.perfect)return 'perfect';if(a<=w.ok)return 'ok';return 'miss'}
 function secBeat(){return 60/bpm}
-function pxPerSec(){return PX_BEAT*bpm/60}
-function noteX(time,now){return HIT_X+(time-now)*pxPerSec()}
+let hitX=130,pxBeat=110,viewW=390,viewH=320,staffGeom={gap:40,step:20,bottom:240,top:80,mid:160};
+function pxPerSec(){return pxBeat*bpm/60}
+function noteX(time,now){return hitX+(time-now)*pxPerSec()}
+function layoutStaff(){
+ const box=$('#score').getBoundingClientRect();
+ viewW=Math.max(280,box.width||390); viewH=Math.max(180,box.height||300);
+ const gap=Math.max(32,viewH*0.145), bottom=viewH*0.84, top=bottom-gap*4, span=bottom-top;
+ const clefScale=span/210, clefRight=10+96*clefScale;
+ hitX=Math.min(viewW*0.46, clefRight+gap*1.25);
+ pxBeat=Math.max(76,(viewW-hitX)/2.35);
+ staffGeom={gap,step:gap/2,bottom,top,mid:top+gap*2,clefScale};
+}
 function nowAudio(){try{if(audioCtx&&audioCtx.state!=='closed')return audioCtx.currentTime}catch(e){}return performance.now()/1000}
 function musicNow(){const raw=nowAudio();if(holding&&held)clockShift=raw-held.time;return raw-clockShift}
 function stopClicks(){for(const n of clickNodes){try{n.stop()}catch(e){}}clickNodes=[]}
@@ -374,32 +387,40 @@ function flushRound(incomplete){
  data.rounds.push(result); queueRound(result); save(); round=[];
  activeRoundId=crypto.randomUUID();
 }
-function staffY(clef,note){const bottom=clef==='treble'?'E4':'G2',base=clef==='treble'?30:18;return 142-(index(note)-base)*9}
+function staffY(clef,note){const base=clef==='treble'?30:18;return staffGeom.bottom-(index(note)-base)*staffGeom.step}
 function glyph(x,y,dur,color){
- const above=y<106,sx=above?x-8:x+8,sy=above?y+34:y-34,open=dur>=2;
- const head=`<ellipse cx="${x}" cy="${y}" rx="8.2" ry="5.6" fill="${open?'#fbf7ef':color}" stroke="${color}" stroke-width="1.5" transform="rotate(-18 ${x} ${y})"/>`;
- const stem=`<line x1="${sx}" y1="${y}" x2="${sx}" y2="${sy}" stroke="${color}" stroke-width="1.25"/>`;
- const flag=dur===0.5?`<path d="M${sx} ${sy} q ${above?12:-12} ${above?6:-6} ${above?2:-2} ${above?16:-16}" fill="none" stroke="${color}" stroke-width="1.25"/>`:'';
+ const g=staffGeom, above=y<g.mid, rx=g.gap*0.46, ry=g.gap*0.34, len=g.gap*1.45;
+ const sx=above?x-rx*0.85:x+rx*0.85, sy=above?y+len:y-len, open=dur>=2, sw=Math.max(1.6,g.gap*0.045);
+ const head=`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${open?'#fbf7ef':color}" stroke="${color}" stroke-width="${sw}" transform="rotate(-18 ${x} ${y})"/>`;
+ const stem=`<line x1="${sx}" y1="${y}" x2="${sx}" y2="${sy}" stroke="${color}" stroke-width="${sw}"/>`;
+ const flag=dur===0.5?`<path d="M${sx} ${sy} q ${above?rx:-rx} ${above?g.step:-g.step} 0 ${above?g.gap*0.9:-g.gap*0.9}" fill="none" stroke="${color}" stroke-width="${sw}"/>`:'';
  let led='';
- for(let ly=160; ly<=y+2; ly+=18) led+=`<line x1="${x-12}" x2="${x+12}" y1="${ly}" y2="${ly}" class="ledger-line"/>`;
- for(let ly=52; ly>=y-2; ly-=18) led+=`<line x1="${x-12}" x2="${x+12}" y1="${ly}" y2="${ly}" class="ledger-line"/>`;
+ const half=rx+4;
+ for(let ly=g.bottom+g.gap; ly<=y+2; ly+=g.gap) led+=`<line x1="${x-half}" x2="${x+half}" y1="${ly}" y2="${ly}" stroke="#1c1915" stroke-width="${sw}"/>`;
+ for(let ly=g.top-g.gap; ly>=y-2; ly-=g.gap) led+=`<line x1="${x-half}" x2="${x+half}" y1="${ly}" y2="${ly}" stroke="#1c1915" stroke-width="${sw}"/>`;
  return led+stem+head+flag;
 }
 const TREBLE='<g transform="translate(2,48) scale(0.46)"><path d="M81 138 C61 125 72 108 88 111 C108 114 108 139 90 146 C66 156 47 136 53 114 C58 94 82 81 90 63 C96 50 92 33 85 31 C73 37 73 59 78 81 L98 167 C103 186 83 198 72 185 C64 173 77 163 85 171 C91 180 80 187 75 180" fill="none" stroke="#1c1915" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></g>';
 const BASS='<g transform="translate(0,78) scale(0.62)" fill="#1c1915"><path d="M62 85 C59 70 68 62 81 62 C98 62 107 72 106 87 C105 110 84 130 62 140 C80 124 94 105 94 86 C94 72 86 67 78 70 C73 72 70 76 71 80 C79 75 87 83 83 90 C78 99 63 97 62 85Z"/><path d="M116 75 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0 M116 95 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0"/></g>';
 function drawScore(now){
- const clef=stream.reduce((c,n)=>n.time<=now+0.02?n.clef:c, roundMode==='mixed'?(stream.find(n=>!n.judged)?.clef||'treble'):roundMode);
+ layoutStaff();
+ const g=staffGeom, clef=stream.reduce((c,n)=>n.time<=now+0.02?n.clef:c, roundMode==='mixed'?(stream.find(n=>!n.judged)?.clef||'treble'):roundMode);
  let notes='';
  for(const n of stream){
   const x=noteX(n.time,now);
-  if(x<-30||x>390) continue;
+  if(x<-40||x>viewW+40) continue;
   notes+=glyph(x,staffY(n.clef,n.note),n.dur,n.mark==='bad'||n.mark==='miss'?'#6e2c32':n.mark==='ok'?'#7a5b3a':n.mark==='perfect'?'#1f4d3a':'#1c1915');
  }
- const barsSvg=beats.filter(b=>b.accent).map(b=>{const x=noteX(b.time,now);return x>70&&x<370?`<line x1="${x}" x2="${x}" y1="70" y2="142" stroke="#1c1915" stroke-width="1.15"/>`:''}).join('');
- const lines=[70,88,106,124,142].map(y=>`<line class="staff-line" x1="0" x2="360" y1="${y}" y2="${y}" stroke="#1c1915" stroke-width="1"/>`).join('');
- const sig='<text x="78" y="100" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-size="22" font-weight="700" fill="#1c1915">4</text><text x="78" y="126" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-size="22" font-weight="700" fill="#1c1915">4</text>';
- const hit=`<line x1="${HIT_X}" x2="${HIT_X}" y1="60" y2="152" stroke="#1c1915" stroke-width="1.4"/>`;
- $('#score').innerHTML=`<rect width="360" height="200" fill="#fbf7ef"/>${lines}${barsSvg}${sig}${clef==='bass'?BASS:TREBLE}${hit}${notes}`;
+ const sw=Math.max(1.2,g.gap*0.035);
+ const barsSvg=beats.filter(b=>b.accent).map(b=>{const x=noteX(b.time,now);return x>hitX-8&&x<viewW-8?`<line x1="${x}" x2="${x}" y1="${g.top}" y2="${g.bottom}" stroke="#1c1915" stroke-width="${sw}"/>`:''}).join('');
+ const lines=[]; for(let i=0;i<5;i++){const y=g.top+i*g.gap; lines.push(`<line class="staff-line" x1="0" x2="${viewW}" y1="${y}" y2="${y}" stroke="#1c1915" stroke-width="${sw}"/>`)}
+ const fs=g.gap*0.62, sx=hitX-g.gap*0.72;
+ const sig=`<text x="${sx}" y="${g.mid-g.step*0.2}" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-size="${fs}" font-weight="700" fill="#1c1915">4</text><text x="${sx}" y="${g.mid+g.gap*0.72}" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-size="${fs}" font-weight="700" fill="#1c1915">4</text>`;
+ const clefSvg=clef==='bass'?`<g transform="translate(8,${g.top-g.gap*0.05}) scale(${g.clefScale})">${BASS.replace('<g transform="translate(0,78) scale(0.62)" ','<g ')}</g>`:`<g transform="translate(2,${g.top-g.gap*0.45}) scale(${g.clefScale})">${TREBLE.replace('<g transform="translate(2,48) scale(0.46)">','<g>')}</g>`;
+ const band=g.gap*1.35;
+ const hit=`<rect class="hit-bar" x="${hitX-band/2}" y="${g.top-g.gap*0.35}" width="${band}" height="${(g.bottom-g.top)+g.gap*0.7}" rx="${g.gap*0.18}" fill="rgba(92,68,40,0.16)"/>`;
+ const svg=$('#score'); svg.setAttribute('viewBox',`0 0 ${viewW} ${viewH}`); svg.setAttribute('preserveAspectRatio','none');
+ svg.innerHTML=`<rect width="${viewW}" height="${viewH}" fill="#fbf7ef"/>${lines.join('')}${hit}${barsSvg}${sig}${clefSvg}${notes}`;
 }
 function drawIdle(){drawScore(0)}
 function pump(){
@@ -531,7 +552,7 @@ function setBpm(next){
 }
 
 function answer(letter){if(!running||locked||performance.now()-started<200)return false;const elapsed=performance.now()-started,correct=check(letter);locked=true;const record={...current,correct,time:elapsed};round.push(record);queueAnswer(record);const key=current.clef+':'+current.note,s=data.notes[key]||{attempts:0,errors:0,averageTime:0};if(correct)s.averageTime+=(elapsed-s.averageTime)/(s.attempts-s.errors+1);s.attempts++;if(!correct)s.errors++;data.notes[key]=s;if(round.length>=total){completedResult=roundResult();data.rounds.push(completedResult);queueRound(completedResult);running=false}save();const advance=()=>completedResult?finish():next();if(correct){try{playAnsweredNote(current.note)}catch(e){}advance()}else{$('#feedback').textContent=current.note;$('#note-head').setAttribute('stroke','#6e2c32');$('#note-head').setAttribute('fill','#f6e4e2');setButtons(true);timer=setTimeout(advance,1000)}return correct}
-function show(view){if(view==='stats'&&running)interrupt();document.body.classList.toggle('stage',view==='practice');document.body.classList.toggle('practicing',running&&view==='practice');for(const id of ['practice','result','stats'])$('#'+id+'-view').classList.toggle('hidden',id!==view);$('#practice-tab').classList.toggle('active',view!=='stats');$('#stats-tab').classList.toggle('active',view==='stats');if(view==='stats')renderStats()}
+function show(view){if(view==='stats'&&running)interrupt();const practice=view==='practice';document.body.classList.toggle('stage',practice);document.body.classList.toggle('practicing',running&&practice);for(const id of ['practice','result','stats'])$('#'+id+'-view').classList.toggle('hidden',id!==view);$('#back-practice').classList.toggle('hidden',practice);$('#play-controls').classList.toggle('hidden',!practice);if(view==='stats')renderStats()}
 function start(){if(cloudUser&&(clearing||localStorage.getItem(key('clear-pending')))){$('#sync-status').textContent='清除尚未完成';return}if(running){interrupt();return}show('practice');rhythmStart()}
 function roundResult(incomplete=false){const correct=round.filter(r=>r.correct),groups={};round.forEach(r=>{const k=r.clef+':'+r.note,g=groups[k]||(groups[k]={...r,correctCount:0,errors:0,sum:0});if(r.correct){g.correctCount++;g.sum+=r.time}else g.errors++});const values=Object.values(groups),slow=values.filter(g=>g.correctCount).sort((a,b)=>b.sum/b.correctCount-a.sum/a.correctCount)[0],wrong=values.filter(g=>g.errors).sort((a,b)=>b.errors-a.errors)[0],label=g=>g?`${g.clef==='treble'?'高音':'低音'} ${g.note}`:'無';return {client_id:activeRoundId,time:new Date().toISOString(),count:round.length,accuracy:correct.length/round.length,averageTime:correct.length?correct.reduce((s,r)=>s+r.time,0)/correct.length:null,mode:roundMode,slowest:slow?label(slow):'—',mostErrors:label(wrong),...(incomplete?{incomplete:true,planned:total}:{})}}
 function interrupt(){if(!running)return;clearTimeout(timer);running=false;holding=false;held=null;interrupted=true;locked=true;cancelAnimationFrame(rafId);stopClicks();setButtons(true);document.body.classList.remove('practicing');if(round.length){const result=roundResult(round.length<5);data.rounds.push(result);queueRound(result);save()}paintTransport();drawIdle()}
@@ -562,8 +583,8 @@ let transportPointer=false;
 $('#transport').addEventListener('pointerdown',e=>{if(e.button>0)return;transportPointer=true;if(soundPref)unlockAudio();start()});
 $('#transport').addEventListener('click',()=>{if(transportPointer){transportPointer=false;return}if(soundPref)unlockAudio();start()});
 $('#again').onclick=()=>{show('practice');if(!running)rhythmStart()};
-$('#practice-tab').onclick=()=>show('practice');
-$('#stats-tab').onclick=()=>show('stats');
+$('#back-practice').onclick=()=>show('practice');
+$('#stats-tab').onclick=()=>{$('#tune-sheet').setAttribute('hidden','');$('#gear').setAttribute('aria-expanded','false');show('stats')};
 $('#export').onclick=exportData;$('#clear').onclick=clearHistory;
 document.addEventListener('keydown',e=>{if((e.target instanceof Element && e.target.matches('input,select'))||e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;if(/^[a-g]$/i.test(e.key)&&!$('#practice-view').classList.contains('hidden')&&running){if(soundPref)unlockAudio();judge(e.key.toUpperCase())}});
 $('#bpm-down').onclick=()=>setBpm(bpm-5);
