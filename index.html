@@ -238,7 +238,38 @@ input[type=checkbox]{accent-color:var(--burgundy);width:20px;min-height:20px}
     border-right:0;
   }
 }
-</style></head><body><header><div class="brand">音感練習室</div><nav><button id="sound-toggle" type="button" role="switch" aria-checked="true" aria-label="聲音開"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg></button><button id="practice-tab" class="active">練習</button><button id="stats-tab">統計</button></nav></header><div id="account-bar" class="account-bar"><button id="google">使用 Google 登入</button><span id="email"></span> <button id="signout" hidden>登出</button><label class="import">匯入<input id="import-file" type="file" accept="application/json"></label><p id="sync-status" role="status"></p><p id="import-status" role="status"></p></div><main hidden><button id="settings-back" type="button" aria-label="返回練習設定">←</button><section id="practice-view"><div class="layout"><div class="card practice"><div class="row"><span id="counter"></span></div><div class="progress"><span id="progress" style="width:0%"></span></div><svg id="score" class="score" viewBox="28 12 364 190" aria-label="五線譜上的音符" role="img"></svg><div id="feedback" class="feedback" aria-live="polite"></div><div id="answers" class="answers piano" role="group" aria-label="鋼琴鍵盤"></div></div><aside class="card settings"><label class="field">譜號<select id="mode"><option value="treble">只高音譜</option><option value="bass">只低音譜</option><option value="mixed">高低音混合</option></select></label><label class="field">題數<input id="count" type="number" min="5" max="100" value="20"></label><label class="switch">加線<input id="ledger" type="checkbox" checked></label><label class="field">音名<select id="naming"><option value="letters">C D E F G A B</option><option value="solfege">Do Re Mi Fa Sol La Si</option></select></label><button id="start" class="primary start">開始</button></aside></div></section><section id="result-view" class="hidden"><div class="card"><div id="result-metrics" class="metrics"></div><button id="again" class="primary">再來</button></div></section><section id="stats-view" class="hidden"><div class="card"><div id="chart"></div><div id="recent-rounds"></div><div id="heat-treble" class="heat"></div><div id="heat-bass" class="heat"></div><div class="stats-actions"><button id="export">匯出</button><button id="clear">清除</button></div></div></section></main><script src="vendor/supabase-js.js"></script><script>
+
+.icon-btn{width:40px;height:40px;min-width:40px;min-height:40px;padding:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+.icon-btn[aria-pressed="true"],#metro-toggle[aria-checked="true"],#sound-toggle[aria-checked="true"]{background:#f8e7e4;border-color:var(--burgundy);color:var(--burgundy)}
+#metro-toggle[aria-checked="false"]{background:#efe8da;border-color:#cbbfa8;color:var(--muted)}
+#mode,#count,#ledger,#naming,#counter,#progress,#feedback{display:none!important}
+.bpm{display:inline-flex;align-items:center;border:1px solid var(--ink);border-radius:999px;overflow:hidden;background:var(--sheet);height:40px}
+.bpm button{border:0;border-radius:0;min-height:40px;width:32px;padding:0;background:transparent}
+.bpm output{min-width:2.4em;text-align:center;font-variant-numeric:tabular-nums;font-weight:700}
+.practice{position:relative}
+.score{background:transparent}
+.tune-sheet{position:absolute;z-index:6;left:8px;right:8px;top:8px;display:flex;flex-direction:column;gap:8px;padding:10px;background:var(--sheet);border:1px solid var(--ink);border-radius:16px;box-shadow:0 8px 24px rgba(28,25,21,.08)}
+.tune-sheet[hidden]{display:none!important}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;min-height:44px;padding:4px 6px;font-family:var(--serif)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
+@media(max-width:800px){
+  header{align-items:flex-start}
+  nav{width:100%;justify-content:space-between}
+  body.stage{height:100dvh;max-height:100dvh;overflow:hidden;display:flex;flex-direction:column}
+  body.stage header{flex:none}
+  body.stage main{flex:1 1 auto;min-height:0;margin:0;padding:0 8px;display:flex;flex-direction:column}
+  body.stage #practice-view{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+  body.stage .layout{flex:1 1 auto;min-height:0;margin:0;display:flex}
+  body.stage .practice{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;padding:0 0 calc(132px + env(safe-area-inset-bottom,0px));border:0;box-shadow:none;background:transparent}
+  body.stage .score{flex:1 1 auto;min-height:0;max-height:none;width:100%;height:auto;margin:0}
+  body.stage .piano{position:absolute;left:-8px;right:auto;bottom:0;z-index:4;width:100vw;max-width:100vw;height:calc(132px + env(safe-area-inset-bottom,0px));min-height:calc(120px + env(safe-area-inset-bottom,0px));margin:0!important;padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;border-radius:0;border-left:0;border-right:0}
+  body.stage.practicing .account-bar{display:none!important}
+}
+@media(min-width:801px){
+  .score{height:230px;max-height:230px}
+}
+</style></head><body class="stage"><header><div class="brand">音感練習室</div><nav><button id="transport" class="icon-btn" type="button" aria-pressed="false" aria-label="開始"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></button><button id="sound-toggle" class="icon-btn" type="button" role="switch" aria-checked="true" aria-label="聲音開"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg></button><button id="metro-toggle" class="icon-btn" type="button" role="switch" aria-checked="true" aria-label="節拍"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M8 21h8L13 3h-2z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 8l6 4"/></svg></button><div class="bpm" role="group" aria-label="速度"><button type="button" id="bpm-down" aria-label="慢">−</button><output id="bpm">60</output><button type="button" id="bpm-up" aria-label="快">+</button></div><button id="gear" class="icon-btn" type="button" aria-expanded="false" aria-label="設定"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></button><button id="practice-tab" class="active">練習</button><button id="stats-tab">統計</button></nav></header><div id="account-bar" class="account-bar"><button id="google">使用 Google 登入</button><span id="email"></span> <button id="signout" hidden>登出</button><label class="import">匯入<input id="import-file" type="file" accept="application/json"></label><p id="sync-status" role="status"></p><p id="import-status" role="status"></p></div><main hidden><section id="practice-view"><div class="layout"><div class="card practice"><svg id="score" class="score" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid meet" aria-label="五線譜" role="img"></svg><div id="tune-sheet" class="tune-sheet" hidden><div class="seg" id="clef-seg" role="group"><button type="button" data-clef="treble" aria-label="高音譜" aria-pressed="true">𝄞</button><button type="button" data-clef="bass" aria-label="低音譜">𝄢</button><button type="button" data-clef="mixed" aria-label="高低音">𝄞𝄢</button></div><div class="seg" role="group"><button type="button" id="ledger-toggle" aria-pressed="true" aria-label="加線">≡</button><button type="button" data-name="letters" aria-pressed="true" aria-label="字母">C</button><button type="button" data-name="solfege" aria-label="唱名">Do</button></div><div class="seg" id="flow-seg" role="group"><button type="button" data-flow="continue" aria-pressed="true" aria-label="繼續">→</button><button type="button" data-flow="pause" aria-label="停下">❚❚</button></div><div class="seg" id="judge-seg" role="group"><button type="button" data-judge="strict" aria-pressed="true">±100</button><button type="button" data-judge="normal">±160</button><button type="button" data-judge="loose">±240</button></div><div class="seg" id="rhythm-seg" role="group"><button type="button" data-rhythm="quarter" aria-pressed="true" aria-label="四分音符">♩</button><button type="button" data-rhythm="mixed" aria-label="混合節奏">♩♪</button></div></div><div id="answers" class="answers piano" role="group" aria-label="鋼琴鍵盤"></div><span id="counter" hidden></span><span id="progress" hidden></span><div id="feedback" hidden></div><select id="mode" hidden><option value="treble" selected>高</option><option value="bass">低</option><option value="mixed">合</option></select><input id="count" type="number" hidden value="20"><input id="ledger" type="checkbox" hidden checked><select id="naming" hidden><option value="letters" selected>C</option><option value="solfege">Do</option></select></div></div></section><section id="result-view" class="hidden"><div class="card"><div id="result-metrics" class="metrics"></div><button id="again" class="primary">再來</button></div></section><section id="stats-view" class="hidden"><div class="card"><div id="chart"></div><div id="recent-rounds"></div><div id="heat-treble" class="heat"></div><div id="heat-bass" class="heat"></div><div class="stats-actions"><button id="export">匯出</button><button id="clear">清除</button></div></div></section></main><script src="vendor/supabase-js.js"></script><script>
 'use strict';
 const $=s=>document.querySelector(s), letters=['C','D','E','F','G','A','B'], syllables=['Do','Re','Mi','Fa','Sol','La','Si'];
 const index=n=>Number(n.slice(1))*7+letters.indexOf(n[0]);
@@ -257,12 +288,14 @@ function cleanData(raw){
 let raw;try{raw=JSON.parse(localStorage.getItem('sight-reading-v1'))}catch{}
 let data={version:1,rounds:[],notes:{}};
 let current,geom,running=false,locked=false,started=0,round=[],total=20,roundMode='treble',activeRoundId=null,practiceGeneration=0,timer,previous=null,completedResult=null,resultReady=false,interrupted=false;
+let bpm=60,metroOn=true,flowMode='continue',judgeMode='strict',rhythmMode='quarter',ledgerOn=true,namingMode='letters',stream=[],beats=[],clickCursor=0,nextNoteTime=0,clockShift=0,holding=false,held=null,rafId=0,clickNodes=[],clickPlan=[],localTiming=[];
+const JUDGE_WINDOWS={strict:{perfect:50,ok:100},normal:{perfect:80,ok:160},loose:{perfect:120,ok:240}},PX_BEAT=64,HIT_X=112,AUDIO_LOOK=0.2;
 const save=()=>{if(cloudUser)merge();else localStorage.setItem('sr-guest',JSON.stringify(data));};
 function renderNote(clef,note){current={clef,note};const lines=[65,85,105,125,145],bottom=clef==='treble'?'E4':'G2',y=145-(index(note)-index(bottom))*10,ledger=[];for(let v=165;v<=y;v+=20)ledger.push(v);for(let v=45;v>=y;v-=20)ledger.push(v);geom={staffLinesY:lines,noteY:y,ledgerLinesY:ledger,clef};let path=clef==='treble'?'<path id="clef-treble" d="M81 138 C61 125 72 108 88 111 C108 114 108 139 90 146 C66 156 47 136 53 114 C58 94 82 81 90 63 C96 50 92 33 85 31 C73 37 73 59 78 81 L98 167 C103 186 83 198 72 185 C64 173 77 163 85 171 C91 180 80 187 75 180" fill="none" stroke="#1c1915" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>':'<g id="clef-bass" fill="#1c1915"><path d="M62 85 C59 70 68 62 81 62 C98 62 107 72 106 87 C105 110 84 130 62 140 C80 124 94 105 94 86 C94 72 86 67 78 70 C73 72 70 76 71 80 C79 75 87 83 83 90 C78 99 63 97 62 85Z"/><path d="M116 75 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0 M116 95 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0"/></g>';
 $('#score').innerHTML=lines.map(v=>`<line class="staff-line" x1="40" x2="380" y1="${v}" y2="${v}"/>`).join('')+path+ledger.map(v=>`<line class="ledger-line" x1="212" x2="268" y1="${v}" y2="${v}"/>`).join('')+`<line class="stem" x1="${y<105?222:258}" y1="${y}" x2="${y<105?222:258}" y2="${y+(y<105?46:-46)}" stroke="#1c1915" stroke-width="2.2" stroke-linecap="round"/><ellipse id="note-head" cx="240" cy="${y}" rx="18" ry="12" fill="#fbf7ef" stroke="#1c1915" stroke-width="3.4" transform="rotate(-18 240 ${y})"/>`;started=performance.now();return geom}
 function check(letter){return !!current&&String(letter).toUpperCase()===current.note[0]}
 function weight(c){const s=data.notes[c.clef+':'+c.note];return s?1+4*(s.attempts>0?s.errors/s.attempts:0)+Math.min(s.averageTime/1800,4):1}
-function next(){const clefs=roundMode==='mixed'?['treble','bass']:[roundMode],pool=clefs.flatMap(c=>notesFor(c,$('#ledger').checked).map(n=>({clef:c,note:n}))).filter(c=>!previous||c.clef!==previous.clef||c.note!==previous.note);let r=Math.random()*pool.reduce((s,c)=>s+weight(c),0),pick=pool[pool.length-1];for(const c of pool){r-=weight(c);if(r<0){pick=c;break}}previous=pick;renderNote(pick.clef,pick.note);locked=false;$('#feedback').textContent='';$('#counter').textContent=`${round.length+1}/${total}`;$('#progress').style.width=100*round.length/total+'%';setButtons(false)}
+function next(){const clefs=roundMode==='mixed'?['treble','bass']:[roundMode],pool=clefs.flatMap(c=>notesFor(c,$('#ledger').checked).map(n=>({clef:c,note:n}))).filter(c=>!previous||c.clef!==previous.clef||c.note!==previous.note);let r=Math.random()*pool.reduce((s,c)=>s+weight(c),0),pick=pool[pool.length-1];for(const c of pool){r-=weight(c);if(r<0){pick=c;break}}previous=pick;renderNote(pick.clef,pick.note);locked=false;if($('#feedback'))$('#feedback').textContent='';if($('#counter'))$('#counter').textContent=`${round.length+1}/${total}`;if($('#progress'))$('#progress').style.width=100*round.length/total+'%';setButtons(false)}
 function setButtons(disabled){document.querySelectorAll('[data-letter]').forEach(b=>b.disabled=disabled)}
 const SEMI={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
 let soundPref=true,audioCtx=null,activeTone=null,audioUnlocked=false;
@@ -275,15 +308,237 @@ function stopTone(){const tone=activeTone;activeTone=null;if(!tone)return;try{to
 const soundIcon={on:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg>',off:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9.5l5 5M21 9.5l-5 5"/></svg>'};
 function paintSound(){const b=$('#sound-toggle');if(!b)return;const on=soundPref;b.setAttribute('aria-checked',on?'true':'false');b.innerHTML=on?soundIcon.on:soundIcon.off;b.setAttribute('aria-label',on?'聲音開':'靜音')}
 function playAnsweredNote(note){if(!soundPref||!note)return;try{const ctx=unlockAudio();if(!ctx||ctx.state==='closed')return;const hz=pitchHz(note);if(!Number.isFinite(hz)||hz<=0)return;stopTone();const osc=ctx.createOscillator(),gain=ctx.createGain(),t=ctx.currentTime;osc.type='sine';osc.frequency.value=hz;gain.gain.setValueAtTime(0.0001,t);gain.gain.exponentialRampToValueAtTime(0.18,t+0.02);gain.gain.exponentialRampToValueAtTime(0.0001,t+0.42);osc.connect(gain);gain.connect(ctx.destination);osc.start(t);osc.stop(t+0.45);activeTone={osc,gain};osc.onended=()=>{if(activeTone&&activeTone.osc===osc)activeTone=null}}catch(e){}}
+
+function loadTune(){
+ try{
+  const b=Number(localStorage.getItem('sr-bpm')); if(b>=40&&b<=160) bpm=b;
+  const m=localStorage.getItem('sr-metro'); if(m==='off') metroOn=false; else if(m==='on') metroOn=true;
+  const f=localStorage.getItem('sr-flow'); if(f==='pause'||f==='continue') flowMode=f;
+  const j=localStorage.getItem('sr-judge'); if(JUDGE_WINDOWS[j]) judgeMode=j;
+  const r=localStorage.getItem('sr-rhythm'); if(r==='quarter'||r==='mixed') rhythmMode=r;
+  const c=localStorage.getItem('sr-clef'); if(c==='treble'||c==='bass'||c==='mixed') roundMode=c;
+  const led=localStorage.getItem('sr-ledger'); if(led==='off') ledgerOn=false; else if(led==='on') ledgerOn=true;
+  const nm=localStorage.getItem('sr-name'); if(nm==='letters'||nm==='solfege') namingMode=nm;
+ }catch(e){}
+ $('#mode').value=roundMode; $('#ledger').checked=ledgerOn; $('#naming').value=namingMode;
+}
+function saveTune(key,value){try{localStorage.setItem(key,value)}catch(e){}}
+function windows(){return JUDGE_WINDOWS[judgeMode]||JUDGE_WINDOWS.strict}
+function classify(offsetMs,mode){const w=(mode?JUDGE_WINDOWS[mode]:windows());const a=Math.abs(offsetMs);if(a<=w.perfect)return 'perfect';if(a<=w.ok)return 'ok';return 'miss'}
+function secBeat(){return 60/bpm}
+function pxPerSec(){return PX_BEAT*bpm/60}
+function noteX(time,now){return HIT_X+(time-now)*pxPerSec()}
+function nowAudio(){try{if(audioCtx&&audioCtx.state!=='closed')return audioCtx.currentTime}catch(e){}return performance.now()/1000}
+function musicNow(){const raw=nowAudio();if(holding&&held)clockShift=raw-held.time;return raw-clockShift}
+function stopClicks(){for(const n of clickNodes){try{n.stop()}catch(e){}}clickNodes=[]}
+function scheduleClick(musicTime,accent){
+ clickPlan.push(musicTime); if(clickPlan.length>80) clickPlan.shift();
+ if(!soundPref||!metroOn) return;
+ const ctx=audioCtx; if(!ctx||ctx.state==='closed') return;
+ const when=Math.max(ctx.currentTime, musicTime+clockShift);
+ try{
+  const osc=ctx.createOscillator(),gain=ctx.createGain();
+  osc.type='sine'; osc.frequency.value=accent?1760:988;
+  gain.gain.setValueAtTime(0.0001,when);
+  gain.gain.exponentialRampToValueAtTime(accent?0.2:0.11,when+0.004);
+  gain.gain.exponentialRampToValueAtTime(0.0001,when+0.045);
+  osc.connect(gain); gain.connect(ctx.destination); osc.start(when); osc.stop(when+0.05);
+  clickNodes.push(osc); if(clickNodes.length>32) clickNodes.shift();
+ }catch(e){}
+}
+function pickRhythmNote(){
+ const clefs=roundMode==='mixed'?['treble','bass']:[roundMode];
+ const pool=clefs.flatMap(c=>notesFor(c,ledgerOn).map(n=>({clef:c,note:n}))).filter(c=>!previous||c.clef!==previous.clef||c.note!==previous.note);
+ if(!pool.length) return {clef:roundMode==='bass'?'bass':'treble',note:roundMode==='bass'?'D3':'G4'};
+ let r=Math.random()*pool.reduce((s,c)=>s+weight(c),0),pick=pool[pool.length-1];
+ for(const c of pool){r-=weight(c);if(r<0){pick=c;break}}
+ previous=pick; return pick;
+}
+function nextDur(){if(rhythmMode!=='mixed')return 1;return [0.5,1,1,2][Math.floor(Math.random()*4)]}
+function rememberTiming(n,offset,correct){
+ localTiming.push({clef:n.clef,note:n.note,offset,correct}); if(localTiming.length>200) localTiming.shift();
+ try{localStorage.setItem('sr-timing',JSON.stringify(localTiming))}catch(e){}
+}
+function recordAttempt(n,correct,offsetMs){
+ const elapsed=Math.round(Math.min(60000,Math.abs(offsetMs)));
+ const record={clef:n.clef,note:n.note,correct,time:elapsed};
+ round.push(record); rememberTiming(n,offsetMs,correct); queueAnswer(record);
+ const key=n.clef+':'+n.note,s=data.notes[key]||{attempts:0,errors:0,averageTime:0};
+ if(correct)s.averageTime+=(elapsed-s.averageTime)/(s.attempts-s.errors+1);
+ s.attempts++; if(!correct)s.errors++; data.notes[key]=s;
+ if(round.length>=20) flushRound(false); else save();
+}
+function flushRound(incomplete){
+ if(!round.length) return;
+ const result=roundResult(incomplete||round.length<5);
+ data.rounds.push(result); queueRound(result); save(); round=[];
+ activeRoundId=crypto.randomUUID();
+}
+function staffY(clef,note){const bottom=clef==='treble'?'E4':'G2',base=clef==='treble'?30:18;return 142-(index(note)-base)*9}
+function glyph(x,y,dur,color){
+ const above=y<106,sx=above?x-8:x+8,sy=above?y+34:y-34,open=dur>=2;
+ const head=`<ellipse cx="${x}" cy="${y}" rx="8.2" ry="5.6" fill="${open?'#fbf7ef':color}" stroke="${color}" stroke-width="1.5" transform="rotate(-18 ${x} ${y})"/>`;
+ const stem=`<line x1="${sx}" y1="${y}" x2="${sx}" y2="${sy}" stroke="${color}" stroke-width="1.25"/>`;
+ const flag=dur===0.5?`<path d="M${sx} ${sy} q ${above?12:-12} ${above?6:-6} ${above?2:-2} ${above?16:-16}" fill="none" stroke="${color}" stroke-width="1.25"/>`:'';
+ let led='';
+ for(let ly=160; ly<=y+2; ly+=18) led+=`<line x1="${x-12}" x2="${x+12}" y1="${ly}" y2="${ly}" class="ledger-line"/>`;
+ for(let ly=52; ly>=y-2; ly-=18) led+=`<line x1="${x-12}" x2="${x+12}" y1="${ly}" y2="${ly}" class="ledger-line"/>`;
+ return led+stem+head+flag;
+}
+const TREBLE='<g transform="translate(2,48) scale(0.46)"><path d="M81 138 C61 125 72 108 88 111 C108 114 108 139 90 146 C66 156 47 136 53 114 C58 94 82 81 90 63 C96 50 92 33 85 31 C73 37 73 59 78 81 L98 167 C103 186 83 198 72 185 C64 173 77 163 85 171 C91 180 80 187 75 180" fill="none" stroke="#1c1915" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></g>';
+const BASS='<g transform="translate(0,78) scale(0.62)" fill="#1c1915"><path d="M62 85 C59 70 68 62 81 62 C98 62 107 72 106 87 C105 110 84 130 62 140 C80 124 94 105 94 86 C94 72 86 67 78 70 C73 72 70 76 71 80 C79 75 87 83 83 90 C78 99 63 97 62 85Z"/><path d="M116 75 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0 M116 95 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0"/></g>';
+function drawScore(now){
+ const clef=stream.reduce((c,n)=>n.time<=now+0.02?n.clef:c, roundMode==='mixed'?(stream.find(n=>!n.judged)?.clef||'treble'):roundMode);
+ let notes='';
+ for(const n of stream){
+  const x=noteX(n.time,now);
+  if(x<-30||x>390) continue;
+  notes+=glyph(x,staffY(n.clef,n.note),n.dur,n.mark==='bad'||n.mark==='miss'?'#6e2c32':n.mark==='ok'?'#7a5b3a':n.mark==='perfect'?'#1f4d3a':'#1c1915');
+ }
+ const barsSvg=beats.filter(b=>b.accent).map(b=>{const x=noteX(b.time,now);return x>70&&x<370?`<line x1="${x}" x2="${x}" y1="70" y2="142" stroke="#1c1915" stroke-width="1.15"/>`:''}).join('');
+ const lines=[70,88,106,124,142].map(y=>`<line class="staff-line" x1="0" x2="360" y1="${y}" y2="${y}" stroke="#1c1915" stroke-width="1"/>`).join('');
+ const sig='<text x="78" y="100" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-size="22" font-weight="700" fill="#1c1915">4</text><text x="78" y="126" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-size="22" font-weight="700" fill="#1c1915">4</text>';
+ const hit=`<line x1="${HIT_X}" x2="${HIT_X}" y1="60" y2="152" stroke="#1c1915" stroke-width="1.4"/>`;
+ $('#score').innerHTML=`<rect width="360" height="200" fill="#fbf7ef"/>${lines}${barsSvg}${sig}${clef==='bass'?BASS:TREBLE}${hit}${notes}`;
+}
+function drawIdle(){drawScore(0)}
+function pump(){
+ if(!running||holding) return;
+ const now=musicNow();
+ let guard=0;
+ while(beats.length&&beats[beats.length-1].time<now+secBeat()*5.2 && guard++<48){
+  const prev=beats[beats.length-1], index=prev.index+1;
+  beats.push({time:prev.time+secBeat(),index,accent:index%4===0});
+ }
+ guard=0;
+ while(clickCursor<beats.length && beats[clickCursor].time<=now+AUDIO_LOOK && guard++<16){
+  const beat=beats[clickCursor++];
+  if(!beat.sent){beat.sent=true; scheduleClick(beat.time,beat.accent)}
+ }
+ while(beats.length>2 && beats[0].time<now-2 && clickCursor>0){beats.shift(); clickCursor--}
+ guard=0;
+ while(nextNoteTime<now+secBeat()*4.8 && guard++<24){
+  const picked=pickRhythmNote(),dur=nextDur();
+  stream.push({clef:picked.clef,note:picked.note,time:nextNoteTime,dur,judged:false,mark:null});
+  nextNoteTime+=dur*secBeat();
+ }
+ const limit=windows().ok/1000;
+ for(const n of stream){
+  if(n.judged) continue;
+  if(now-n.time>limit){
+   n.judged=true; n.mark='miss';
+   recordAttempt(n,false,windows().ok);
+   if(flowMode==='pause'){holding=true; held=n; break}
+  }
+ }
+ stream=stream.filter(n=>noteX(n.time,now)>-40);
+}
+function frame(){
+ if(!running) return;
+ try{pump(); drawScore(musicNow())}catch(e){window.__frameError=String(e&&e.message||e)}
+ rafId=requestAnimationFrame(frame);
+}
+function rhythmStart(){
+ unlockAudio();
+ stopClicks();
+ stream=[]; beats=[]; clickCursor=0; clickPlan=[]; round=[]; previous=null; holding=false; held=null; clockShift=0;
+ activeRoundId=crypto.randomUUID();
+ practiceGeneration=cloudUser?generation(cloudUser.id):0;
+ completedResult=null; resultReady=false; interrupted=false; running=true; locked=false;
+ const t0=musicNow()+secBeat()*2;
+ beats=[{time:t0,index:0,accent:true,sent:false}];
+ nextNoteTime=t0;
+ setButtons(false);
+ document.body.classList.add('practicing');
+ paintTransport(); paintTune();
+ cancelAnimationFrame(rafId);
+ rafId=requestAnimationFrame(frame);
+}
+function judge(letter,at){
+ if(!running) return false;
+ if(holding){
+  if(held && letter===held.note[0]){
+   holding=false; held.mark='ok';
+   const raw=nowAudio(); clockShift=raw-held.time;
+   try{playAnsweredNote(held.note)}catch(e){}
+  }
+  return true;
+ }
+ const now=typeof at==='number'?at:musicNow(),w=windows();
+ let best=null;
+ for(const n of stream){
+  if(n.judged) continue;
+  const off=(now-n.time)*1000;
+  if(off<-w.ok) continue;
+  if(!best||Math.abs(off)<Math.abs(best.off)) best={n,off};
+ }
+ if(!best) return false;
+ const n=best.n,ad=Math.abs(best.off),right=letter===n.note[0];
+ n.judged=true;
+ if(right&&ad<=w.ok){
+  n.mark=ad<=w.perfect?'perfect':'ok';
+  recordAttempt(n,true,best.off);
+  try{playAnsweredNote(n.note)}catch(e){}
+ }else{
+  n.mark='bad';
+  recordAttempt(n,false,best.off);
+  if(flowMode==='pause'){holding=true; held=n}
+ }
+ return true;
+}
+function paintTransport(){
+ const b=$('#transport'); if(!b) return;
+ b.setAttribute('aria-pressed',running?'true':'false');
+ b.setAttribute('aria-label',running?'停止':'開始');
+ b.innerHTML=running?'<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="6" y="6" width="12" height="12" fill="currentColor"/></svg>':'<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>';
+}
+function paintMetro(){const b=$('#metro-toggle'); if(!b) return; b.setAttribute('aria-checked',metroOn?'true':'false'); b.setAttribute('aria-label',metroOn?'節拍開':'節拍關')}
+function paintTune(){
+ const press=(sel,ok)=>document.querySelectorAll(sel).forEach(b=>b.setAttribute('aria-pressed',ok(b)?'true':'false'));
+ press('#clef-seg button',b=>b.dataset.clef===roundMode);
+ press('#flow-seg button',b=>b.dataset.flow===flowMode);
+ press('#judge-seg button',b=>b.dataset.judge===judgeMode);
+ press('#rhythm-seg button',b=>b.dataset.rhythm===rhythmMode);
+ press('[data-name]',b=>b.dataset.name===namingMode);
+ const led=$('#ledger-toggle'); if(led) led.setAttribute('aria-pressed',ledgerOn?'true':'false');
+ const out=$('#bpm'); if(out) out.textContent=String(bpm);
+ paintMetro();
+}
+function retime(){
+ if(!running||!beats.length) return;
+ const now=musicNow(), beat=secBeat();
+ const kept=beats.filter(b=>b.sent||b.time<=now+AUDIO_LOOK);
+ beats=kept.length?kept.slice():[{time:now+beat,index:0,accent:true,sent:false}];
+ if(!kept.length) beats[0].index=0;
+ let guard=0;
+ while(beats[beats.length-1].time<now+beat*5.2 && guard++<48){
+  const prev=beats[beats.length-1], index=prev.index+1;
+  beats.push({time:prev.time+beat,index,accent:index%4===0,sent:false});
+ }
+ clickCursor=0;
+ const future=stream.filter(n=>!n.judged && n.time>now+0.05);
+ if(future.length>1){
+  let t=future[0].time;
+  for(let i=1;i<future.length;i++){t+=future[i-1].dur*beat; future[i].time=t}
+  nextNoteTime=t+future[future.length-1].dur*beat;
+ }
+}
+function setBpm(next){
+ bpm=Math.max(40,Math.min(160,Math.round(next)));
+ saveTune('sr-bpm',String(bpm));
+ const out=$('#bpm'); if(out) out.textContent=String(bpm);
+ retime();
+}
+
 function answer(letter){if(!running||locked||performance.now()-started<200)return false;const elapsed=performance.now()-started,correct=check(letter);locked=true;const record={...current,correct,time:elapsed};round.push(record);queueAnswer(record);const key=current.clef+':'+current.note,s=data.notes[key]||{attempts:0,errors:0,averageTime:0};if(correct)s.averageTime+=(elapsed-s.averageTime)/(s.attempts-s.errors+1);s.attempts++;if(!correct)s.errors++;data.notes[key]=s;if(round.length>=total){completedResult=roundResult();data.rounds.push(completedResult);queueRound(completedResult);running=false}save();const advance=()=>completedResult?finish():next();if(correct){try{playAnsweredNote(current.note)}catch(e){}advance()}else{$('#feedback').textContent=current.note;$('#note-head').setAttribute('stroke','#6e2c32');$('#note-head').setAttribute('fill','#f6e4e2');setButtons(true);timer=setTimeout(advance,1000)}return correct}
-function show(view){if(view==='practice'&&resultReady)view='result';document.body.classList.toggle('practicing',running&&view==='practice');for(const id of ['practice','result','stats'])$('#'+id+'-view').classList.toggle('hidden',id!==view);$('#practice-tab').classList.toggle('active',view!=='stats');$('#stats-tab').classList.toggle('active',view==='stats');if(view==='stats')renderStats()}
-function start(){if(cloudUser&&(clearing||localStorage.getItem(key('clear-pending')))){$('#sync-status').textContent='清除尚未完成';return}interrupt();clearTimeout(timer);const value=$('#count').value.trim(),number=Number(value);total=value!==''&&Number.isFinite(number)?Math.max(5,Math.min(100,Math.round(number))):20;$('#count').value=total;roundMode=$('#mode').value;round=[];activeRoundId=crypto.randomUUID();practiceGeneration=cloudUser?generation(cloudUser.id):0;completedResult=null;resultReady=false;interrupted=false;running=true;locked=false;['mode','count','ledger'].forEach(id=>$('#'+id).disabled=true);$('#start').textContent='再來';show('practice');window.scrollTo({top:0,behavior:'instant'});next()}
+function show(view){if(view==='stats'&&running)interrupt();document.body.classList.toggle('stage',view==='practice');document.body.classList.toggle('practicing',running&&view==='practice');for(const id of ['practice','result','stats'])$('#'+id+'-view').classList.toggle('hidden',id!==view);$('#practice-tab').classList.toggle('active',view!=='stats');$('#stats-tab').classList.toggle('active',view==='stats');if(view==='stats')renderStats()}
+function start(){if(cloudUser&&(clearing||localStorage.getItem(key('clear-pending')))){$('#sync-status').textContent='清除尚未完成';return}if(running){interrupt();return}show('practice');rhythmStart()}
 function roundResult(incomplete=false){const correct=round.filter(r=>r.correct),groups={};round.forEach(r=>{const k=r.clef+':'+r.note,g=groups[k]||(groups[k]={...r,correctCount:0,errors:0,sum:0});if(r.correct){g.correctCount++;g.sum+=r.time}else g.errors++});const values=Object.values(groups),slow=values.filter(g=>g.correctCount).sort((a,b)=>b.sum/b.correctCount-a.sum/a.correctCount)[0],wrong=values.filter(g=>g.errors).sort((a,b)=>b.errors-a.errors)[0],label=g=>g?`${g.clef==='treble'?'高音':'低音'} ${g.note}`:'無';return {client_id:activeRoundId,time:new Date().toISOString(),count:round.length,accuracy:correct.length/round.length,averageTime:correct.length?correct.reduce((s,r)=>s+r.time,0)/correct.length:null,mode:roundMode,slowest:slow?label(slow):'—',mostErrors:label(wrong),...(incomplete?{incomplete:true,planned:total}:{})}}
-function interrupt(){if(!running)return;clearTimeout(timer);running=false;interrupted=true;locked=true;setButtons(true);['mode','count','ledger'].forEach(id=>$('#'+id).disabled=false);if(round.length){const result=roundResult(true);data.rounds.push(result);queueRound(result);save()}}
+function interrupt(){if(!running)return;clearTimeout(timer);running=false;holding=false;held=null;interrupted=true;locked=true;cancelAnimationFrame(rafId);stopClicks();setButtons(true);document.body.classList.remove('practicing');if(round.length){const result=roundResult(round.length<5);data.rounds.push(result);queueRound(result);save()}paintTransport();drawIdle()}
 window.addEventListener('pagehide',interrupt);
 window.addEventListener('beforeunload',interrupt);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')interrupt()});
-function resetPractice(message=''){clearTimeout(timer);running=false;locked=true;round=[];completedResult=null;resultReady=false;interrupted=false;previous=null;setButtons(true);['mode','count','ledger'].forEach(id=>$('#'+id).disabled=false);$('#start').textContent='開始';$('#counter').textContent='';$('#progress').style.width='0%';renderNote('treble','G4');$('#feedback').textContent=message;document.body.classList.remove('practicing')}
+function resetPractice(message=''){clearTimeout(timer);if(running){interrupt();return}running=false;holding=false;held=null;locked=true;round=[];stream=[];completedResult=null;resultReady=false;interrupted=false;previous=null;setButtons(true);if($('#feedback'))$('#feedback').textContent=message||'';document.body.classList.remove('practicing');paintTransport();drawIdle()}
 window.addEventListener('pageshow',e=>{if(e.persisted&&interrupted){resetPractice('');show('practice')}});
 const roundAverage=r=>r.averageTime===null||(r.accuracy===0&&r.averageTime===0)?null:r.averageTime;
 const averageLabel=r=>roundAverage(r)===null?'—':Math.round(r.averageTime)+' ms';
@@ -295,16 +550,35 @@ function exportData(){const blob=new Blob([JSON.stringify({...data,source:'sight
 $('#answers').innerHTML=letters.map(l=>`<button type="button" data-letter="${l}" disabled>${l}</button>`).join('')+[1,2,4,5,6].map(i=>`<span class="black-key" style="--i:${i}" aria-hidden="true"></span>`).join('');
 let tapAnswered=false;
 document.querySelectorAll('[data-letter]').forEach(b=>{
- b.addEventListener('pointerdown',e=>{if(e.button>0)return;b.classList.add('is-down');if(soundPref)unlockAudio()});
- b.addEventListener('pointerup',e=>{b.classList.remove('is-down');if(e.button>0)return;tapAnswered=true;if(soundPref)unlockAudio();answer(b.dataset.letter)});
+ b.addEventListener('pointerdown',e=>{if(e.button>0)return;b.classList.add('is-down');if(soundPref)unlockAudio();if(running)judge(b.dataset.letter)});
+ b.addEventListener('pointerup',()=>b.classList.remove('is-down'));
  b.addEventListener('pointercancel',()=>b.classList.remove('is-down'));
  b.addEventListener('pointerleave',()=>b.classList.remove('is-down'));
- b.addEventListener('click',()=>{if(tapAnswered){tapAnswered=false;return}if(soundPref)unlockAudio();answer(b.dataset.letter)});
+ b.addEventListener('click',e=>{if(e.detail!==0)return;if(soundPref)unlockAudio();if(running)judge(b.dataset.letter)});
 });
-$('#naming').onchange=()=>document.querySelectorAll('[data-letter]').forEach(b=>b.textContent=$('#naming').value==='letters'?b.dataset.letter:syllables[letters.indexOf(b.dataset.letter)]);$('#start').onclick=start;$('#again').onclick=start;$('#practice-tab').onclick=()=>show('practice');$('#settings-back').onclick=()=>{interrupt();resetPractice();show('practice')};$('#stats-tab').onclick=()=>show('stats');$('#export').onclick=exportData;$('#clear').onclick=clearHistory;document.addEventListener('keydown',e=>{if((e.target instanceof Element && e.target.matches('input,select'))||e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;if(/^[a-g]$/i.test(e.key)&&!$('#practice-view').classList.contains('hidden')){if(soundPref)unlockAudio();answer(e.key)}});
+function paintNames(){document.querySelectorAll('[data-letter]').forEach(b=>b.textContent=namingMode==='letters'?b.dataset.letter:syllables[letters.indexOf(b.dataset.letter)])}
+$('#naming').onchange=()=>{namingMode=$('#naming').value;paintNames()};
+let transportPointer=false;
+$('#transport').addEventListener('pointerdown',e=>{if(e.button>0)return;transportPointer=true;if(soundPref)unlockAudio();start()});
+$('#transport').addEventListener('click',()=>{if(transportPointer){transportPointer=false;return}if(soundPref)unlockAudio();start()});
+$('#again').onclick=()=>{show('practice');if(!running)rhythmStart()};
+$('#practice-tab').onclick=()=>show('practice');
+$('#stats-tab').onclick=()=>show('stats');
+$('#export').onclick=exportData;$('#clear').onclick=clearHistory;
+document.addEventListener('keydown',e=>{if((e.target instanceof Element && e.target.matches('input,select'))||e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;if(/^[a-g]$/i.test(e.key)&&!$('#practice-view').classList.contains('hidden')&&running){if(soundPref)unlockAudio();judge(e.key.toUpperCase())}});
+$('#bpm-down').onclick=()=>setBpm(bpm-5);
+$('#bpm-up').onclick=()=>setBpm(bpm+5);
+$('#metro-toggle').onclick=()=>{metroOn=!metroOn;saveTune('sr-metro',metroOn?'on':'off');paintMetro()};
+$('#gear').onclick=()=>{const s=$('#tune-sheet');const open=s.hasAttribute('hidden');if(open)s.removeAttribute('hidden');else s.setAttribute('hidden','');$('#gear').setAttribute('aria-expanded',open?'true':'false');paintTune()};
+$('#clef-seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;roundMode=b.dataset.clef;$('#mode').value=roundMode;saveTune('sr-clef',roundMode);paintTune()};
+$('#ledger-toggle').onclick=()=>{ledgerOn=!ledgerOn;$('#ledger').checked=ledgerOn;saveTune('sr-ledger',ledgerOn?'on':'off');paintTune()};
+document.querySelectorAll('[data-name]').forEach(b=>b.onclick=()=>{namingMode=b.dataset.name;$('#naming').value=namingMode;saveTune('sr-name',namingMode);paintNames();paintTune()});
+$('#flow-seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;flowMode=b.dataset.flow;saveTune('sr-flow',flowMode);paintTune()};
+$('#judge-seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;judgeMode=b.dataset.judge;saveTune('sr-judge',judgeMode);paintTune()};
+$('#rhythm-seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;rhythmMode=b.dataset.rhythm;saveTune('sr-rhythm',rhythmMode);paintTune()};
 $('#sound-toggle').onclick=()=>{soundPref=!soundPref;try{localStorage.setItem('sr-sound',soundPref?'on':'off')}catch(e){}if(soundPref)unlockAudio();else stopTone();paintSound()};
 document.querySelector('.answers').addEventListener('pointerdown',()=>{if(soundPref)unlockAudio()});$('#answers').addEventListener('touchmove',e=>{e.preventDefault()},{passive:false});
-paintSound();window.__sr={notesFor,renderNote,geometry:()=>structuredClone(geom),check,answer,weights:()=>['treble','bass'].flatMap(c=>notesFor(c,true).map(note=>weight({clef:c,note})))};renderNote('treble','G4');
+paintSound();loadTune();paintTune();paintNames();paintTransport();drawIdle();window.__sr={notesFor,renderNote,geometry:()=>structuredClone(geom),check,answer,judge,classify,windows:()=>windows(),noteX:(time,now,bpmNow)=>HIT_X+(time-now)*(PX_BEAT*(bpmNow||bpm)/60),secondsPerBeat:()=>60/bpm,weights:()=>['treble','bass'].flatMap(c=>notesFor(c,true).map(note=>weight({clef:c,note}))),get rhythm(){return {running,bpm,holding,flowMode,judgeMode,rhythmMode,metroOn,stream,beats,clickPlan,musicNow:musicNow(),beat:secBeat(),frameError:window.__frameError||null}}};
 
 const client=supabase.createClient("https://tgmjfztmbistwrhmbfip.supabase.co","sb_publishable_cxZ6UfL_PTpqetxBVfp0Iw_zxY5bfv_",{auth:{flowType:'pkce',detectSessionInUrl:true}});
 let cloudUser=null,denied=false,flushing=null,clearing=false,epoch=0;
