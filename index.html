@@ -321,7 +321,7 @@ function cleanData(raw){
 let raw;try{raw=JSON.parse(localStorage.getItem('sight-reading-v1'))}catch{}
 let data={version:1,rounds:[],notes:{}};
 let current,geom,running=false,locked=false,started=0,round=[],total=20,roundMode='treble',activeRoundId=null,practiceGeneration=0,timer,previous=null,completedResult=null,resultReady=false,interrupted=false;
-let bpm=60,roundSeconds=60,roundStart=null,playMode='rhythm',metroOn=true,flowMode='continue',judgeMode='strict',rhythmMode='quarter',ledgerOn=true,namingMode='letters',stream=[],beats=[],clickCursor=0,nextNoteTime=0,clockShift=0,holding=false,held=null,rafId=0,clickNodes=[],clickPlan=[],localTiming=[],speedCur=null,speedOut=null;
+let bpm=60,roundSeconds=60,roundStart=null,playMode='rhythm',metroOn=true,flowMode='continue',judgeMode='strict',rhythmMode='quarter',ledgerOn=true,namingMode='letters',stream=[],beats=[],clickCursor=0,nextNoteTime=0,clockShift=0,holding=false,held=null,rafId=0,clickNodes=[],clickPlan=[],localTiming=[],speedQ=[],speedGone=null,speedLag=0,speedLagAt=0;
 let tally={perfect:0,ok:0,miss:0,score:0,streak:0,bestStreak:0};
 const JUDGE_WINDOWS={strict:{perfect:50,ok:100},normal:{perfect:80,ok:160},loose:{perfect:120,ok:240}},PX_BEAT=64,HIT_X=112,AUDIO_LOOK=0.2;
 const save=()=>{if(cloudUser)merge();else localStorage.setItem('sr-guest',JSON.stringify(data));};
@@ -468,60 +468,76 @@ function drawScore(now){
 function drawIdle(){drawScore(0)}
 const SLIDE=0.14;
 function easeOut(t){const u=Math.max(0,Math.min(1,t));return 1-Math.pow(1-u,3)}
-function presentSpeed(now){
- const picked=pickRhythmNote();
- speedCur={clef:picked.clef,note:picked.note,born:now,mark:null,judged:false};
-}
-function advanceSpeed(now){
- if(speedCur) speedOut={...speedCur,left:now};
- presentSpeed(now);
-}
-function drawSpeed(now){
+function speedLayout(){
  layoutStaff();
  const g=staffGeom;
  hitX=8+g.gap*(684/250)+g.gap*0.9+g.band/2;
- const clef=speedCur?speedCur.clef:(roundMode==='mixed'?'treble':roundMode);
- const travel=Math.min(120,Math.max(80,(viewW-hitX)*0.4));
- const notes=[];
- if(speedOut && now-speedOut.left<SLIDE){
-  const x=hitX-easeOut((now-speedOut.left)/SLIDE)*64;
-  const color=speedOut.mark==='bad'?'#6e2c32':speedOut.mark==='ok'?'#7a5b3a':'#1f4d3a';
-  notes.push(glyph(x,staffY(speedOut.clef,speedOut.note),1,color));
+ pxBeat=Math.max(g.gap*3.4, Math.min(g.gap*4.6, (viewW-hitX-12)/5.2));
+}
+function speedLagNow(now){
+ if(speedLag<=0) return 0;
+ const left=speedLag-(now-speedLagAt)/SLIDE;
+ return left>0?left:0;
+}
+function fillSpeed(now){
+ speedLayout();
+ const need=Math.ceil((viewW-hitX)/pxBeat)+2;
+ while(speedQ.length<need){
+  const picked=pickRhythmNote();
+  speedQ.push({clef:picked.clef,note:picked.note,mark:null,born:null});
  }
- if(speedCur){
-  const x=hitX+(1-easeOut((now-speedCur.born)/SLIDE))*travel;
-  const color=speedCur.mark==='bad'?'#6e2c32':'#1c1915';
-  notes.push(glyph(x,staffY(speedCur.clef,speedCur.note),1,color));
- }
+ if(speedQ[0]&&speedQ[0].born==null) speedQ[0].born=now;
+}
+function advanceSpeed(now){
+ const gone=speedQ.shift();
+ if(gone){gone.mark=gone.mark||'perfect'; speedGone=gone}
+ speedLag=speedLagNow(now)+1;
+ speedLagAt=now;
+ fillSpeed(now);
+ if(speedQ[0]) speedQ[0].born=now;
+}
+function drawSpeed(now){
+ speedLayout();
+ const g=staffGeom, lag=speedLagNow(now);
+ const clef=speedQ[0]?speedQ[0].clef:(roundMode==='mixed'?'treble':roundMode);
+ const colorOf=n=>n.mark==='bad'?'#6e2c32':n.mark==='ok'?'#7a5b3a':n.mark==='perfect'?'#1f4d3a':'#1c1915';
+ let notes='';
+ if(speedGone&&lag>0.02) notes+=glyph(hitX+(lag-1)*pxBeat,staffY(speedGone.clef,speedGone.note),1,colorOf(speedGone));
+ speedQ.forEach((n,i)=>{
+  const x=hitX+(i+lag)*pxBeat;
+  if(x<-40||x>viewW+36) return;
+  notes+=glyph(x,staffY(n.clef,n.note),1,colorOf(n));
+ });
  const lines=[]; for(let i=0;i<5;i++){const y=g.top+i*g.gap; lines.push(`<line class="staff-line" x1="0" x2="${viewW}" y1="${y}" y2="${y}" stroke="#1c1915" stroke-width="1"/>`)}
  const music=`font-family="Bravura" font-size="${g.em}" fill="#1c1915"`;
  const clefSvg=`<text ${music} x="8" y="${clef==='bass'?g.top+g.gap:g.bottom-g.gap}">${clef==='bass'?'\uE062':'\uE050'}</text>`;
  const band=g.band;
  const hit=`<rect class="hit-bar" x="${hitX-band/2}" y="${g.top-g.gap*1.15}" width="${band}" height="${(g.bottom-g.top)+g.gap*2.3}" rx="2" fill="rgba(150,150,150,0.22)"/>`;
  const svg=$('#score'); svg.setAttribute('viewBox',`0 0 ${viewW} ${viewH}`); svg.setAttribute('preserveAspectRatio','none');
- svg.innerHTML=`<rect width="${viewW}" height="${viewH}" fill="transparent"/>${lines.join('')}${hit}${clefSvg}${notes.join('')}`;
+ svg.innerHTML=`<rect width="${viewW}" height="${viewH}" fill="transparent"/>${lines.join('')}${hit}${clefSvg}${notes}`;
 }
 function judgeSpeed(letter){
- if(!speedCur) return false;
+ const cur=speedQ[0];
+ if(!cur) return false;
  const now=musicNow();
  if(holding){
-  if(letter===speedCur.note[0]){
-   holding=false; speedCur.mark='ok';
-   try{playAnsweredNote(speedCur.note)}catch(e){}
+  if(letter===cur.note[0]){
+   holding=false; cur.mark='ok';
+   try{playAnsweredNote(cur.note)}catch(e){}
    advanceSpeed(now);
   }
   return true;
  }
- const elapsed=Math.max(0,(now-speedCur.born)*1000);
- if(letter===speedCur.note[0]){
-  speedCur.mark='perfect';
-  recordAttempt(speedCur,true,elapsed);
-  try{playAnsweredNote(speedCur.note)}catch(e){}
+ const elapsed=Math.max(0,(now-(cur.born==null?now:cur.born))*1000);
+ if(letter===cur.note[0]){
+  cur.mark='perfect';
+  recordAttempt(cur,true,elapsed);
+  try{playAnsweredNote(cur.note)}catch(e){}
   advanceSpeed(now);
  }else{
-  speedCur.mark='bad';
-  recordAttempt(speedCur,false,elapsed);
-  if(flowMode==='pause'){holding=true; held=speedCur}
+  cur.mark='bad';
+  recordAttempt(cur,false,elapsed);
+  if(flowMode==='pause'){holding=true; held=cur}
   else advanceSpeed(now);
  }
  return true;
@@ -584,14 +600,14 @@ function rhythmStart(){
  unlockAudio();
  stopClicks();
  stream=[]; beats=[]; clickCursor=0; clickPlan=[]; round=[]; previous=null; holding=false; held=null; clockShift=0; resetTally();
- speedCur=null; speedOut=null;
+ speedQ=[]; speedGone=null; speedLag=0; speedLagAt=0;
  activeRoundId=crypto.randomUUID();
  practiceGeneration=cloudUser?generation(cloudUser.id):0;
  completedResult=null; resultReady=false; interrupted=false; running=true; locked=false;
  const speed=playMode==='speed';
  const t0=musicNow()+(speed?0:secBeat()*2);
  roundStart=t0;
- if(speed) presentSpeed(t0);
+ if(speed) fillSpeed(t0);
  else{
   beats=[{time:t0,index:0,accent:true,sent:false}];
   nextNoteTime=t0;
