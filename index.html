@@ -258,6 +258,31 @@ input[type=checkbox]{accent-color:var(--burgundy);width:20px;min-height:20px}
 header{flex-wrap:nowrap!important;align-items:center;justify-content:center;width:100%;margin:0;padding:calc(6px + env(safe-area-inset-top,0px)) 12px 6px;max-width:none}
 #play-controls{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:12px;width:min(100%,440px);margin:0 auto}
 #play-controls.hidden,#back-practice.hidden{display:none!important}
+.clock{font-variant-numeric:tabular-nums;font-weight:700;font-size:18px;min-width:3.2em;text-align:center;color:var(--ink)}
+.clock.urgent{color:var(--burgundy)}
+#length-seg,#round-start{display:none}
+#length-seg button{font-variant-numeric:tabular-nums;font-size:16px}
+.setup-bpm{align-self:center;height:52px}
+.setup-bpm output{font-size:22px;min-width:3em}
+#round-start{width:100%;min-height:56px;margin-top:auto;font-size:20px}
+.result-overlay{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(28,25,21,.28)}
+.result-overlay[hidden]{display:none!important}
+.result-card{position:relative;width:min(100%,300px);padding:36px 22px 22px;border-radius:22px;background:var(--sheet);text-align:center;box-shadow:0 16px 40px rgba(28,25,21,.18)}
+.result-card .score-num{display:block;font-size:76px;font-weight:700;line-height:.9;font-variant-numeric:tabular-nums}
+.result-best{margin:10px 0 0;color:var(--burgundy);font-weight:700;letter-spacing:.14em;font-size:13px}
+.result-acc{margin:16px 0 8px;font-size:22px;font-weight:700}
+.result-grades{display:flex;justify-content:center;gap:28px;margin:0;font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.result-grades .perfect{color:#1f4d3a}
+.result-grades .ok{color:#7a5b3a}
+.result-grades .miss{color:#6e2c32}
+.result-streak{margin:12px 0 18px;color:var(--muted);font-size:15px}
+#result-close{position:absolute;top:8px;right:8px;border:0;background:transparent;color:var(--muted)}
+#result-again{width:100%}
+body.stage.setup header{display:none}
+body.stage.setup .score,body.stage.setup .piano{display:none!important}
+body.stage.setup #tune-sheet{position:relative;z-index:1;left:auto;right:auto;top:auto;flex:1 1 auto;display:flex!important;margin:0;border:0;border-radius:0;box-shadow:none;background:transparent;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));overflow:auto}
+body.stage.setup #length-seg{display:flex}
+body.stage.setup #round-start{display:block}
 .seg button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:18px;font-weight:700;line-height:1}
 .seg button small{font-size:12px;font-weight:700;letter-spacing:.04em}
 body.stage .account-bar{display:none!important}
@@ -276,7 +301,7 @@ body.stage .piano .black-key{height:54%;border-radius:0 0 3px 3px;background:lin
   body.stage .layout{max-width:760px;margin:0 auto;width:100%}
   body.stage .piano{height:30vh!important;max-height:250px;min-height:180px}
 }
-</style></head><body class="stage"><header><button id="back-practice" class="icon-btn hidden" type="button" aria-label="練習"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15 5l-7 7 7 7"/></svg></button><nav id="play-controls"><button id="transport" class="icon-btn" type="button" aria-pressed="false" aria-label="開始"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></button><div class="bpm" role="group" aria-label="速度"><button type="button" id="bpm-down" aria-label="慢">−</button><output id="bpm">60</output><button type="button" id="bpm-up" aria-label="快">+</button></div><button id="gear" class="icon-btn" type="button" aria-expanded="false" aria-label="設定"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></button></nav></header><main hidden><section id="practice-view"><div class="layout"><div class="card practice"><svg id="score" class="score" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid meet" aria-label="五線譜" role="img"></svg><div id="tune-sheet" class="tune-sheet" hidden><div class="seg" id="clef-seg" role="group"><button type="button" data-clef="treble" aria-label="高音" aria-pressed="true">𝄞<small>高音</small></button><button type="button" data-clef="bass" aria-label="低音">𝄢<small>低音</small></button><button type="button" data-clef="mixed" aria-label="混合">𝄞<small>混合</small></button></div><div class="seg" role="group"><button type="button" id="ledger-toggle" aria-pressed="true" aria-label="加線">≡<small>加線</small></button><button type="button" data-name="letters" aria-pressed="true" aria-label="字母">C<small>字母</small></button><button type="button" data-name="solfege" aria-label="唱名">Do<small>唱名</small></button></div><div class="seg" id="flow-seg" role="group"><button type="button" data-flow="continue" aria-pressed="true" aria-label="繼續">→<small>繼續</small></button><button type="button" data-flow="pause" aria-label="停下">Ⅱ<small>停下</small></button></div><div class="seg" id="judge-seg" role="group"><button type="button" data-judge="strict" aria-pressed="true" aria-label="嚴">±100<small>嚴</small></button><button type="button" data-judge="normal" aria-label="中">±160<small>中</small></button><button type="button" data-judge="loose" aria-label="寬">±240<small>寬</small></button></div><div class="seg" id="rhythm-seg" role="group"><button type="button" data-rhythm="quarter" aria-pressed="true" aria-label="四分">♩<small>四分</small></button><button type="button" data-rhythm="mixed" aria-label="混合">♫<small>混合</small></button></div><div class="seg" role="group"><button id="sound-toggle" type="button" role="switch" aria-checked="true" aria-label="聲音開"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg><small>聲音</small></button><button id="metro-toggle" type="button" role="switch" aria-checked="true" aria-label="節拍開"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M9 20h6L12 4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 9l5 3"/></svg><small>節拍</small></button><button type="button" id="stats-tab" aria-label="統計">▤<small>統計</small></button></div><div class="seg" role="group"><button type="button" id="google">登入</button><button id="signout" type="button" hidden>登出</button><label class="import">匯入<input id="import-file" type="file" accept="application/json"></label></div><p id="sync-status" role="status"></p><p id="import-status" role="status"></p><span id="email" hidden></span></div><div id="answers" class="answers piano" role="group" aria-label="鋼琴鍵盤"></div><span id="counter" hidden></span><span id="progress" hidden></span><div id="feedback" hidden></div><select id="mode" hidden><option value="treble" selected>高</option><option value="bass">低</option><option value="mixed">合</option></select><input id="count" type="number" hidden value="20"><input id="ledger" type="checkbox" hidden checked><select id="naming" hidden><option value="letters" selected>C</option><option value="solfege">Do</option></select></div></div></section><section id="result-view" class="hidden"><div class="card"><div id="result-metrics" class="metrics"></div><button id="again" class="primary">再來</button></div></section><section id="stats-view" class="hidden"><div class="card"><div id="chart"></div><div id="recent-rounds"></div><div id="heat-treble" class="heat"></div><div id="heat-bass" class="heat"></div><div class="stats-actions"><button id="export">匯出</button><button id="clear">清除</button></div></div></section></main><script src="vendor/supabase-js.js"></script><script>
+</style></head><body class="stage setup"><header><button id="back-practice" class="icon-btn hidden" type="button" aria-label="練習"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15 5l-7 7 7 7"/></svg></button><nav id="play-controls"><button id="transport" class="icon-btn" type="button" aria-pressed="false" aria-label="開始"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></button><div class="bpm" role="group" aria-label="速度"><button type="button" id="bpm-down" aria-label="慢">−</button><output id="bpm" data-bpm>60</output><button type="button" id="bpm-up" aria-label="快">+</button></div><output id="clock" class="clock" hidden>1:00</output><button id="gear" class="icon-btn" type="button" aria-expanded="false" aria-label="設定"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></button></nav></header><main hidden><section id="practice-view"><div class="layout"><div class="card practice"><svg id="score" class="score" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid meet" aria-label="五線譜" role="img"></svg><div id="tune-sheet" class="tune-sheet" hidden><div class="seg" id="length-seg" role="group" aria-label="時間"><button type="button" data-seconds="30">0:30</button><button type="button" data-seconds="60" aria-pressed="true">1:00</button><button type="button" data-seconds="90">1:30</button><button type="button" data-seconds="120">2:00</button></div><div class="bpm setup-bpm" role="group" aria-label="速度"><button type="button" id="setup-bpm-down" aria-label="慢">−</button><output id="setup-bpm" data-bpm>60</output><button type="button" id="setup-bpm-up" aria-label="快">+</button></div><div class="seg" id="clef-seg" role="group"><button type="button" data-clef="treble" aria-label="高音" aria-pressed="true">𝄞<small>高音</small></button><button type="button" data-clef="bass" aria-label="低音">𝄢<small>低音</small></button><button type="button" data-clef="mixed" aria-label="混合">𝄞<small>混合</small></button></div><div class="seg" role="group"><button type="button" id="ledger-toggle" aria-pressed="true" aria-label="加線">≡<small>加線</small></button><button type="button" data-name="letters" aria-pressed="true" aria-label="字母">C<small>字母</small></button><button type="button" data-name="solfege" aria-label="唱名">Do<small>唱名</small></button></div><div class="seg" id="flow-seg" role="group"><button type="button" data-flow="continue" aria-pressed="true" aria-label="繼續">→<small>繼續</small></button><button type="button" data-flow="pause" aria-label="停下">Ⅱ<small>停下</small></button></div><div class="seg" id="judge-seg" role="group"><button type="button" data-judge="strict" aria-pressed="true" aria-label="嚴">±100<small>嚴</small></button><button type="button" data-judge="normal" aria-label="中">±160<small>中</small></button><button type="button" data-judge="loose" aria-label="寬">±240<small>寬</small></button></div><div class="seg" id="rhythm-seg" role="group"><button type="button" data-rhythm="quarter" aria-pressed="true" aria-label="四分">♩<small>四分</small></button><button type="button" data-rhythm="mixed" aria-label="混合">♫<small>混合</small></button></div><div class="seg" role="group"><button id="sound-toggle" type="button" role="switch" aria-checked="true" aria-label="聲音開"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.5 8.5a4.5 4.5 0 010 7"/></svg><small>聲音</small></button><button id="metro-toggle" type="button" role="switch" aria-checked="true" aria-label="節拍開"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M9 20h6L12 4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 9l5 3"/></svg><small>節拍</small></button><button type="button" id="stats-tab" aria-label="統計">▤<small>統計</small></button></div><div class="seg" role="group"><button type="button" id="google">登入</button><button id="signout" type="button" hidden>登出</button><label class="import">匯入<input id="import-file" type="file" accept="application/json"></label></div><p id="sync-status" role="status"></p><p id="import-status" role="status"></p><span id="email" hidden></span><button id="round-start" class="primary" type="button">開始</button></div><div id="result-overlay" class="result-overlay" hidden><div class="result-card" role="dialog" aria-label="成績"><button id="result-close" class="icon-btn" type="button" aria-label="關閉">×</button><output id="result-score" class="score-num">0</output><p id="result-best" class="result-best" hidden>最佳</p><p id="result-acc" class="result-acc">0%</p><p class="result-grades"><span id="result-perfect" class="perfect">0</span><span id="result-ok" class="ok">0</span><span id="result-miss" class="miss">0</span></p><p id="result-streak" class="result-streak">連續 0</p><button id="result-again" class="primary" type="button">再來</button></div></div><div id="answers" class="answers piano" role="group" aria-label="鋼琴鍵盤"></div><span id="counter" hidden></span><span id="progress" hidden></span><div id="feedback" hidden></div><select id="mode" hidden><option value="treble" selected>高</option><option value="bass">低</option><option value="mixed">合</option></select><input id="count" type="number" hidden value="20"><input id="ledger" type="checkbox" hidden checked><select id="naming" hidden><option value="letters" selected>C</option><option value="solfege">Do</option></select></div></div></section><section id="result-view" class="hidden"><div class="card"><div id="result-metrics" class="metrics"></div><button id="again" class="primary">再來</button></div></section><section id="stats-view" class="hidden"><div class="card"><div id="chart"></div><div id="recent-rounds"></div><div id="heat-treble" class="heat"></div><div id="heat-bass" class="heat"></div><div class="stats-actions"><button id="export">匯出</button><button id="clear">清除</button></div></div></section></main><script src="vendor/supabase-js.js"></script><script>
 'use strict';
 const $=s=>document.querySelector(s), letters=['C','D','E','F','G','A','B'], syllables=['Do','Re','Mi','Fa','Sol','La','Si'];
 const index=n=>Number(n.slice(1))*7+letters.indexOf(n[0]);
@@ -295,7 +320,8 @@ function cleanData(raw){
 let raw;try{raw=JSON.parse(localStorage.getItem('sight-reading-v1'))}catch{}
 let data={version:1,rounds:[],notes:{}};
 let current,geom,running=false,locked=false,started=0,round=[],total=20,roundMode='treble',activeRoundId=null,practiceGeneration=0,timer,previous=null,completedResult=null,resultReady=false,interrupted=false;
-let bpm=60,metroOn=true,flowMode='continue',judgeMode='strict',rhythmMode='quarter',ledgerOn=true,namingMode='letters',stream=[],beats=[],clickCursor=0,nextNoteTime=0,clockShift=0,holding=false,held=null,rafId=0,clickNodes=[],clickPlan=[],localTiming=[];
+let bpm=60,roundSeconds=60,roundStart=null,metroOn=true,flowMode='continue',judgeMode='strict',rhythmMode='quarter',ledgerOn=true,namingMode='letters',stream=[],beats=[],clickCursor=0,nextNoteTime=0,clockShift=0,holding=false,held=null,rafId=0,clickNodes=[],clickPlan=[],localTiming=[];
+let tally={perfect:0,ok:0,miss:0,score:0,streak:0,bestStreak:0};
 const JUDGE_WINDOWS={strict:{perfect:50,ok:100},normal:{perfect:80,ok:160},loose:{perfect:120,ok:240}},PX_BEAT=64,HIT_X=112,AUDIO_LOOK=0.2;
 const save=()=>{if(cloudUser)merge();else localStorage.setItem('sr-guest',JSON.stringify(data));};
 function renderNote(clef,note){current={clef,note};const lines=[65,85,105,125,145],bottom=clef==='treble'?'E4':'G2',y=145-(index(note)-index(bottom))*10,ledger=[];for(let v=165;v<=y;v+=20)ledger.push(v);for(let v=45;v>=y;v-=20)ledger.push(v);geom={staffLinesY:lines,noteY:y,ledgerLinesY:ledger,clef};let path=clef==='treble'?'<path id="clef-treble" d="M81 138 C61 125 72 108 88 111 C108 114 108 139 90 146 C66 156 47 136 53 114 C58 94 82 81 90 63 C96 50 92 33 85 31 C73 37 73 59 78 81 L98 167 C103 186 83 198 72 185 C64 173 77 163 85 171 C91 180 80 187 75 180" fill="none" stroke="#1c1915" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>':'<g id="clef-bass" fill="#1c1915"><path d="M62 85 C59 70 68 62 81 62 C98 62 107 72 106 87 C105 110 84 130 62 140 C80 124 94 105 94 86 C94 72 86 67 78 70 C73 72 70 76 71 80 C79 75 87 83 83 90 C78 99 63 97 62 85Z"/><path d="M116 75 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0 M116 95 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0"/></g>';
@@ -319,6 +345,7 @@ function playAnsweredNote(note){if(!soundPref||!note)return;try{const ctx=unlock
 function loadTune(){
  try{
   const b=Number(localStorage.getItem('sr-bpm')); if(b>=40&&b<=160) bpm=b;
+  const sec=Number(localStorage.getItem('sr-seconds')); if([30,60,90,120].includes(sec)) roundSeconds=sec;
   const m=localStorage.getItem('sr-metro'); if(m==='off') metroOn=false; else if(m==='on') metroOn=true;
   const f=localStorage.getItem('sr-flow'); if(f==='pause'||f==='continue') flowMode=f;
   const j=localStorage.getItem('sr-judge'); if(JUDGE_WINDOWS[j]) judgeMode=j;
@@ -377,10 +404,22 @@ function rememberTiming(n,offset,correct){
  localTiming.push({clef:n.clef,note:n.note,offset,correct}); if(localTiming.length>200) localTiming.shift();
  try{localStorage.setItem('sr-timing',JSON.stringify(localTiming))}catch(e){}
 }
+function resetTally(){tally={perfect:0,ok:0,miss:0,score:0,streak:0,bestStreak:0}}
+// Score: perfect 100, ok 50, miss or wrong key 0.
+// After 10 correct notes in a row, each further correct note in that run adds 10.
+function scoreNote(grade){
+ if(grade==='perfect'||grade==='ok'){
+  tally.streak++;
+  if(tally.streak>tally.bestStreak) tally.bestStreak=tally.streak;
+  tally[grade]++;
+  tally.score+=(grade==='perfect'?100:50)+(tally.streak>=10?10:0);
+ }else{tally.streak=0;tally.miss++}
+}
 function recordAttempt(n,correct,offsetMs){
  const elapsed=Math.round(Math.min(60000,Math.abs(offsetMs)));
  const record={clef:n.clef,note:n.note,correct,time:elapsed};
  round.push(record); rememberTiming(n,offsetMs,correct); queueAnswer(record);
+ scoreNote(n.mark==='perfect'?'perfect':n.mark==='ok'?'ok':'miss');
  const key=n.clef+':'+n.note,s=data.notes[key]||{attempts:0,errors:0,averageTime:0};
  if(correct)s.averageTime+=(elapsed-s.averageTime)/(s.attempts-s.errors+1);
  s.attempts++; if(!correct)s.errors++; data.notes[key]=s;
@@ -456,21 +495,41 @@ function pump(){
  }
  stream=stream.filter(n=>noteX(n.time,now)>-40);
 }
+function roundLeft(now){
+ const t=typeof now==='number'?now:musicNow();
+ if(roundStart==null) return roundSeconds;
+ return Math.max(0,Math.min(roundSeconds,roundSeconds-(t-roundStart)));
+}
+function formatClock(sec){const s=Math.max(0,Math.ceil(sec-1e-6)),m=Math.floor(s/60),r=s%60;return m+':'+(r<10?'0':'')+r}
+function paintClock(left){
+ const el=$('#clock'); if(!el) return;
+ const remain=typeof left==='number'?left:roundLeft();
+ el.textContent=formatClock(remain);
+ el.classList.toggle('urgent',running&&roundStart!=null&&musicNow()>=roundStart&&remain<=5&&remain>0);
+}
 function frame(){
  if(!running) return;
- try{pump(); drawScore(musicNow())}catch(e){window.__frameError=String(e&&e.message||e)}
- rafId=requestAnimationFrame(frame);
+ try{
+  pump();
+  const now=musicNow();
+  drawScore(now);
+  paintClock(roundLeft(now));
+  if(roundStart!=null&&now>=roundStart+roundSeconds){endRound();return}
+ }catch(e){window.__frameError=String(e&&e.message||e)}
+ if(running) rafId=requestAnimationFrame(frame);
 }
 function rhythmStart(){
  unlockAudio();
  stopClicks();
- stream=[]; beats=[]; clickCursor=0; clickPlan=[]; round=[]; previous=null; holding=false; held=null; clockShift=0;
+ stream=[]; beats=[]; clickCursor=0; clickPlan=[]; round=[]; previous=null; holding=false; held=null; clockShift=0; resetTally();
  activeRoundId=crypto.randomUUID();
  practiceGeneration=cloudUser?generation(cloudUser.id):0;
  completedResult=null; resultReady=false; interrupted=false; running=true; locked=false;
  const t0=musicNow()+secBeat()*2;
+ roundStart=t0;
  beats=[{time:t0,index:0,accent:true,sent:false}];
  nextNoteTime=t0;
+ paintClock(roundSeconds);
  setButtons(false);
  document.body.classList.add('practicing');
  paintTransport(); paintTune();
@@ -524,7 +583,8 @@ function paintTune(){
  press('#rhythm-seg button',b=>b.dataset.rhythm===rhythmMode);
  press('[data-name]',b=>b.dataset.name===namingMode);
  const led=$('#ledger-toggle'); if(led) led.setAttribute('aria-pressed',ledgerOn?'true':'false');
- const out=$('#bpm'); if(out) out.textContent=String(bpm);
+ document.querySelectorAll('[data-bpm]').forEach(out=>out.textContent=String(bpm));
+ document.querySelectorAll('#length-seg button').forEach(b=>b.setAttribute('aria-pressed',Number(b.dataset.seconds)===roundSeconds?'true':'false'));
  paintMetro();
 }
 function retime(){
@@ -549,15 +609,65 @@ function retime(){
 function setBpm(next){
  bpm=Math.max(40,Math.min(160,Math.round(next)));
  saveTune('sr-bpm',String(bpm));
- const out=$('#bpm'); if(out) out.textContent=String(bpm);
+ document.querySelectorAll('[data-bpm]').forEach(out=>out.textContent=String(bpm));
  retime();
 }
 
 function answer(letter){if(!running||locked||performance.now()-started<200)return false;const elapsed=performance.now()-started,correct=check(letter);locked=true;const record={...current,correct,time:elapsed};round.push(record);queueAnswer(record);const key=current.clef+':'+current.note,s=data.notes[key]||{attempts:0,errors:0,averageTime:0};if(correct)s.averageTime+=(elapsed-s.averageTime)/(s.attempts-s.errors+1);s.attempts++;if(!correct)s.errors++;data.notes[key]=s;if(round.length>=total){completedResult=roundResult();data.rounds.push(completedResult);queueRound(completedResult);running=false}save();const advance=()=>completedResult?finish():next();if(correct){try{playAnsweredNote(current.note)}catch(e){}advance()}else{$('#feedback').textContent=current.note;$('#note-head').setAttribute('stroke','#6e2c32');$('#note-head').setAttribute('fill','#f6e4e2');setButtons(true);timer=setTimeout(advance,1000)}return correct}
-function show(view){if(view==='stats'&&running)interrupt();const practice=view==='practice';document.body.classList.toggle('stage',practice);document.body.classList.toggle('practicing',running&&practice);for(const id of ['practice','result','stats'])$('#'+id+'-view').classList.toggle('hidden',id!==view);$('#back-practice').classList.toggle('hidden',practice);$('#play-controls').classList.toggle('hidden',!practice);if(view==='stats')renderStats()}
-function start(){if(cloudUser&&(clearing||localStorage.getItem(key('clear-pending')))){$('#sync-status').textContent='清除尚未完成';return}if(running){interrupt();return}show('practice');rhythmStart()}
+function show(view){if(view==='stats'&&running)interrupt();const practice=view==='practice';document.body.classList.toggle('stage',practice);document.body.classList.toggle('practicing',running&&practice);for(const id of ['practice','result','stats'])$('#'+id+'-view').classList.toggle('hidden',id!==view);$('#back-practice').classList.toggle('hidden',practice);$('#play-controls').classList.toggle('hidden',!practice);if(view==='stats')renderStats();else if(practice&&!running)showSetup()}
+function showSetup(){
+ document.body.classList.add('stage','setup');
+ document.body.classList.remove('practicing');
+ for(const id of ['result','stats'])$('#'+id+'-view').classList.add('hidden');
+ $('#practice-view').classList.remove('hidden');
+ $('#back-practice').classList.add('hidden');
+ $('#tune-sheet').removeAttribute('hidden');
+ $('#gear').setAttribute('aria-expanded','false');
+ $('#result-overlay').hidden=true;
+ $('#clock').hidden=true;
+ paintTune();
+ paintClock(roundSeconds);
+}
+function beginRound(){
+ if(cloudUser&&(clearing||localStorage.getItem(key('clear-pending')))){$('#sync-status').textContent='清除尚未完成';return}
+ if(running) return;
+ document.body.classList.remove('setup');
+ $('#tune-sheet').setAttribute('hidden','');
+ $('#result-overlay').hidden=true;
+ $('#clock').hidden=false;
+ rhythmStart();
+}
+function markBest(score){
+ let all={}; try{all=JSON.parse(localStorage.getItem('sr-best'))||{}}catch(e){}
+ const k=roundSeconds+':'+bpm, prev=all[k], beat=typeof prev==='number'&&score>prev;
+ if(typeof prev!=='number'||score>prev){all[k]=score; try{localStorage.setItem('sr-best',JSON.stringify(all))}catch(e){}}
+ return beat;
+}
+function showResult(){
+ const total=tally.perfect+tally.ok+tally.miss, acc=total?Math.round(100*(tally.perfect+tally.ok)/total):0;
+ $('#result-score').textContent=String(tally.score);
+ $('#result-best').hidden=!markBest(tally.score);
+ $('#result-acc').textContent=acc+'%';
+ $('#result-perfect').textContent=String(tally.perfect);
+ $('#result-ok').textContent=String(tally.ok);
+ $('#result-miss').textContent=String(tally.miss);
+ $('#result-streak').textContent='連續 '+tally.bestStreak;
+ $('#result-overlay').hidden=false;
+}
+function endRound(){
+ if(!running) return;
+ running=false; holding=false; held=null; locked=true;
+ cancelAnimationFrame(rafId); stopClicks(); setButtons(true);
+ document.body.classList.remove('practicing');
+ flushRound(false);
+ paintClock(0);
+ paintTransport();
+ showResult();
+}
+function closeResult(){$('#result-overlay').hidden=true;showSetup()}
+function start(){if(cloudUser&&(clearing||localStorage.getItem(key('clear-pending')))){$('#sync-status').textContent='清除尚未完成';return}if(running){interrupt();return}beginRound()}
 function roundResult(incomplete=false){const correct=round.filter(r=>r.correct),groups={};round.forEach(r=>{const k=r.clef+':'+r.note,g=groups[k]||(groups[k]={...r,correctCount:0,errors:0,sum:0});if(r.correct){g.correctCount++;g.sum+=r.time}else g.errors++});const values=Object.values(groups),slow=values.filter(g=>g.correctCount).sort((a,b)=>b.sum/b.correctCount-a.sum/a.correctCount)[0],wrong=values.filter(g=>g.errors).sort((a,b)=>b.errors-a.errors)[0],label=g=>g?`${g.clef==='treble'?'高音':'低音'} ${g.note}`:'無';return {client_id:activeRoundId,time:new Date().toISOString(),count:round.length,accuracy:correct.length/round.length,averageTime:correct.length?correct.reduce((s,r)=>s+r.time,0)/correct.length:null,mode:roundMode,slowest:slow?label(slow):'—',mostErrors:label(wrong),...(incomplete?{incomplete:true,planned:total}:{})}}
-function interrupt(){if(!running)return;clearTimeout(timer);running=false;holding=false;held=null;interrupted=true;locked=true;cancelAnimationFrame(rafId);stopClicks();setButtons(true);document.body.classList.remove('practicing');if(round.length){const result=roundResult(round.length<5);data.rounds.push(result);queueRound(result);save()}paintTransport();drawIdle()}
+function interrupt(){if(!running)return;clearTimeout(timer);running=false;holding=false;held=null;interrupted=true;locked=true;cancelAnimationFrame(rafId);stopClicks();setButtons(true);document.body.classList.remove('practicing');flushRound(true);paintTransport();drawIdle();showSetup()}
 window.addEventListener('pagehide',interrupt);
 window.addEventListener('beforeunload',interrupt);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')interrupt()});
@@ -584,8 +694,16 @@ $('#naming').onchange=()=>{namingMode=$('#naming').value;paintNames()};
 let transportPointer=false;
 $('#transport').addEventListener('pointerdown',e=>{if(e.button>0)return;transportPointer=true;if(soundPref)unlockAudio();start()});
 $('#transport').addEventListener('click',()=>{if(transportPointer){transportPointer=false;return}if(soundPref)unlockAudio();start()});
-$('#again').onclick=()=>{show('practice');if(!running)rhythmStart()};
+$('#again').onclick=()=>closeResult();
 $('#back-practice').onclick=()=>show('practice');
+$('#round-start').addEventListener('pointerdown',e=>{if(e.button>0)return;if(soundPref)unlockAudio()});
+$('#round-start').onclick=()=>beginRound();
+$('#length-seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;const sec=Number(b.dataset.seconds);if(![30,60,90,120].includes(sec))return;roundSeconds=sec;saveTune('sr-seconds',String(sec));paintTune()};
+$('#setup-bpm-down').onclick=()=>setBpm(bpm-5);
+$('#setup-bpm-up').onclick=()=>setBpm(bpm+5);
+$('#result-again').onclick=()=>closeResult();
+$('#result-close').onclick=()=>closeResult();
+$('#result-overlay').addEventListener('pointerdown',e=>{if(e.target===$('#result-overlay'))closeResult()});
 $('#stats-tab').onclick=()=>{$('#tune-sheet').setAttribute('hidden','');$('#gear').setAttribute('aria-expanded','false');show('stats')};
 $('#export').onclick=exportData;$('#clear').onclick=clearHistory;
 document.addEventListener('keydown',e=>{if((e.target instanceof Element && e.target.matches('input,select'))||e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;if(/^[a-g]$/i.test(e.key)&&!$('#practice-view').classList.contains('hidden')&&running){if(soundPref)unlockAudio();judge(e.key.toUpperCase())}});
@@ -601,7 +719,7 @@ $('#judge-seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;judg
 $('#rhythm-seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;rhythmMode=b.dataset.rhythm;saveTune('sr-rhythm',rhythmMode);paintTune()};
 $('#sound-toggle').onclick=()=>{soundPref=!soundPref;try{localStorage.setItem('sr-sound',soundPref?'on':'off')}catch(e){}if(soundPref)unlockAudio();else stopTone();paintSound()};
 document.querySelector('.answers').addEventListener('pointerdown',()=>{if(soundPref)unlockAudio()});$('#answers').addEventListener('touchmove',e=>{e.preventDefault()},{passive:false});
-paintSound();loadTune();paintTune();paintNames();paintTransport();drawIdle();window.__sr={notesFor,renderNote,geometry:()=>structuredClone(geom),check,answer,judge,classify,windows:()=>windows(),noteX:(time,now,bpmNow)=>HIT_X+(time-now)*(PX_BEAT*(bpmNow||bpm)/60),secondsPerBeat:()=>60/bpm,weights:()=>['treble','bass'].flatMap(c=>notesFor(c,true).map(note=>weight({clef:c,note}))),get rhythm(){return {running,bpm,holding,flowMode,judgeMode,rhythmMode,metroOn,stream,beats,clickPlan,musicNow:musicNow(),beat:secBeat(),frameError:window.__frameError||null}}};
+paintSound();loadTune();paintTune();paintNames();paintTransport();drawIdle();showSetup();window.__sr={notesFor,renderNote,geometry:()=>structuredClone(geom),check,answer,judge,classify,windows:()=>windows(),noteX:(time,now,bpmNow)=>HIT_X+(time-now)*(PX_BEAT*(bpmNow||bpm)/60),secondsPerBeat:()=>60/bpm,scoreNote,formatClock,get rhythm(){return {running,bpm,roundSeconds,tally:{...tally},holding,flowMode,judgeMode,rhythmMode,metroOn,stream,beats,clickPlan,musicNow:musicNow(),beat:secBeat(),frameError:window.__frameError||null}}};
 
 const client=supabase.createClient("https://tgmjfztmbistwrhmbfip.supabase.co","sb_publishable_cxZ6UfL_PTpqetxBVfp0Iw_zxY5bfv_",{auth:{flowType:'pkce',detectSessionInUrl:true}});
 let cloudUser=null,denied=false,flushing=null,clearing=false,epoch=0;
